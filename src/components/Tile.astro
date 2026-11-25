@@ -1,0 +1,45 @@
+---
+import type { PackageEntry } from '../data/packages';
+
+interface Props {
+  tile: PackageEntry['tile'];
+  size?: number;
+  class?: string;
+}
+const { tile, size = 28, class: className = '' } = Astro.props;
+---
+
+<span
+  class:list={['tile', className]}
+  style={`--tile-bg:${tile.bg};--tile-fg:${tile.fg};--tile-ink:${tile.ink};--tile-size:${size}px`}
+  aria-hidden="true"
+>
+  {
+    tile.glyph === 'bolt' ? (
+      <svg viewBox="0 0 24 24" width="60%" height="60%">
+        <path d="M13.2 2 4.8 13.4h6l-1.4 8.6 8.8-11.8h-6.1z" fill="currentColor" />
+      </svg>
+    ) : (
+      <span class="tile__text">{tile.glyph}</span>
+    )
+  }
+</span>
+
+<style>
+  .tile {
+    inline-size: var(--tile-size);
+    block-size: var(--tile-size);
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    color: var(--tile-fg);
+    background: var(--tile-bg);
+    border: 1.5px solid var(--tile-ink);
+    border-bottom-width: 3px;
+    border-radius: calc(var(--tile-size) * 0.24);
+  }
+  .tile__text {
+    font: 700 calc(var(--tile-size) * 0.36) / 1 var(--font-mono);
+    letter-spacing: -0.04em;
+  }
+</style>

@@ -1,0 +1,47 @@
+---
+import StudioLayout from '../../layouts/StudioLayout.astro';
+import GamePlate from '../../components/GamePlate.astro';
+import { games, gameHref } from '../../data/games';
+import '../../styles/shelf.css';
+
+const year = new Date().getFullYear();
+---
+
+<StudioLayout
+  section="games"
+  title="Games | Zero Work Studios"
+  description="Games in development at Zero Work Studios."
+>
+  <div class="home">
+    <section class="home__intro">
+      <h1>Games</h1>
+      <p>What the studio is building, between the Unity tools.</p>
+    </section>
+
+    <ul class="shelf" role="list">
+      {
+        games.map((game) => (
+          <li class:list={['slot', 'slot--link', `slot--${game.slug}`, { 'slot--soon': game.status === 'soon' }]}>
+            <div class="slot__stage">
+              <GamePlate game={game} size="lg" />
+            </div>
+            <div class="slot__body">
+              <h2>
+                <a href={gameHref(game.slug)}>{game.name}</a>
+              </h2>
+              <p>{game.summary}</p>
+              <div class="slot__meta">
+                <span>{game.status === 'soon' ? 'In development' : 'Out now'}</span>
+              </div>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+
+    <footer class="home__foot">
+      <span>&copy; {year} Zero Work Studios</span>
+      <span>No donuts were confiscated without cause</span>
+    </footer>
+  </div>
+</StudioLayout>

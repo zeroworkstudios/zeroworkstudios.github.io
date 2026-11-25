@@ -1,0 +1,34 @@
+---
+import StudioLayout from '../../../layouts/StudioLayout.astro';
+import ComboHero from '../../../packages/combo-counter/ComboHero.astro';
+import { Content } from '../../../content/combo-counter/Documentation.md';
+import { sections } from '../../../packages/combo-counter/sections';
+import { href } from '../../../data/packages';
+import '../../../packages/combo-counter/cc.css';
+---
+
+<StudioLayout
+  section="docs"
+  title="Combo Counter | Zero Work Studios Docs"
+  description="Combo Counter for Unity 6: hit counters, scoring levels and floating word popups for uGUI, UI Toolkit, UniText, FairyGUI, NoesisGUI, OneJS and ReactUnity."
+  theme="combo"
+  current="combo-counter"
+  page="guide"
+  sections={sections}
+>
+  <div class="cc">
+    <ComboHero />
+
+    <div class="cc-prose">
+      <Content />
+    </div>
+
+    <footer class="cc-foot">
+      <span>Combo Counter is made by Zero Work Studios.</span>
+      <span class="cc-foot__links">
+        <a class="btn" href={href('combo-counter/changelog/')}>Changelog</a>
+        <a class="btn btn--setup" href="https://assetstore.unity.com/packages/tools/gui/combo-counter-system-217635" rel="noopener">Get it on the Asset Store</a>
+      </span>
+    </footer>
+  </div>
+</StudioLayout>

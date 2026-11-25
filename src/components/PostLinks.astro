@@ -1,0 +1,51 @@
+---
+// A blog post's link row: the same post elsewhere, the asset it is about, and email.
+// A forum or Reddit link left empty in src/data/blog.ts is hidden from the built site
+// and shown as a dashed placeholder in `npm run dev`, as a reminder to fill it in.
+import BrandIcon from './BrandIcon.astro';
+import links from '../data/links.json';
+import type { Post } from '../data/blog';
+
+interface Props {
+  post: Post;
+}
+const { post } = Astro.props;
+const { forum, reddit, asset, emailSubject } = post.links;
+const email = `mailto:${links.studio.email}${emailSubject ? `?subject=${encodeURIComponent(emailSubject)}` : ''}`;
+
+type Pill = { label: string; icon: string; url?: string };
+const pills: Pill[] = [
+  { label: 'Unity Discussions thread', icon: 'unity', url: forum },
+  { label: 'Reddit thread', icon: 'reddit', url: reddit },
+  ...(asset ? [{ label: `Get ${asset.name}`, icon: 'bolt', url: asset.url }] : []),
+  { label: 'Email me', icon: 'mail', url: email },
+].filter((p) => p.url || import.meta.env.DEV);
+---
+
+<ul class="post-pills" role="list">
+  {
+    pills.map((p) => (
+      <li>
+        {p.url ? (
+          <a class="post-pill" href={p.url} rel={p.url.startsWith('mailto:') ? undefined : 'noopener'}>
+            {p.icon === 'bolt' ? (
+              <span class="post-pill__bolt" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M13.2 2 4.8 13.4h6l-1.4 8.6 8.8-11.8h-6.1z" fill="currentColor" />
+                </svg>
+              </span>
+            ) : (
+              <BrandIcon id={p.icon} class="post-pill__icon" />
+            )}
+            <span>{p.label}</span>
+          </a>
+        ) : (
+          <span class="post-pill post-pill--missing" title="Add this link in src/data/blog.ts">
+            <BrandIcon id={p.icon} class="post-pill__icon" />
+            <span>{p.label} (no link yet)</span>
+          </span>
+        )}
+      </li>
+    ))
+  }
+</ul>

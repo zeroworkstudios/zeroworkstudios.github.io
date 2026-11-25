@@ -1,0 +1,158 @@
+---
+// Racket Kings' placeholder page until there are real screenshots and a store page:
+// the family's pub sign hanging over the city, and the pitch.
+import StudioLayout from '../../layouts/StudioLayout.astro';
+import BrandIcon from '../../components/BrandIcon.astro';
+import { games } from '../../data/games';
+import links from '../../data/links.json';
+import '../../styles/kings.css';
+
+const game = games.find((g) => g.slug === 'racket-kings')!;
+
+// ---- The skyline: terraced streets in front of mills, chimneys and a gasholder ----
+// Deterministic "random" so every build draws the same city.
+const rand = (i: number) => {
+  const x = Math.sin(i * 12.9898) * 43758.5453;
+  return x - Math.floor(x);
+};
+
+const W = 1200;
+const H = 260;
+
+// Terraces: pitched roofs at slightly different heights, with chimney pots on the party walls.
+let terrace = `M0 ${H}`;
+const pots: string[] = [];
+const windows: { x: number; y: number }[] = [];
+for (let x = 0, i = 0; x < W; i++) {
+  const w = 54 + Math.round(rand(i) * 30);
+  const eave = 200 + Math.round(rand(i + 50) * 14);
+  const ridge = eave - 16 - Math.round(rand(i + 90) * 8);
+  terrace += ` L${x} ${eave} L${x + w / 2} ${ridge} L${x + w} ${eave}`;
+  if (rand(i + 7) > 0.35) pots.push(`M${x + w - 6} ${eave - 2} v-${14 + Math.round(rand(i + 3) * 8)} h9 V${eave}Z`);
+  // A lit window in some houses, more of them down the street than up it.
+  if (rand(i + 21) > 0.55) windows.push({ x: x + 10 + Math.round(rand(i + 33) * (w - 26)), y: eave + 14 + Math.round(rand(i + 44) * 18) });
+  x += w;
+}
+terrace += ` L${W} ${H}Z`;
+---
+
+<StudioLayout
+  section="games"
+  current="racket-kings"
+  theme="kings"
+  title="Racket Kings | Zero Work Studios"
+  description={game.summary}
+>
+  <Fragment slot="head">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" />
+  </Fragment>
+
+  <div class="rk">
+    <header class="rk-hero">
+      <div class="rk-hang">
+        <div class="rk-sign">
+          <svg class="rk-sign__crown" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 8.5 7.6 12 12 5l4.4 7L21 8.5 19.4 17H4.6Z" />
+            <rect x="4.6" y="18.4" width="14.8" height="2.2" rx="0.6" />
+          </svg>
+          <h1>{game.name}</h1>
+        </div>
+      </div>
+
+      <svg class="rk-city" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <defs>
+          <radialGradient id="rk-smoke">
+            <stop offset="0" stop-color="#9fb0a2" stop-opacity="0.16" />
+            <stop offset="1" stop-color="#9fb0a2" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <!-- Smoke drifting off the mill chimneys -->
+        <ellipse cx="100" cy="30" rx="90" ry="26" fill="url(#rk-smoke)" />
+        <ellipse cx="720" cy="14" rx="120" ry="30" fill="url(#rk-smoke)" />
+        <ellipse cx="1120" cy="48" rx="80" ry="22" fill="url(#rk-smoke)" />
+
+        <!-- Far: mills with sawtooth roofs, chimneys, a clock tower and a gasholder -->
+        <g fill="#172820">
+          <path d="M0 260V150l40-28v28l40-28v28l40-28v28l40-28v28l40-28v28l40-28v28h20v110Z" />
+          <rect x="62" y="44" width="14" height="110" />
+          <rect x="212" y="66" width="12" height="90" />
+          <path d="M260 260V164h110v96Z" />
+          <path d="M366 260V70h36v190Z" />
+          <path d="M362 72 384 34l22 38Z" />
+          <path d="M400 260V150h124v110Z" />
+          <path d="M520 260V104h180v156Z" />
+          <rect x="688" y="22" width="18" height="90" />
+          <path d="M700 260V140h130v120Z" />
+          <path d="M826 260V118q74-24 148 0v142Z" />
+          <path d="M970 260V150l36-24v24l36-24v24l36-24v24l36-24v24l36-24v24h20v110Z" />
+          <rect x="1100" y="56" width="14" height="100" />
+        </g>
+        <!-- The gasholder's guide frame -->
+        <g stroke="#22382d" stroke-width="2" fill="none">
+          <path d="M832 118v142M869 112v148M906 108v152M943 112v148M970 118v142" />
+          <path d="M826 150h148M826 190h148M826 230h148" />
+        </g>
+        <!-- Near: the terraced street, lamplit windows, chimney pots -->
+        <g fill="#0d1813">
+          <path d={terrace} />
+          {pots.map((d) => <path d={d} />)}
+        </g>
+        <g fill="#e8b25a">
+          {windows.map((w, i) => <rect x={w.x} y={w.y} width="9" height="11" rx="1" opacity={0.55 + rand(i + 5) * 0.4} />)}
+        </g>
+      </svg>
+    </header>
+
+    <div class="rk-body">
+      <p class="rk-lede">
+        A first-person crime sandbox for up to five players per family, set in a British industrial city
+        between the wars.
+      </p>
+      <p class="rk-status">In development</p>
+
+      <p>
+        You come home from the war by train to a grim city with almost nothing: a modest house, a few brothers
+        and the chance to buy a damaged pub. What the family becomes from there is up to you. It grows through
+        property, trade, territory, politics, corruption and violence, not a scripted campaign.
+      </p>
+
+      <dl class="rk-ledger">
+        <div>
+          <dt>Everything is physical</dt>
+          <dd>
+            Cash is carried, hidden and stolen. Stock travels the streets in real vehicles. Messages are written on
+            paper and delivered by someone who can be followed.
+          </dd>
+        </div>
+        <div>
+          <dt>The family outlives you</dt>
+          <dd>
+            Your character can be arrested, jailed or killed. When they die, you carry on as one of the family's
+            young adults, so one match can span generations.
+          </dd>
+        </div>
+        <div>
+          <dt>Power comes from people</dt>
+          <dd>
+            Neighbourhoods aren't captured. They side with the gang they trust or fear, and they remember how they
+            were treated.
+          </dd>
+        </div>
+        <div>
+          <dt>The law needs evidence</dt>
+          <dd>
+            Police attention follows what the family does, but a conviction needs witnesses and evidence that
+            survive until the trial.
+          </dd>
+        </div>
+      </dl>
+
+      <div class="rk-cta">
+        <a class="rk-pill" href={links.studio.discord} rel="noopener">
+          <BrandIcon id="discord" class="rk-pill__icon" />
+          <span>Follow development on Discord</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</StudioLayout>

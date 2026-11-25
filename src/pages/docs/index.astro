@@ -1,0 +1,63 @@
+---
+import StudioLayout from '../../layouts/StudioLayout.astro';
+import PackagePlate from '../../components/PackagePlate.astro';
+import { packages, href } from '../../data/packages';
+import '../../styles/shelf.css';
+
+const year = new Date().getFullYear();
+---
+
+<StudioLayout
+  section="docs"
+  title="Packages | Zero Work Studios Docs"
+  description="Setup guides, scripting references and changelogs for Zero Work Studios' Unity packages."
+>
+  <div class="home">
+    <section class="home__intro">
+      <h1>Docs for Unity tools</h1>
+      <p>
+        Setup guides, scripting references and changelogs for each Zero Work Studios package.
+      </p>
+    </section>
+
+    <ul class="shelf" role="list">
+      {
+        packages.map((pkg) => (
+          <li
+            class:list={[
+              'slot',
+              `slot--${pkg.slug}`,
+              { 'slot--soon': pkg.status === 'soon', 'slot--link': pkg.status === 'live' },
+            ]}
+          >
+            <div class="slot__stage">
+              <PackagePlate pkg={pkg} size="lg" />
+            </div>
+            <div class="slot__body">
+              <h2>
+                {pkg.status === 'live' ? <a href={href(`${pkg.slug}/`)}>{pkg.name}</a> : pkg.name}
+              </h2>
+              <p>{pkg.summary}</p>
+              <div class="slot__meta">
+                {pkg.status === 'live' ? (
+                  <>
+                    <span>Unity {pkg.unity}+</span>
+                    <a href={href(`${pkg.slug}/changelog/`)}>Changelog</a>
+                    {pkg.store && <a href={pkg.store} rel="noopener">Asset Store</a>}
+                  </>
+                ) : (
+                  <span>In development. Docs arrive with the first release.</span>
+                )}
+              </div>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+
+    <footer class="home__foot">
+      <span>&copy; {year} Zero Work Studios</span>
+      <span>No donuts were confiscated without cause</span>
+    </footer>
+  </div>
+</StudioLayout>

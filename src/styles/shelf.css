@@ -1,0 +1,150 @@
+/* ==========================================================================
+   SHELF PAGES
+   The docs home (/docs/) and the games page (/games/): an intro, then one
+   card per package or game, its plate on a slice of its own world.
+   ========================================================================== */
+.home {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: clamp(40px, 8vw, 96px) clamp(16px, 4vw, 56px) 40px;
+}
+
+.home__intro h1 {
+  margin: 0;
+  max-width: 14ch;
+  font: 800 clamp(42px, 6.4vw, 84px) / 0.95 var(--font-display);
+  font-variation-settings: 'opsz' 96;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+
+.home__intro p {
+  margin: 24px 0 0;
+  max-width: 52ch;
+  font-size: clamp(17px, 1.6vw, 19px);
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.shelf {
+  list-style: none;
+  margin: clamp(48px, 7vw, 80px) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  gap: 20px;
+}
+
+.slot {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  transition:
+    border-color 0.25s,
+    box-shadow 0.25s,
+    transform 0.35s var(--ease-out);
+}
+
+.slot--link:hover,
+.slot--link:focus-within {
+  border-color: var(--caramel);
+  box-shadow: 0 14px 30px -14px rgb(98 43 20 / 0.4);
+  transform: translateY(-3px);
+}
+
+/* Each plate sits on a slice of its own world. */
+.slot__stage {
+  display: grid;
+  place-items: center;
+  block-size: 150px;
+  padding: 0 20px;
+}
+.slot--combo-counter .slot__stage {
+  background-color: #1b1927;
+  background-image: radial-gradient(#2c2939 1.3px, transparent 1.7px);
+  background-size: 12px 12px;
+  border-bottom: 2px solid #0c0a14;
+}
+.slot--scene-stats .slot__stage {
+  background: linear-gradient(180deg, #1a2027, #0b0e11);
+}
+.slot--gasworks .slot__stage {
+  background: radial-gradient(70% 120% at 50% 110%, #4a2d10, #14181d 70%);
+}
+/* Racket Kings: the sign under a gas lamp on a foggy street. */
+.slot--racket-kings .slot__stage {
+  background:
+    radial-gradient(60% 90% at 50% 0%, rgb(255 196 110 / 0.22), transparent 70%),
+    linear-gradient(180deg, #1a2a22, #0b1510);
+}
+
+.slot__body {
+  flex: 1;
+  padding: 20px 22px 22px;
+}
+
+.slot h2 {
+  margin: 0;
+  font: 700 22px/1.2 var(--font-display);
+  letter-spacing: -0.025em;
+}
+.slot h2 a {
+  text-decoration: none;
+}
+.slot h2 a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.slot p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.slot__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.slot__meta > * {
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--desk);
+  color: var(--muted);
+}
+.slot__meta a {
+  position: relative;
+  z-index: 1;
+  text-decoration: none;
+  color: var(--mahogany);
+}
+.slot__meta a:hover {
+  border-color: var(--caramel);
+}
+.slot--soon .slot__meta > span {
+  border-style: dashed;
+  background: transparent;
+}
+
+.home__foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  margin-top: clamp(64px, 10vw, 112px);
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--muted);
+}

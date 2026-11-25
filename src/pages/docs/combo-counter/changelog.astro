@@ -1,0 +1,82 @@
+---
+import StudioLayout from '../../../layouts/StudioLayout.astro';
+import Tile from '../../../components/Tile.astro';
+import { Content } from '../../../content/combo-counter/CHANGELOG.md';
+import { sections } from '../../../packages/combo-counter/sections';
+import { packages, href } from '../../../data/packages';
+import '../../../packages/combo-counter/cc.css';
+
+const pkg = packages.find((p) => p.slug === 'combo-counter')!;
+---
+
+<StudioLayout
+  section="docs"
+  title="Combo Counter changelog | Zero Work Studios Docs"
+  description="Every Combo Counter release, and how to upgrade from 1.x to 2.0."
+  theme="combo"
+  current="combo-counter"
+  page="changelog"
+  sections={sections}
+>
+  <div class="cc">
+    <header class="cl-head">
+      <a class="cl-back" href={href('combo-counter/')}>
+        <Tile tile={pkg.tile} size={30} />
+        <span>Combo Counter</span>
+      </a>
+      <h1>Changelog</h1>
+    </header>
+
+    <div class="cc-prose cl-body">
+      <Content />
+    </div>
+  </div>
+</StudioLayout>
+
+<style>
+  .cl-head {
+    padding-top: clamp(32px, 5vw, 64px);
+  }
+
+  .cl-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 14px 6px 6px;
+    font: 700 14px/1 var(--font-sans);
+    color: var(--cc-ink);
+    text-decoration: none;
+    background: var(--cc-yellow);
+    border: 2px solid var(--cc-ink);
+    border-radius: 10px;
+    box-shadow: 3px 4px 0 var(--cc-plate);
+    transition:
+      transform 0.2s var(--ease-out),
+      box-shadow 0.2s var(--ease-out);
+  }
+  .cl-back:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 5px 6px 0 var(--cc-plate);
+  }
+  .cl-back :global(.tile) {
+    transform: rotate(-4deg);
+  }
+
+  h1 {
+    margin: 22px 0 0;
+    font: 400 clamp(40px, 7vw, 76px) / 1 var(--cc-display);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--cc-yellow);
+    text-shadow: var(--outline-red);
+  }
+
+  /* The changelog's own H1 duplicates the page title. */
+  .cl-body :global(h1) {
+    display: none;
+  }
+  .cl-body :global(h1 + p) {
+    margin-top: 28px;
+    color: var(--cc-muted);
+  }
+</style>

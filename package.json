@@ -1,0 +1,26 @@
+{
+  "name": "zeroworkstudios.github.io",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Zero Work Studios: the studio page at / and package docs at /docs/",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "sync": "node scripts/sync-docs.mjs",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/markdown-remark": "^7.3.10",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.4.13",
+    "tailwindcss": "^4.3.3"
+  },
+  "allowScripts": {
+    "esbuild": true
+  }
+}

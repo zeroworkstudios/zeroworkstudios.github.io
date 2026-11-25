@@ -1,0 +1,67 @@
+---
+import StudioLayout from '../layouts/StudioLayout.astro';
+import linksData from '../data/links.json';
+import Hero from '../components/Hero.astro';
+import StudioOverview from '../components/StudioOverview.astro';
+import HankDossier from '../components/HankDossier.astro';
+import SocialGrid from '../components/SocialGrid.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/about.css';
+
+const { studio, mascot } = linksData;
+
+const copy = {
+  hank: {
+    heading: 'Officer Hank',
+    intro: 'Company mascot and head of logistics. May his donuts be plentiful.',
+  },
+  channels: {
+    heading: 'Channels',
+    intro: 'Where to follow the studio.',
+  },
+};
+---
+
+<StudioLayout
+  section="about"
+  title={studio.metaTitle || studio.name}
+  description={studio.tagline}
+  image={studio.ogImage}
+  imageAlt={studio.name}
+>
+  <!-- Period faces for Hank's ID card. The signatures font only needs the two names. -->
+  <Fragment slot="head">
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@600..700&family=Special+Elite&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href={`https://fonts.googleapis.com/css2?family=Homemade+Apple&text=${encodeURIComponent('Officer Hank Central Constabulary')}&display=swap`}
+    />
+  </Fragment>
+
+  <div class="page">
+    <section id="platforms" aria-label="Studio">
+      <Hero heroTitle={studio.heroTitle} tagline={studio.tagline} />
+      <StudioOverview
+        unityAssetStore={studio.unityAssetStore}
+        steam={studio.steam}
+        discord={studio.discord}
+        email={studio.email}
+      />
+    </section>
+
+    <HankDossier
+      fullName={mascot.fullName}
+      avatar={mascot.avatar}
+      discordInvite={studio.discord}
+      heading={copy.hank.heading}
+      intro={copy.hank.intro}
+    />
+
+    <SocialGrid socials={mascot.socials} heading={copy.channels.heading} intro={copy.channels.intro} />
+
+    <Footer name={studio.name} />
+  </div>
+</StudioLayout>

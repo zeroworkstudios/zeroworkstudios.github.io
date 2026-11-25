@@ -1,0 +1,68 @@
+{
+  "studio": {
+    "name": "Zero Work Studios",
+    "metaTitle": "Zero Work Studios",
+    "heroTitle": "Contrary to the studio name, quite a lot of work...",
+    "tagline": "Solo Indie Developer. Currently building Racket Kings & the Gasworks Rendering Stack.",
+    "ogImage": "/og-image.webp",
+    "siteUrl": "https://zeroworkstudios.github.io",
+    "email": "zeroworkstudios@gmail.com",
+    "unityAssetStore": "https://assetstore.unity.com/publishers/66172",
+    "steam": "https://store.steampowered.com/",
+    "discord": "https://discord.gg/e2wWESQXw2"
+  },
+  "mascot": {
+    "fullName": "Officer Hank",
+    "avatar": "/hank-pfp.webp",
+    "socials": [
+      {
+        "id": "youtube",
+        "name": "YouTube",
+        "url": "https://www.youtube.com/@ZeroWorkStudios",
+        "handle": "@ZeroWorkStudios"
+      },
+      {
+        "id": "reddit",
+        "name": "Reddit",
+        "url": "https://www.reddit.com/user/zeroworkstudios/",
+        "handle": "u/zeroworkstudios"
+      },
+      {
+        "id": "instagram",
+        "name": "Instagram",
+        "url": "https://www.instagram.com/zeroworkstudios/",
+        "handle": "@zeroworkstudios"
+      },
+      {
+        "id": "tiktok",
+        "name": "TikTok",
+        "url": "https://www.tiktok.com/@zeroworkstudios",
+        "handle": "@zeroworkstudios"
+      },
+      {
+        "id": "threads",
+        "name": "Threads",
+        "url": "https://www.threads.com/@zeroworkstudios",
+        "handle": "@zeroworkstudios"
+      },
+      {
+        "id": "x",
+        "name": "X / Twitter",
+        "url": "https://x.com/zeroworkstudios",
+        "handle": "@zeroworkstudios"
+      },
+      {
+        "id": "facebook",
+        "name": "Facebook",
+        "url": "https://www.facebook.com/profile.php?id=61594333011578",
+        "handle": "Hank"
+      },
+      {
+        "id": "linkedin",
+        "name": "LinkedIn",
+        "url": "https://www.linkedin.com/in/hank-%E2%80%8E-93667b434/",
+        "handle": "Hank"
+      }
+    ]
+  }
+}

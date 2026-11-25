@@ -1,0 +1,1017 @@
+---
+import Tile from '../../components/Tile.astro';
+import { packages, href, base } from '../../data/packages';
+
+const pkg = packages.find((p) => p.slug === 'combo-counter')!;
+const sprite = (name: string) => `${base}sprites/combo-counter/${name}.webp`;
+---
+
+<header class="hero" id="top">
+  <div class="mast-shell">
+    <div class="mast">
+      <Tile tile={pkg.tile} size={56} class="mast__logo" />
+      <div class="mast__titles">
+        <h1 class="mast__title">Combo Counter</h1>
+        <p class="mast__sub">Hit counters &amp; floating popups for every Unity UI framework</p>
+      </div>
+      <div class="mast__meta">
+        <span class="chip chip--ink">v{pkg.version}</span>
+        <span class="mast__unity">Unity {pkg.unity}+</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero__intro">
+    <p>
+      A combo counter with a running score, levels and floating word popups for Unity 6. One component,
+      <code>ComboCounterSystem</code>, counts the hits and draws the counter and popups through one of seven UI backends.
+      Popups are pooled and animated without per-frame allocations, and can sit at the counter, at a screen position or on
+      a point in the world.
+    </p>
+    <div class="hero__actions">
+      <a class="btn btn--setup" href="#quick-start">Quick start</a>
+      <a class="btn" href="#scripting-api">Scripting API</a>
+      <a class="btn" href={href('combo-counter/changelog/#upgrading-from-1x')}>Upgrading from 1.x</a>
+      {pkg.store && <a class="btn btn--store" href={pkg.store} rel="noopener">Asset Store</a>}
+    </div>
+  </div>
+
+  <!-- Live demo: a web port of ComboCounterSystem with the demo scenes' Combo Config and HUD -->
+  <section class="live" aria-labelledby="live-title">
+    <div class="live__head">
+      <h2 id="live-title" class="live__title">Try it</h2>
+      <span class="live__rule" aria-hidden="true"></span>
+      <span class="live__hint">Click the game view to hit at that point. With it focused, Space hits and R breaks.</span>
+    </div>
+
+    <div class="live__shell">
+      <div class="live__card">
+        <div
+          class="stage"
+          tabindex="0"
+          role="application"
+          aria-roledescription="Combo Counter demo"
+          aria-label="Combo Counter demo. Press Space to hit, R to break the combo."
+          data-stage
+        >
+          <div class="stage__counter" data-counter data-zero>0 hits!</div>
+          <div class="stage__prompt" aria-hidden="true">Click to hit</div>
+          <div class="stage__popups" data-popups aria-hidden="true"></div>
+          <div class="stage__levelup" data-levelup aria-hidden="true"></div>
+
+          <!-- The demo scenes' HUD controls -->
+          <div class="hud" data-hud>
+            <div class="hud__inputs">
+              <label class="hud-field hud-field--amount">
+                <span class="hud-field__label">Amount</span>
+                <input type="range" min="0" max="3" step="1" value="1" data-amount aria-label="Amount: hits per call" />
+                <output class="hud-field__value" data-amount-out>1</output>
+              </label>
+              <label class="hud-field hud-field--word">
+                <span class="hud-field__label">Word</span>
+                <input
+                  type="text"
+                  maxlength="16"
+                  placeholder="Random"
+                  spellcheck="false"
+                  autocomplete="off"
+                  data-word
+                  aria-label="Custom word. Leave empty for a random word."
+                />
+              </label>
+            </div>
+            <div class="hud__buttons">
+              <button type="button" class="pill" data-act="hit">
+                <span>Hit combo</span><img src={sprite('grin')} alt="" width="22" height="22" />
+              </button>
+              <button type="button" class="pill" data-act="sprite">
+                <span>Hit combo w/ sprite</span><img src={sprite('hearteyes')} alt="" width="22" height="22" />
+              </button>
+              <button type="button" class="pill" data-act="spriteonly">
+                <span>Hit combo only sprite</span><img src={sprite('cool')} alt="" width="22" height="22" />
+              </button>
+              <button type="button" class="pill" data-act="break">
+                <span>Break combo</span><img src={sprite('repeat')} alt="" width="22" height="22" />
+              </button>
+            </div>
+          </div>
+
+          <div class="stage__timer" aria-hidden="true"><span data-timer></span></div>
+        </div>
+
+        <dl class="stats">
+          <div class="stat"><dt>Count</dt><dd data-stat="count">0</dd></div>
+          <div class="stat"><dt>Level</dt><dd data-stat="level">0</dd></div>
+          <div class="stat"><dt>Multiplier</dt><dd data-stat="mult">×1</dd></div>
+          <div class="stat"><dt>Score</dt><dd data-stat="score">0</dd></div>
+          <div class="stat"><dt>Timer</dt><dd data-stat="timer">0.0s</dd></div>
+        </dl>
+
+        <div class="console" aria-live="polite">
+          <code class="console__call" data-call>// Waiting for a hit</code>
+          <span class="console__events" data-events></span>
+        </div>
+      </div>
+    </div>
+  </section>
+</header>
+
+<script define:vars={{ spriteBase: `${base}sprites/combo-counter/` }}>
+  // ComboCounterSystem, ported to the page. Values are the demo scenes' Combo Config
+  // and Level_01..03 assets, so the timing matches what you see in Unity.
+  const CONFIG = {
+    comboTimeout: 2.5,
+    baseScorePerHit: 100,
+    counterPunchScale: 1.4,
+    counterPunchDuration: 150,
+    popupDuration: 600,
+    popupMovement: 60,
+    popupRotation: 12,
+    counterFormat: '{0} hits!',
+  };
+  const LEVELS = [
+    { at: 0, mult: 1, scale: 1, words: ['Nice', 'Great', 'Cute', 'Beautiful', 'Charming', 'Cool', 'Fabulous', 'Jolly', 'Lovely', 'Neat', 'Super', 'Sweet'] },
+    { at: 15, mult: 2, scale: 1.25, words: ['Brilliant', 'Clever', 'Awesome', 'Fantastic', 'Energizing', 'Fancy', 'Stylish', 'Hot', 'Incredible', 'Magical', 'Mischievous', 'Radical'] },
+    { at: 35, mult: 4, scale: 1.5, words: ['Unbelievable', 'Godlike', 'Dreamy', 'Ecstatic', 'Feisty', 'Frenzy', 'Heroic', 'Mesmerizing', 'Ostentatious', 'Perfect', 'Royal', 'Phenomenal'] },
+  ];
+  // The demo controllers' popup sprites.
+  const SPRITES = ['cool', 'grin', 'hearteyes', 'joy'].map((n) => spriteBase + n + '.webp');
+  SPRITES.forEach((src) => (new Image().src = src));
+
+  const q = (s) => document.querySelector(s);
+  const stage = q('[data-stage]');
+  const counter = q('[data-counter]');
+  const popupLayer = q('[data-popups]');
+  const levelUp = q('[data-levelup]');
+  const timerBar = q('[data-timer]');
+  const callEl = q('[data-call]');
+  const eventsEl = q('[data-events]');
+  const amountEl = q('[data-amount]');
+  const amountOut = q('[data-amount-out]');
+  const wordEl = q('[data-word]');
+  const stat = (k) => q(`[data-stat="${k}"]`);
+  const stats = { count: stat('count'), level: stat('level'), mult: stat('mult'), score: stat('score'), timer: stat('timer') };
+
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fmt = new Intl.NumberFormat('en-US');
+
+  let count = 0;
+  let score = 0;
+  let level = 0;
+  let timerEnd = 0;
+  let timerAnim = null;
+  let punchAnim = null;
+  let raf = 0;
+
+  const levelFor = (n) => LEVELS.reduce((l, lv, i) => (n >= lv.at ? i : l), 0);
+  const pick = (a) => a[(Math.random() * a.length) | 0];
+
+  // ---- Popup pool (UnityEngine.Pool in the package) -------------------------
+  const pool = [];
+  const active = new Set();
+
+  function makePopup() {
+    const el = document.createElement('span');
+    const img = document.createElement('img');
+    img.alt = '';
+    const label = document.createElement('span');
+    label.className = 'popup__word';
+    el.append(img, label);
+    return popupLayer.appendChild(el);
+  }
+
+  // text: null = random word, '' = no word. sprite: image URL or null.
+  function popup(text, sprite, lvl, x, y) {
+    const el = pool.pop() ?? makePopup();
+    const [img, label] = el.children;
+    const word = text ?? pick(LEVELS[lvl].words);
+    label.textContent = word;
+    img.hidden = !sprite;
+    if (sprite) img.src = sprite;
+    el.className = `popup popup--l${lvl}${word ? '' : ' popup--sprite-only'}`;
+    el.hidden = false;
+
+    const r = stage.getBoundingClientRect();
+    // Default stage: a wide area under the counter with a random spread. Explicit points get none.
+    const px = x ?? r.width * (0.5 + (Math.random() - 0.5) * 0.6);
+    const py = y ?? r.height * (0.44 + (Math.random() - 0.5) * 0.2);
+    el.style.left = `${px}px`;
+    el.style.top = `${py}px`;
+
+    const s = LEVELS[lvl].scale * Math.min(1, r.width / 640 + 0.25);
+    const rot = (Math.random() * 2 - 1) * CONFIG.popupRotation;
+    const rise = reduced ? 0 : CONFIG.popupMovement;
+    const t = (dy, sc) => `translate(-50%, -50%) translateY(${-dy}px) rotate(${rot}deg) scale(${sc})`;
+
+    const anim = el.animate(
+      reduced
+        ? [{ opacity: 1, transform: t(0, s) }, { opacity: 1, offset: 0.6 }, { opacity: 0, transform: t(0, s) }]
+        : [
+            { opacity: 1, transform: t(0, s * 0.3), easing: 'cubic-bezier(.2,.9,.3,1.4)' },
+            { opacity: 1, transform: t(rise * 0.35, s * 1.12), offset: 0.3 },
+            { opacity: 1, transform: t(rise * 0.6, s), offset: 0.6 },
+            { opacity: 0, transform: t(rise, s) },
+          ],
+      { duration: reduced ? 900 : CONFIG.popupDuration, easing: 'linear', fill: 'forwards' },
+    );
+    const entry = { el, anim };
+    active.add(entry);
+    anim.onfinish = () => release(entry);
+  }
+
+  function release(entry) {
+    if (!active.delete(entry)) return;
+    entry.anim.cancel();
+    entry.el.hidden = true;
+    pool.push(entry.el);
+  }
+
+  // ---- Counter ---------------------------------------------------------------
+  function renderCounter(punch) {
+    counter.textContent = CONFIG.counterFormat.replace('{0}', String(count));
+    counter.toggleAttribute('data-zero', count === 0);
+    if (punch && !reduced) {
+      punchAnim?.cancel();
+      punchAnim = counter.animate(
+        [{ transform: `scale(${CONFIG.counterPunchScale})` }, { transform: 'scale(1)' }],
+        { duration: CONFIG.counterPunchDuration, easing: 'cubic-bezier(.2,.8,.3,1.25)' },
+      );
+    }
+  }
+
+  function renderStats() {
+    stats.count.textContent = String(count);
+    stats.level.textContent = String(level);
+    stats.mult.textContent = `×${LEVELS[level].mult}`;
+    stats.score.textContent = fmt.format(score);
+  }
+
+  function tickTimer() {
+    const left = Math.max(0, (timerEnd - performance.now()) / 1000);
+    stats.timer.textContent = `${left.toFixed(1)}s`;
+    if (left > 0) raf = requestAnimationFrame(tickTimer);
+  }
+
+  function startTimer() {
+    timerEnd = performance.now() + CONFIG.comboTimeout * 1000;
+    timerAnim?.cancel();
+    timerAnim = timerBar.animate([{ transform: 'scaleX(1)' }, { transform: 'scaleX(0)' }], {
+      duration: CONFIG.comboTimeout * 1000,
+      easing: 'linear',
+      fill: 'forwards',
+    });
+    timerAnim.onfinish = () => breakCombo('timeout');
+    cancelAnimationFrame(raf);
+    tickTimer();
+  }
+
+  function flashLevel(lvl) {
+    levelUp.textContent = `Level ${lvl}  ×${LEVELS[lvl].mult}`;
+    levelUp.className = `stage__levelup stage__levelup--l${lvl}`;
+    if (reduced) return;
+    levelUp.animate(
+      [
+        { opacity: 0, transform: 'translate(-50%, 8px) scale(.9)' },
+        { opacity: 1, transform: 'translate(-50%, 0) scale(1)', offset: 0.15 },
+        { opacity: 1, transform: 'translate(-50%, 0) scale(1)', offset: 0.8 },
+        { opacity: 0, transform: 'translate(-50%, -6px) scale(1)' },
+      ],
+      { duration: 1300, easing: 'ease-out' },
+    );
+    stats.level.parentElement.animate([{ background: '#E2E524' }, { background: 'transparent' }], { duration: 700 });
+  }
+
+  // ---- The API ---------------------------------------------------------------
+  function hitCombo(amount = 1, text = null, sprite = null, x, y) {
+    const events = [];
+    if (amount <= 0) {
+      popup(text, sprite, level, x, y);
+      events.push('OnPopupSpawned');
+      return events;
+    }
+    for (let i = 0; i < amount; i++) {
+      count++;
+      const next = levelFor(count);
+      if (next !== level) {
+        level = next;
+        events.push(`OnLevelUp(${level}, ${count})`);
+        flashLevel(level);
+      }
+      score += Math.round(CONFIG.baseScorePerHit * LEVELS[level].mult);
+      popup(text, sprite, level, x, y);
+    }
+    events.unshift(amount > 1 ? `OnComboHit ×${amount}` : `OnComboHit(${count})`);
+    events.push(`OnScoreChanged(${score})`);
+    renderCounter(true);
+    renderStats();
+    startTimer();
+    return events;
+  }
+
+  function breakCombo(reason) {
+    const final = count;
+    timerAnim?.cancel();
+    timerBar.style.transform = 'scaleX(0)';
+    cancelAnimationFrame(raf);
+    stats.timer.textContent = '0.0s';
+    for (const e of [...active]) release(e);
+    count = 0;
+    level = 0;
+    renderCounter(false);
+    renderStats();
+    const events = final > 0 ? [`OnComboBroken(${final})`] : [];
+    if (reason === 'timeout') log(['// comboTimeout reached'], events);
+    return events;
+  }
+
+  // The call as C#: an array of strings, with { sprite } standing for the sprite argument.
+  function log(parts, events) {
+    callEl.replaceChildren(
+      ...parts.map((p) => {
+        if (typeof p === 'string') return document.createTextNode(p);
+        const img = document.createElement('img');
+        img.src = p.sprite;
+        img.alt = 'sprite';
+        img.className = 'console__sprite';
+        return img;
+      }),
+    );
+    eventsEl.replaceChildren(
+      ...events.slice(0, 4).map((e) => {
+        const s = document.createElement('span');
+        s.className = `ev ${e.startsWith('OnLevelUp') ? 'ev--level' : e.startsWith('OnComboBroken') ? 'ev--broken' : ''}`;
+        s.textContent = e;
+        return s;
+      }),
+    );
+  }
+
+  // ---- HUD -------------------------------------------------------------------
+  const amount = () => Number(amountEl.value);
+  const word = () => wordEl.value.trim() || null;
+  const quote = (w) => `"${w.replace(/["\\]/g, '\\$&')}"`;
+
+  amountEl.addEventListener('input', () => {
+    amountOut.textContent = amountEl.value;
+    amountEl.style.setProperty('--fill', `${(amount() / 3) * 100}%`);
+  });
+
+  // Builds HitCombo's argument list the way you'd write it, dropping trailing defaults.
+  function call(first, a, text, sprite) {
+    const args = first ? [first] : [];
+    const tail = [String(a), text === null ? 'null' : quote(text), sprite ? { sprite } : 'null'];
+    while (tail.length && (tail.at(-1) === 'null' || (tail.length === 1 && tail[0] === '1'))) tail.pop();
+    const all = [...args, ...tail];
+    const parts = ['combo.HitCombo('];
+    all.forEach((arg, i) => parts.push(...(i ? [', '] : []), arg));
+    parts.push(');');
+    return parts;
+  }
+
+  const actions = {
+    hit: () => {
+      const a = amount(), w = word();
+      log(call(null, a, w, null), hitCombo(a, w, null));
+    },
+    sprite: () => {
+      const a = amount(), w = word(), s = pick(SPRITES);
+      log(call(null, a, w, s), hitCombo(a, w, s));
+    },
+    spriteonly: () => {
+      const a = amount(), s = pick(SPRITES);
+      log(call(null, a, '', s), hitCombo(a, '', s));
+    },
+    break: () => log(['combo.BreakCombo();'], breakCombo('call')),
+  };
+
+  let attract = 0;
+  const stopAttract = () => clearTimeout(attract);
+
+  document.querySelectorAll('[data-act]').forEach((b) =>
+    b.addEventListener('click', () => {
+      stopAttract();
+      actions[b.dataset.act]();
+    }),
+  );
+
+  stage.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('[data-hud]')) return;
+    stopAttract();
+    const r = stage.getBoundingClientRect();
+    const x = e.clientX - r.left;
+    const y = e.clientY - r.top;
+    // Unity's screen space has its origin at the bottom left.
+    const pos = `new Vector2(${Math.round(x)}, ${Math.round(r.height - y)})`;
+    const a = amount(), w = word();
+    log(call(pos, a, w, null), hitCombo(a, w, null, x, y));
+  });
+
+  stage.addEventListener('keydown', (e) => {
+    if (e.target !== stage) return;
+    if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault();
+      stopAttract();
+      if (!e.repeat) actions.hit();
+    } else if (e.key === 'r' || e.key === 'R') {
+      stopAttract();
+      actions.break();
+    }
+  });
+
+  // ---- Attract mode: a short burst once the page has settled --------------------
+  if (!reduced) {
+    const seq = ['hit', 'hit', 'sprite', 'hit', 'spriteonly', 'hit'];
+    let i = 0;
+    const step = () => {
+      if (i >= seq.length) return;
+      actions[seq[i++]]();
+      attract = window.setTimeout(step, 240 + Math.random() * 90);
+    };
+    attract = window.setTimeout(step, 950);
+  }
+</script>
+
+<style>
+  .hero {
+    padding: clamp(24px, 4vw, 48px) 0 0;
+  }
+
+  /* ---- Masthead (Setup window .cs-masthead) ---- */
+  .mast-shell {
+    border-radius: 14px;
+    background: var(--cc-plate);
+    padding: 0 6px 7px 0;
+    animation: mast-in 0.7s cubic-bezier(0.2, 0.9, 0.3, 1.25) both;
+  }
+
+  .mast {
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 2vw, 20px);
+    padding: clamp(14px, 2.4vw, 22px) clamp(14px, 2.6vw, 26px);
+    background: var(--cc-yellow);
+    border: 2.5px solid var(--cc-ink);
+    border-radius: 14px;
+    color: var(--cc-ink);
+  }
+
+  .mast :global(.mast__logo) {
+    transform: rotate(-4deg);
+    border-width: 2.5px;
+    border-bottom-width: 5px;
+    animation: logo-in 0.9s cubic-bezier(0.3, 1.6, 0.5, 1) 0.15s both;
+  }
+
+  .mast__titles {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .mast__title {
+    margin: 0;
+    font: 400 clamp(26px, 4.6vw, 46px) / 1 var(--cc-display);
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+  }
+
+  .mast__sub {
+    margin: 8px 0 0;
+    font-size: clamp(14px, 1.5vw, 16.5px);
+    color: #4a4512;
+    line-height: 1.4;
+  }
+
+  .mast__meta {
+    display: grid;
+    justify-items: end;
+    gap: 8px;
+  }
+
+  .mast__unity {
+    font: 400 10px/1 var(--cc-display);
+    letter-spacing: 0.08em;
+    color: #3a3510;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  @keyframes mast-in {
+    from {
+      opacity: 0;
+      transform: translateY(-18px) scale(0.98);
+    }
+  }
+  @keyframes logo-in {
+    from {
+      transform: rotate(-40deg) scale(0.4);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .mast {
+      flex-wrap: wrap;
+    }
+    .mast__meta {
+      order: -1;
+      margin-left: auto;
+    }
+    .mast__titles {
+      flex-basis: 100%;
+    }
+  }
+
+  /* ---- Intro ---- */
+  .hero__intro {
+    display: grid;
+    gap: 22px;
+    margin-top: clamp(24px, 3.4vw, 36px);
+  }
+
+  .hero__intro p {
+    margin: 0;
+    max-width: 66ch;
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--cc-body);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* ---- Live demo ---- */
+  .live {
+    margin-top: clamp(36px, 5vw, 56px);
+  }
+
+  .live__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 14px;
+    margin-bottom: 14px;
+  }
+
+  .live__title {
+    margin: 0;
+    font: 700 13px/1 var(--font-sans);
+    letter-spacing: 0.1em;
+    color: var(--cc-muted);
+    text-transform: uppercase;
+  }
+
+  .live__rule {
+    flex: 1;
+    min-width: 40px;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--cc-panel-hi);
+  }
+
+  .live__hint {
+    font-size: 13px;
+    color: var(--cc-faint);
+  }
+
+  .live__shell {
+    border-radius: 14px;
+    background: var(--cc-plate);
+    padding: 0 6px 7px 0;
+  }
+
+  .live__card {
+    padding: 12px;
+    background: var(--cc-panel);
+    border: 2px solid var(--cc-ink);
+    border-radius: 14px;
+  }
+
+  .stage {
+    position: relative;
+    block-size: clamp(470px, 46vw, 540px);
+    overflow: hidden;
+    border: 2px solid var(--cc-ink);
+    border-radius: 9px;
+    background:
+      radial-gradient(120% 90% at 50% 35%, transparent 55%, rgb(0 0 0 / 0.28)),
+      #2f3545;
+    cursor: crosshair;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .stage:focus-visible {
+    outline: 3px solid var(--cc-yellow);
+    outline-offset: 3px;
+  }
+
+  .stage__counter {
+    position: absolute;
+    left: 50%;
+    top: 9%;
+    translate: -50% 0;
+    font: 400 clamp(34px, 6vw, 64px) / 1 var(--cc-display);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--cc-yellow);
+    text-shadow: var(--outline-red);
+    transform-origin: 50% 50%;
+    transition: opacity 0.3s;
+    will-change: transform;
+  }
+
+  .stage__counter[data-zero] {
+    opacity: 0.28;
+  }
+
+  /* Arcade attract prompt, only while no combo is running. */
+  .stage__prompt {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    translate: -50% 0;
+    font: 400 15px/1 var(--cc-display);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cc-cream);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s;
+  }
+  .stage__counter[data-zero] ~ .stage__prompt {
+    opacity: 0.7;
+    animation: blink 1.2s step-end 0.4s infinite;
+  }
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  .stage__popups {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .stage__popups :global(.popup) {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    font: 400 clamp(22px, 3.2vw, 34px) / 1 var(--cc-display);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+  /* The sprite sits just left of the word, so the word stays centred on the point. */
+  .stage__popups :global(.popup img) {
+    position: absolute;
+    right: calc(100% + 0.18em);
+    top: 50%;
+    inline-size: 1.15em;
+    block-size: 1.15em;
+    translate: 0 -50%;
+    filter: drop-shadow(2px 3px 0 rgb(12 10 20 / 0.45));
+  }
+  .stage__popups :global(.popup--sprite-only img) {
+    position: static;
+    translate: none;
+    inline-size: 1.6em;
+    block-size: 1.6em;
+  }
+  .stage__popups :global(.popup img[hidden]) {
+    display: none;
+  }
+  .stage__popups :global(.popup--l0) {
+    color: #49e0cd;
+    text-shadow: var(--outline-blue);
+  }
+  .stage__popups :global(.popup--l1) {
+    color: #8ad644;
+    text-shadow: var(--outline-green);
+  }
+  .stage__popups :global(.popup--l2) {
+    color: var(--cc-yellow);
+    text-shadow: var(--outline-red);
+  }
+
+  .stage__levelup {
+    position: absolute;
+    left: 50%;
+    top: 26%;
+    transform: translateX(-50%);
+    padding: 6px 12px;
+    border: 2px solid var(--cc-ink);
+    border-radius: 999px;
+    font: 400 12px/1 var(--cc-display);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: pre;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .stage__levelup--l1 {
+    background: #8ad644;
+    color: var(--cc-ink);
+  }
+  .stage__levelup--l2 {
+    background: var(--cc-yellow);
+    color: var(--cc-ink);
+  }
+
+  .stage__timer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 6px;
+    background: rgb(12 10 20 / 0.5);
+  }
+  .stage__timer span {
+    display: block;
+    height: 100%;
+    background: var(--cc-yellow);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  /* ---- HUD controls (the demo scenes' bottom bar) ---- */
+  .hud {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 18px;
+    display: grid;
+    justify-items: center;
+    gap: 12px;
+    padding: 0 16px;
+    cursor: default;
+  }
+
+  .hud__inputs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .hud-field {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    block-size: 36px;
+    padding: 0 14px;
+    background: rgb(20 23 34 / 0.82);
+    border: 1px solid #454c60;
+    border-radius: 9px;
+  }
+
+  .hud-field__label {
+    font: 400 12px/1 var(--cc-display);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #fff;
+  }
+
+  .hud-field__value {
+    min-inline-size: 1ch;
+    font: 400 14px/1 var(--cc-display);
+    color: var(--cc-orange);
+    text-align: center;
+  }
+
+  .hud-field input[type='range'] {
+    --fill: 33.333%;
+    inline-size: 120px;
+    block-size: 18px;
+    margin: 0;
+    background: transparent;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .hud-field input[type='range']::-webkit-slider-runnable-track {
+    block-size: 4px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #49e0cd var(--fill), #6b7286 var(--fill));
+  }
+  .hud-field input[type='range']::-moz-range-track {
+    block-size: 4px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #49e0cd var(--fill), #6b7286 var(--fill));
+  }
+  .hud-field input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    inline-size: 16px;
+    block-size: 16px;
+    margin-top: -6px;
+    border-radius: 50%;
+    background: #49e0cd;
+    border: 2px solid #1b2a33;
+    transition: transform 0.15s;
+  }
+  .hud-field input[type='range']::-moz-range-thumb {
+    inline-size: 14px;
+    block-size: 14px;
+    border-radius: 50%;
+    background: #49e0cd;
+    border: 2px solid #1b2a33;
+  }
+  .hud-field input[type='range']:active::-webkit-slider-thumb {
+    transform: scale(1.2);
+  }
+  .hud-field input[type='range']:focus-visible {
+    outline: 2px solid var(--cc-yellow);
+    outline-offset: 4px;
+  }
+
+  .hud-field--word input {
+    inline-size: 150px;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    outline: 0;
+    color: var(--cc-yellow);
+    font: 400 14px/1 var(--cc-display);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    caret-color: var(--cc-yellow);
+  }
+  .hud-field--word input::placeholder {
+    color: #7f879c;
+  }
+  .hud-field--word:focus-within {
+    border-color: var(--cc-yellow);
+  }
+
+  .hud__buttons {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 150px));
+    gap: 12px;
+  }
+
+  /* White pill buttons from the demo HUD (Button.png), LEMON MILK in blue. */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-block-size: 50px;
+    padding: 6px 14px;
+    font: 400 12.5px/1.15 var(--cc-display);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #2e8be6;
+    background: #fff;
+    border: 0;
+    border-radius: 999px;
+    box-shadow:
+      0 4px 0 #b9c7db,
+      0 6px 10px rgb(0 0 0 / 0.25);
+    cursor: pointer;
+    transition:
+      transform 0.12s,
+      box-shadow 0.12s,
+      color 0.15s;
+  }
+  .pill span {
+    text-align: center;
+  }
+  .pill img {
+    inline-size: 20px;
+    block-size: 20px;
+    flex: none;
+    transition: transform 0.35s var(--ease-spring);
+  }
+  .pill:hover {
+    color: #1769c4;
+  }
+  .pill:hover img {
+    transform: rotate(-12deg) scale(1.15);
+  }
+  .pill:active {
+    transform: translateY(3px);
+    box-shadow:
+      0 1px 0 #b9c7db,
+      0 2px 4px rgb(0 0 0 / 0.25);
+  }
+  .pill:focus-visible {
+    outline: 3px solid var(--cc-yellow);
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 720px) {
+    .stage {
+      block-size: 560px;
+    }
+    .hud__buttons {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      inline-size: 100%;
+      max-inline-size: 340px;
+      gap: 10px;
+    }
+    .hud-field input[type='range'] {
+      inline-size: 90px;
+    }
+    .hud-field--word input {
+      inline-size: 110px;
+    }
+  }
+
+  /* ---- Inspector readout ---- */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 6px;
+    margin: 10px 0 0;
+  }
+
+  .stat {
+    padding: 6px 4px 7px;
+    text-align: center;
+    background: var(--cc-stage);
+    border: 2px solid var(--cc-ink);
+    border-radius: 8px;
+  }
+
+  .stat dt {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--cc-faint);
+  }
+  .stat dd {
+    margin: 2px 0 0;
+    font: 700 16px/1.2 var(--font-sans);
+    font-variant-numeric: tabular-nums;
+    color: var(--cc-text);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 560px) {
+    .stats {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .console {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+    min-height: 40px;
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: var(--cc-well);
+    border: 1.5px solid #3a3550;
+    border-radius: 8px;
+    font: 500 13px/1.4 var(--font-mono);
+  }
+
+  .console__call {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    white-space: pre;
+    color: var(--cc-yellow);
+    background: none !important;
+    border: 0 !important;
+    padding: 0 !important;
+  }
+
+  .console__call :global(.console__sprite) {
+    inline-size: 18px;
+    block-size: 18px;
+    margin: 0 1px;
+  }
+
+  .console__events {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .console__events :global(.ev) {
+    padding: 2px 8px;
+    border-radius: 999px;
+    border: 1.5px solid var(--cc-ink);
+    background: var(--cc-green);
+    color: var(--cc-ink);
+    font: 700 11.5px/1.4 var(--font-mono);
+  }
+  .console__events :global(.ev--level) {
+    background: var(--cc-yellow);
+  }
+  .console__events :global(.ev--broken) {
+    background: #3a2433;
+    color: #ff8fa3;
+    border-color: #ff5a79;
+  }
+</style>

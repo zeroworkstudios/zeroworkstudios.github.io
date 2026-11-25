@@ -1,0 +1,457 @@
+---
+interface Props {
+  fullName?: string;
+  avatar?: string;
+  discordInvite?: string;
+  heading: string;
+  intro: string;
+}
+
+const {
+  fullName = "Officer Hank",
+  avatar = "/hank-pfp.webp",
+  discordInvite = "https://discord.gg/e2wWESQXw2",
+  heading,
+  intro
+} = Astro.props;
+---
+
+<section id="hank" class="hank" aria-labelledby="hank-title">
+  <div id="mascot" class="sr-only"></div>
+  <div id="hank-id-card" class="sr-only"></div>
+
+  <div class="sec-head">
+    <h2 id="hank-title">{heading}</h2>
+    <p>{intro}</p>
+  </div>
+
+  <!-- Hank's ID card, laid on the studio desk. The booklet stacks its pages on narrow screens (global.css). -->
+  <div class="hank__blotter">
+  <div class="dossier">
+
+    <!-- ============================================================ -->
+    <!-- AUTHENTIC BRITISH MILITARY ID CARD (1954 SPECIFICATION)       -->
+    <!-- ============================================================ -->
+    <div
+      class="bifold-booklet select-none cursor-default"
+    >
+      
+      <!-- ============================================================ -->
+      <!-- LEFT PAGE (Page 1): Photo + Personal Description            -->
+      <!-- ============================================================ -->
+      <div 
+        class="bifold-page-left bg-guilloche-left p-5 sm:p-6 flex flex-col justify-between relative"
+        style="background-color: #E4D6A9;"
+      >
+        
+        <!-- Top Row: Serial Number (flex flow aligned right) -->
+        <div class="flex items-center justify-end pb-1 relative z-10">
+          <div class="pointer-events-none select-none font-serif text-[#622B14] flex items-baseline gap-1">
+            <span class="text-sm sm:text-base font-semibold tracking-tighter">Nº</span>
+            <span class="text-xl sm:text-2xl font-bold tracking-widest font-serif">218917</span>
+          </div>
+        </div>
+
+        <!-- Service Record Audit Stamp (Red Circular Stamp Effect - 2x size overlapping photo) -->
+        <div 
+          class="audit-stamp absolute top-1 sm:top-2 left-2 sm:left-4 z-20 pointer-events-none select-none -rotate-12 opacity-85 mix-blend-multiply"
+          title="Official Service Record Audited"
+        >
+          <svg class="w-32 h-32 sm:w-38 sm:h-38 text-[#B91C1C]" viewBox="0 0 100 100" fill="currentColor">
+            <!-- Outer concentric rings -->
+            <circle cx="50" cy="50" r="47" fill="none" stroke="currentColor" stroke-width="2.5" />
+            <circle cx="50" cy="50" r="41" fill="none" stroke="currentColor" stroke-width="1.2" />
+            
+            <defs>
+              <!-- Top arc with ample breathing room to the inner circle -->
+              <path id="stamp-arc-top" d="M 21,50 A 29,29 0 0,1 79,50" fill="none" />
+            </defs>
+            
+            <!-- Curved Top Text: spaced nicely from circle border -->
+            <text font-family="'Special Elite', monospace" font-size="6.5" font-weight="bold" letter-spacing="1.4" text-anchor="middle">
+              <textPath href="#stamp-arc-top" startOffset="50%" text-anchor="middle">
+                SERVICE RECORD
+              </textPath>
+            </text>
+            
+            <!-- Center AUDITED Banner -->
+            <line x1="22" y1="43" x2="78" y2="43" stroke="currentColor" stroke-width="1.2" />
+            <text x="50" y="53.5" font-family="'Special Elite', monospace" font-size="9.5" font-weight="bold" text-anchor="middle" letter-spacing="2">
+              AUDITED
+            </text>
+            <line x1="22" y1="59" x2="78" y2="59" stroke="currentColor" stroke-width="1.2" />
+            
+            <!-- Bottom Stars -->
+            <text x="50" y="73" font-family="'Special Elite', monospace" font-size="7.5" text-anchor="middle" letter-spacing="3">
+              ★★★
+            </text>
+          </svg>
+        </div>
+
+        <!-- Identification Photo (with slight dropshadow, white photo-border and stencil number plate) -->
+        <div class="flex flex-col items-center my-auto py-3 relative z-10">
+          <div class="p-1 sm:p-1.5 bg-[#FAF6EB] border border-[#622B14]/40 shadow-[0_4px_12px_rgba(98,43,20,0.22),0_1px_3px_rgba(98,43,20,0.15)] rounded-[1px] relative">
+            <div class="w-[162px] h-[216px] sm:w-[185px] sm:h-[246px] overflow-hidden bg-neutral-900 relative">
+              <img 
+                src={avatar} 
+                alt={fullName} 
+                class="w-full h-full object-cover object-center"
+                loading="eager"
+              />
+            </div>
+
+            <!-- Stencil Number Board at bottom of photo -->
+            <div class="w-full bg-[#24130A] border-t border-[#3d2114] text-[#E4D6A9] flex items-center justify-between font-typewriter py-1 px-1.5 tracking-wider shadow-inner select-none mt-0.5" style="font-size: 12px;">
+              <span class="px-0.5">2</span>
+              <span class="px-0.5 border-l border-[#E4D6A9]/30">2</span>
+              <span class="px-0.5 border-l border-[#E4D6A9]/30">8</span>
+              <span class="px-0.5 border-l border-[#E4D6A9]/30">7</span>
+              <span class="px-0.5 border-l border-[#E4D6A9]/30">0</span>
+              <span class="px-0.5 border-l border-[#E4D6A9]/30">8</span>
+              <span class="px-0.5 border-l border-[#E4D6A9]/30">8</span>
+              <span class="px-0.5 border-l border-[#E4D6A9]/30">1</span>
+            </div>
+          </div>
+
+          <!-- Photo mount caption -->
+          <span class="text-[10px] sm:text-[11px] font-serif font-semibold text-[#7D7552] mt-1.5 uppercase tracking-wider">
+            Official Record, Metro
+          </span>
+        </div>
+
+        <!-- Personal Description -->
+        <div class="space-y-3.5 sm:space-y-4 pt-2">
+          <div class="text-center pb-1 mb-2.5 sm:mb-3">
+            <span class="font-serif text-sm sm:text-base font-bold text-[#622B14] tracking-wider uppercase">
+              PERSONAL DESCRIPTION
+            </span>
+          </div>
+
+          <!-- Height & Colour of eyes -->
+          <div class="flex items-baseline justify-between gap-2">
+            <div class="flex items-baseline gap-1.5 flex-1">
+              <span class="font-serif text-[11px] sm:text-xs text-[#622B14] shrink-0 font-semibold">Height</span>
+              <div class="flex-1 border-b border-dotted border-[#622B14]/75 px-1.5 py-1">
+                <span class="font-typewriter text-xs sm:text-sm font-bold text-black block">
+                  5 ft. 10 ins.
+                </span>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-1.5 flex-1 pl-1">
+              <span class="font-serif text-[11px] sm:text-xs text-[#622B14] leading-tight shrink-0 font-semibold">
+                Colour<br />of eyes
+              </span>
+              <div class="flex-1 border-b border-dotted border-[#622B14]/75 px-1.5 py-1">
+                <span class="font-typewriter text-xs sm:text-sm font-bold text-black block tracking-wider">
+                  BLUE
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Date of Birth & Colour of hair -->
+          <div class="flex items-baseline justify-between gap-2">
+            <div class="flex items-baseline gap-1.5 flex-1">
+              <span class="font-serif text-[11px] sm:text-xs text-[#622B14] leading-tight shrink-0 font-semibold">
+                Date of<br />Birth
+              </span>
+              <div class="flex-1 border-b border-dotted border-[#622B14]/75 px-1.5 py-1">
+                <span class="font-typewriter text-xs sm:text-sm font-bold text-black block">
+                  24 / 3 / 06
+                </span>
+              </div>
+            </div>
+            <div class="flex items-baseline gap-1.5 flex-1 pl-1">
+              <span class="font-serif text-[11px] sm:text-xs text-[#622B14] leading-tight shrink-0 font-semibold">
+                Colour<br />of hair
+              </span>
+              <div class="flex-1 border-b border-dotted border-[#622B14]/75 px-1.5 py-1">
+                <span class="font-typewriter text-xs sm:text-sm font-bold text-black block tracking-wider">
+                  BLACK
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Distinguishing marks -->
+          <div class="pt-0.5 space-y-1.5">
+            <div class="flex items-baseline gap-2">
+              <span class="font-serif text-[11px] sm:text-xs text-[#622B14] leading-tight shrink-0 font-semibold w-28 sm:w-32">
+                Other visible<br />distinguishing marks
+              </span>
+              <div class="flex-1 space-y-1 pl-1">
+                <div class="border-b border-dotted border-[#622B14]/75 flex items-baseline px-1 py-1 justify-center">
+                  <span class="font-typewriter text-xs sm:text-sm font-bold text-black tracking-wider">
+                    NONE
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+
+      <!-- ============================================================ -->
+      <!-- RIGHT PAGE (Page 2): Service Identity + Changes of Rank      -->
+      <!-- ============================================================ -->
+      <div 
+        class="bifold-page-right bg-guilloche-right p-5 sm:p-6 flex flex-col justify-between relative"
+        style="background-color: #E4D6A9;"
+      >
+        
+        <!-- Service / Theatre Stamp (Top Right, swapped with Nº 218917) -->
+        <div class="absolute top-3.5 right-5 sm:right-6 font-serif text-[#622B14]/85 select-none pointer-events-none">
+          <span class="font-serif text-xs sm:text-sm tracking-[0.2em] font-bold uppercase">
+            R.A.O.C. B.E.F.
+          </span>
+        </div>
+
+        <!-- Rubber Stamp: ACTIVE IN DISCORD (Top Right) -->
+        <a 
+          href={discordInvite}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="absolute top-10 sm:top-11 right-5 sm:right-6 select-none -rotate-2 group cursor-pointer z-10"
+          title="Get yourself on the books: discord.gg/e2wWESQXw2"
+        >
+          <div class="border-2 border-dashed border-[#995F2F] rounded-[3px] px-3 py-1 bg-[#FAF6EB]/95 backdrop-blur-[0.5px] shadow-sm text-center group-hover:border-[#622B14] group-hover:bg-[#FAF6EB] group-hover:scale-105 transition-all">
+            <div class="font-typewriter text-[#995F2F] group-hover:text-[#622B14] tracking-widest uppercase flex items-center justify-center gap-1.5 transition-colors" style="font-size: 11px;">
+              <span class="w-2 h-2 rounded-full bg-[#995F2F] group-hover:bg-[#622B14] animate-pulse transition-colors"></span>
+              <span>Active in Discord</span>
+            </div>
+            <div class="font-typewriter text-[#995F2F]/90 group-hover:text-[#622B14] tracking-tight transition-colors" style="font-size: 10px; font-weight: 400;">
+              discord.gg/e2wWESQXw2
+            </div>
+          </div>
+        </a>
+
+        <!-- Upper Form Fields -->
+        <div class="space-y-3.5 sm:space-y-4 pt-1">
+          
+          <!-- Row 1: P/Army No. -->
+          <div class="flex items-baseline gap-2">
+            <span class="font-serif text-xs sm:text-sm font-semibold text-[#622B14] shrink-0">
+              P/Army No.
+            </span>
+            <div class="flex-1 border-b border-dotted border-[#622B14]/75 flex items-baseline px-1.5 py-1">
+              <span class="font-typewriter text-xs sm:text-sm font-bold text-black tracking-wider">
+                22870881
+              </span>
+            </div>
+          </div>
+
+          <!-- Row 2: Surname -->
+          <div class="flex items-baseline gap-2">
+            <span class="font-serif text-xs sm:text-sm font-semibold text-[#622B14] shrink-0">
+              Surname
+            </span>
+            <div class="flex-1 border-b border-dotted border-[#622B14]/75 flex items-baseline px-2 py-1">
+              <span class="font-typewriter text-xs sm:text-sm font-bold text-black tracking-wider">
+                HANK
+              </span>
+            </div>
+          </div>
+
+          <!-- Row 3 & 4: Christian/Fore Names grouped by curly bracket + Rank & Sex -->
+          <div class="flex items-center gap-2 sm:gap-2.5">
+            <div class="font-serif text-[11px] sm:text-xs leading-tight text-[#622B14] font-semibold w-24 sm:w-28 shrink-0">
+              Christian or<br />Fore Name(s)
+            </div>
+            
+            <!-- Curly bracket grouping lines -->
+            <div class="text-4xl sm:text-5xl font-serif text-[#622B14] select-none -my-2 -ml-1">
+              &#123;
+            </div>
+
+            <!-- Two rows of forenames with Rank & Sex on right -->
+            <div class="flex-1 space-y-2">
+              <!-- Line 1: HENRY + Rk. Desk Sgt. -->
+              <div class="flex items-baseline gap-2">
+                <div class="flex-1 border-b border-dotted border-[#622B14]/75 px-1.5 py-1">
+                  <span class="font-typewriter text-xs sm:text-sm font-bold text-black tracking-wider block">
+                    HENRY
+                  </span>
+                </div>
+                <div class="flex items-baseline gap-1.5 shrink-0">
+                  <span class="font-serif text-[11px] sm:text-xs font-semibold text-[#622B14]">Rk.</span>
+                  <div class="border-b border-dotted border-[#622B14]/75 px-1.5 py-1 min-w-[65px]">
+                    <span class="font-typewriter text-xs sm:text-sm font-bold text-black block text-center">
+                      Desk Sgt.
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Line 2: "OFFICER" + Sex -->
+              <div class="flex items-baseline gap-2">
+                <div class="flex-1 border-b border-dotted border-[#622B14]/75 px-1.5 py-1">
+                  <span class="font-typewriter text-xs sm:text-sm font-bold text-black tracking-wider block">
+                    OFFICER
+                  </span>
+                </div>
+                <div class="flex items-baseline gap-1.5 shrink-0">
+                  <span class="font-serif text-[11px] sm:text-xs font-semibold text-[#622B14]">Sex</span>
+                  <div class="border-b border-dotted border-[#622B14]/75 px-1.5 py-1 min-w-[65px]">
+                    <span class="font-typewriter text-xs sm:text-sm font-bold text-black block text-center tracking-wider">
+                      MALE
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 5: Signature of Holder (Blue Ink) -->
+          <div class="flex items-baseline gap-2 pt-0.5">
+            <span class="font-serif text-[11px] sm:text-xs font-semibold text-[#622B14] shrink-0">
+              Signature of Holder
+            </span>
+            <div class="flex-1 border-b border-dotted border-[#622B14]/75 flex items-baseline px-2 py-0.5">
+              <span class="font-signature text-2xl sm:text-3xl text-[#1E40AF] -mb-1 transform -rotate-1 select-none">
+                Officer Hank
+              </span>
+            </div>
+          </div>
+
+          <!-- Row 6: Signature of Issuer (Blue Ink) -->
+          <div class="flex items-baseline gap-2">
+            <span class="font-serif text-[11px] sm:text-xs font-semibold text-[#622B14] shrink-0">
+              Signature of Issuer
+            </span>
+            <div class="flex-1 border-b border-dotted border-[#622B14]/75 flex items-baseline px-2 py-0.5">
+              <span class="font-signature text-lg sm:text-xl text-[#1E40AF]/90 -mb-1 select-none">
+                Central Constabulary
+              </span>
+            </div>
+          </div>
+
+          <!-- Row 7: Rk. of Issuer + Date of Issue -->
+          <div class="flex items-baseline justify-between gap-2.5 pt-0.5">
+            <div class="flex items-baseline gap-1.5 flex-1">
+              <span class="font-serif text-[11px] sm:text-xs font-semibold text-[#622B14] shrink-0">
+                Rk. of Issuer
+              </span>
+              <div class="flex-1 border-b border-dotted border-[#622B14]/75 px-1.5 py-1">
+                <span class="font-typewriter text-xs sm:text-sm font-bold text-black block">
+                  Chief Constable
+                </span>
+              </div>
+            </div>
+
+            <div class="flex items-baseline gap-1.5 shrink-0">
+              <span class="font-serif text-[11px] sm:text-xs font-semibold text-[#622B14]">
+                Date of Issue
+              </span>
+              <div class="border-b border-dotted border-[#622B14]/75 px-1.5 py-1">
+                <span class="font-typewriter text-xs sm:text-sm font-bold text-black inline-block">
+                  12 / 5 / 1931
+                </span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Changes of Rank Table -->
+        <div class="pt-3 sm:pt-4">
+          <div class="text-center pb-1 mb-2.5">
+            <span class="font-serif text-sm sm:text-base font-bold text-[#622B14] tracking-wider uppercase">
+              CHANGES OF RANK
+            </span>
+          </div>
+
+          <!-- Ledger Table -->
+          <div class="border border-[#622B14]/80 rounded-[1px] overflow-hidden bg-[#622B14]/[0.05]">
+            <table class="w-full border-collapse text-xs sm:text-sm">
+              <thead>
+                <tr class="border-b border-[#622B14]/80 text-[#622B14] font-serif font-semibold bg-[#622B14]/[0.08]">
+                  <th class="border-r border-[#622B14]/80 px-2 py-1.5 text-left font-semibold">New Rank</th>
+                  <th class="border-r border-[#622B14]/80 px-2 py-1.5 text-center font-semibold">Date</th>
+                  <th class="px-2 py-1.5 text-left font-semibold">Authority</th>
+                </tr>
+              </thead>
+              <tbody class="font-typewriter text-black text-xs sm:text-sm font-bold">
+                <!-- 1. Royal Army Ordnance Corps (BEF): Oct 1926 -->
+                <tr class="border-b border-[#622B14]/30">
+                  <td class="border-r border-[#622B14]/80 px-2 py-1.5 leading-tight">Q.M. Sgt.</td>
+                  <td class="border-r border-[#622B14]/80 px-2 py-1.5 text-center">10/1926</td>
+                  <td class="px-2 py-1.5 leading-tight">R.A.O.C. (BEF)</td>
+                </tr>
+                <!-- 2. Police Constable & Beat Officer: Feb 1928 -->
+                <tr class="border-b border-[#622B14]/30">
+                  <td class="border-r border-[#622B14]/80 px-2 py-1.5 leading-tight">P.C. (Beat)</td>
+                  <td class="border-r border-[#622B14]/80 px-2 py-1.5 text-center">02/1928</td>
+                  <td class="px-2 py-1.5 leading-tight">Central Constab.</td>
+                </tr>
+                <!-- 3. Desk Sergeant & Records Officer: May 1931 -->
+                <tr class="border-b border-[#622B14]/30">
+                  <td class="border-r border-[#622B14]/80 px-2 py-1.5 leading-tight">Desk Sgt.</td>
+                  <td class="border-r border-[#622B14]/80 px-2 py-1.5 text-center">05/1931</td>
+                  <td class="px-2 py-1.5 leading-tight">HQ Records</td>
+                </tr>
+                <!-- 4. Head Logistics: Apr 2026 -->
+                <tr class="border-b border-[#622B14]/30">
+                  <td class="border-r border-[#622B14]/80 px-2 py-1.5 leading-tight">Head Logistics</td>
+                  <td class="border-r border-[#622B14]/80 px-2 py-1.5 text-center">04/2026</td>
+                  <td class="px-2 py-1.5 leading-tight">Zero Work Studios</td>
+                </tr>
+                <!-- 5. Empty Row for Future Changes -->
+                <tr class="border-b border-[#622B14]/30 h-7 sm:h-8">
+                  <td class="border-r border-[#622B14]/80 px-2 py-1">&nbsp;</td>
+                  <td class="border-r border-[#622B14]/80 px-2 py-1 text-center">&nbsp;</td>
+                  <td class="px-2 py-1">&nbsp;</td>
+                </tr>
+                <!-- 6. Empty Row for Future Changes -->
+                <tr class="h-7 sm:h-8">
+                  <td class="border-r border-[#622B14]/80 px-2 py-1">&nbsp;</td>
+                  <td class="border-r border-[#622B14]/80 px-2 py-1 text-center">&nbsp;</td>
+                  <td class="px-2 py-1">&nbsp;</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <!-- ============================================================ -->
+    <!-- END AUTHENTIC BRITISH MILITARY ID CARD                       -->
+    <!-- ============================================================ -->
+
+  </div>
+  </div>
+</section>
+
+<script is:inline>
+  // Lands the audit stamp the first time the card scrolls into view (CSS in global.css).
+  (() => {
+    const card = document.querySelector('.dossier');
+    if (!card || !('IntersectionObserver' in window)) return card?.setAttribute('data-stamped', '');
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        setTimeout(() => card.setAttribute('data-stamped', ''), 250);
+        io.disconnect();
+      },
+      { threshold: 0.45 },
+    );
+    io.observe(card);
+  })();
+</script>
+
+<style>
+  /* The desk blotter Hank's card rests on: studio paper with its guilloche, inset from the page. */
+  .hank__blotter {
+    padding: clamp(36px, 6vw, 72px) clamp(12px, 4vw, 48px) clamp(48px, 7vw, 88px);
+    background-color: var(--paper);
+    background-image: var(--guilloche);
+    background-size: 120px 14px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    box-shadow: inset 0 2px 0 rgb(255 255 255 / 0.5);
+  }
+</style>

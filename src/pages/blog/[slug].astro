@@ -1,0 +1,39 @@
+---
+import StudioLayout from '../../layouts/StudioLayout.astro';
+import PostLinks from '../../components/PostLinks.astro';
+import { posts, postHref, formatDate, type Post } from '../../data/blog';
+import '../../styles/blog.css';
+
+export function getStaticPaths() {
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props as { post: Post };
+const { Content } = post;
+---
+
+<StudioLayout
+  section="blog"
+  current={post.slug}
+  title={`${post.title} | Zero Work Studios`}
+  description={post.description}
+>
+  <article class="post">
+    <header class="post__head">
+      <time class="post__date" datetime={post.date.toISOString().slice(0, 10)}>{formatDate(post.date)}</time>
+      <h1>{post.title}</h1>
+      <p class="post__lede">{post.description}</p>
+      <PostLinks post={post} />
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    <footer class="post__foot">
+      <p>{post.closing ?? 'Questions or corrections? Reply on a thread or email me.'}</p>
+      <PostLinks post={post} />
+      <a class="post__all" href={postHref()}>All posts</a>
+    </footer>
+  </article>
+</StudioLayout>

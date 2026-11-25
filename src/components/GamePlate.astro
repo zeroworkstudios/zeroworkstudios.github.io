@@ -1,0 +1,29 @@
+---
+// A game's name plate in its own look, like the package plates. Used in the sidebar and on /games/.
+// Skins live in src/styles/plates.css, one block per game slug.
+import type { GameEntry } from '../data/games';
+
+interface Props {
+  game: GameEntry;
+  size?: 'sm' | 'lg';
+}
+const { game, size = 'sm' } = Astro.props;
+---
+
+<span class:list={['plate', `plate--${game.slug}`, `plate--${size}`, { 'plate--soon': game.status === 'soon' }]}>
+  {
+    game.slug === 'racket-kings' && (
+      <>
+        {/* A painted pub signboard: gilt letters on bottle green, under a crown. */}
+        <span class="plate__crown" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M3 8.5 7.6 12 12 5l4.4 7L21 8.5 19.4 17H4.6Z" />
+            <rect x="4.6" y="18.4" width="14.8" height="2.2" rx="0.6" />
+          </svg>
+        </span>
+        <span class="plate__name">{game.name}</span>
+        {game.status === 'soon' && <span class="plate__soon">Soon</span>}
+      </>
+    )
+  }
+</span>

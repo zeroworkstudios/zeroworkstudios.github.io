@@ -1,0 +1,32 @@
+---
+import StudioLayout from '../../layouts/StudioLayout.astro';
+import { posts, postHref, formatDate } from '../../data/blog';
+import '../../styles/blog.css';
+---
+
+<StudioLayout
+  section="blog"
+  title="Blog | Zero Work Studios"
+  description="Write-ups from building games and Unity tools at Zero Work Studios."
+>
+  <div class="blog">
+    <header class="blog__intro">
+      <h1>Blog</h1>
+      <p>Write-ups from building games and Unity tools at Zero Work Studios.</p>
+    </header>
+
+    <ol class="blog__list" role="list">
+      {
+        posts.map((post) => (
+          <li class="entry">
+            <time class="entry__date" datetime={post.date.toISOString().slice(0, 10)}>{formatDate(post.date)}</time>
+            <h2>
+              <a href={postHref(post.slug)}>{post.title}</a>
+            </h2>
+            <p>{post.description}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</StudioLayout>

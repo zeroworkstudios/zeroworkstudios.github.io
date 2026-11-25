@@ -1,0 +1,267 @@
+/* ==========================================================================
+   ABOUT PAGE
+   Loaded by src/pages/index.astro only. The shell (sidebar, tokens, type)
+   comes from shell.css like every other page.
+
+   Tailwind is here for Officer Hank's ID card, which is written in utility
+   classes. Its preflight reset is left out so the about page shares the same
+   base styles as the docs, and it only scans the about components.
+   ========================================================================== */
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities) source(none);
+@source '../components/HankDossier.astro';
+@source '../components/Hero.astro';
+@source '../components/SocialGrid.astro';
+
+@theme {
+  /* Hank's ID card keeps its own period faces. */
+  --font-serif: 'EB Garamond', Georgia, Cambria, 'Times New Roman', serif;
+  --font-signature: 'Homemade Apple', cursive;
+  --font-typewriter: 'Special Elite', 'Courier New', monospace;
+}
+
+:root {
+  /* The studio's ID-card guilloche, as on the sidebar. */
+  --guilloche: url("data:image/svg+xml,%3Csvg width='120' height='14' viewBox='0 0 120 14' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 7 Q 30 2 60 7 T 120 7' fill='none' stroke='%23C9B88C' stroke-width='0.7' opacity='0.35'/%3E%3C/svg%3E");
+}
+
+/* --------------------------------------------------------------------------
+   Page column
+   -------------------------------------------------------------------------- */
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(40px, 8vw, 96px) clamp(16px, 4vw, 56px) 40px;
+}
+
+/* Not `section + section`: Hank's inline script sits between his section and the next. */
+.page > section:not(:first-child) {
+  margin-top: clamp(80px, 11vw, 136px);
+}
+
+@media (max-width: 959px) {
+  .page {
+    padding-top: clamp(36px, 8vw, 64px);
+  }
+  html {
+    scroll-padding-top: 76px;
+  }
+}
+
+/* Section headings, shared by every section after the hero. */
+.sec-head {
+  max-width: 60ch;
+  margin-bottom: clamp(24px, 3vw, 36px);
+}
+
+.sec-head h2 {
+  margin: 0;
+  font: 800 clamp(30px, 3.6vw, 44px) / 1 var(--font-display);
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+.sec-head p {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   OFFICER HANK'S ID CARD
+   A 1950s British service identification booklet. It keeps its own cream
+   card stock and period type; only the page around it follows the studio.
+   ========================================================================== */
+.bg-guilloche-left,
+.bg-guilloche-right {
+  background-color: #e4d6a9;
+  background-repeat: no-repeat, repeat;
+  background-size: 100% 100%, 120px 12px;
+}
+
+.bg-guilloche-left {
+  background-image:
+    /* Crease shadow deepening toward the spine */
+    linear-gradient(to right, rgba(98, 43, 20, 0.05) 0%, rgba(255, 255, 255, 0.12) 20%, transparent 60%, rgba(98, 43, 20, 0.16) 100%),
+    url("data:image/svg+xml,%3Csvg width='120' height='12' viewBox='0 0 120 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 6 Q 30 1.5 60 6 T 120 6' fill='none' stroke='%23978F66' stroke-width='0.75' opacity='0.45'/%3E%3Cpath d='M0 12 Q 30 7.5 60 12 T 120 12' fill='none' stroke='%23978F66' stroke-width='0.75' opacity='0.45'/%3E%3C/svg%3E");
+}
+
+.bg-guilloche-right {
+  background-image:
+    /* Crease shadow leading out of the spine */
+    linear-gradient(to right, rgba(98, 43, 20, 0.18) 0%, rgba(255, 255, 255, 0.22) 4%, transparent 40%, rgba(255, 255, 255, 0.12) 75%, rgba(98, 43, 20, 0.06) 100%),
+    url("data:image/svg+xml,%3Csvg width='120' height='12' viewBox='0 0 120 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 6 Q 30 1.5 60 6 T 120 6' fill='none' stroke='%23978F66' stroke-width='0.75' opacity='0.45'/%3E%3Cpath d='M0 12 Q 30 7.5 60 12 T 120 12' fill='none' stroke='%23978F66' stroke-width='0.75' opacity='0.45'/%3E%3C/svg%3E");
+}
+
+/* The card's utilities were written against Tailwind's preflight reset (e.g. `border-b
+   border-dotted` expects every other side at 0). Reset just the card, in the base layer
+   so its utilities still win. */
+@layer base {
+  .dossier *,
+  .dossier ::before,
+  .dossier ::after {
+    margin: 0;
+    padding: 0;
+    border: 0 solid;
+  }
+  .dossier a {
+    text-decoration: inherit;
+  }
+}
+
+.font-typewriter {
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+/* The booklet opens left to right when there is room for both pages... */
+.dossier {
+  container-type: inline-size;
+}
+
+.bifold-booklet {
+  display: flex;
+  align-items: stretch;
+  min-width: 700px;
+  max-width: 900px;
+  margin-inline: auto;
+  transform: rotate(-1deg);
+  transition: transform 0.4s ease;
+}
+
+.bifold-booklet:hover {
+  transform: rotate(-0.5deg) translateY(-4px);
+}
+
+.bifold-page-left,
+.bifold-page-right {
+  flex: 1 1 0;
+  min-width: 0;
+  border: 2px solid rgb(98 43 20 / 0.7);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.bifold-page-left {
+  border-right-width: 2.5px;
+  border-radius: 3px 0 0 3px;
+  transform-origin: 100% 50%;
+  transform: skewY(-1.2deg);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.45),
+    inset 0 -1px 1px rgba(98, 43, 20, 0.18),
+    -6px 12px 20px -2px rgba(98, 43, 20, 0.2);
+}
+
+.bifold-page-right {
+  border-left-width: 0;
+  border-radius: 0 3px 3px 0;
+  transform-origin: 0% 50%;
+  transform: skewY(1.2deg);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.45),
+    inset 0 -1px 1px rgba(98, 43, 20, 0.18),
+    6px 12px 20px -2px rgba(98, 43, 20, 0.2);
+}
+
+.bifold-booklet:hover .bifold-page-left {
+  transform: skewY(-0.6deg);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.45),
+    inset 0 -1px 1px rgba(98, 43, 20, 0.18),
+    -8px 16px 26px -2px rgba(98, 43, 20, 0.26);
+}
+
+.bifold-booklet:hover .bifold-page-right {
+  transform: skewY(0.6deg);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.45),
+    inset 0 -1px 1px rgba(98, 43, 20, 0.18),
+    8px 16px 26px -2px rgba(98, 43, 20, 0.26);
+}
+
+/* ...and opens top to bottom, folded at a horizontal spine, when there is not. */
+@container (max-width: 739px) {
+  .bifold-booklet {
+    flex-direction: column;
+    min-width: 0;
+    max-width: 420px;
+    transform: rotate(-0.6deg);
+  }
+  .bifold-booklet:hover {
+    transform: rotate(-0.3deg) translateY(-3px);
+  }
+
+  .bifold-page-left {
+    border-right-width: 2px;
+    border-bottom-width: 2.5px;
+    border-radius: 3px 3px 0 0;
+    transform-origin: 50% 100%;
+    transform: skewX(0.8deg);
+  }
+  .bifold-page-right {
+    border-left-width: 2px;
+    border-top-width: 0;
+    border-radius: 0 0 3px 3px;
+    transform-origin: 50% 0%;
+    transform: skewX(-0.8deg);
+  }
+  .bifold-booklet:hover .bifold-page-left {
+    transform: skewX(0.4deg);
+  }
+  .bifold-booklet:hover .bifold-page-right {
+    transform: skewX(-0.4deg);
+  }
+
+  .bg-guilloche-left {
+    background-image:
+      linear-gradient(to bottom, rgba(98, 43, 20, 0.05) 0%, rgba(255, 255, 255, 0.12) 20%, transparent 60%, rgba(98, 43, 20, 0.16) 100%),
+      url("data:image/svg+xml,%3Csvg width='120' height='12' viewBox='0 0 120 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 6 Q 30 1.5 60 6 T 120 6' fill='none' stroke='%23978F66' stroke-width='0.75' opacity='0.45'/%3E%3Cpath d='M0 12 Q 30 7.5 60 12 T 120 12' fill='none' stroke='%23978F66' stroke-width='0.75' opacity='0.45'/%3E%3C/svg%3E");
+  }
+  .bg-guilloche-right {
+    background-image:
+      linear-gradient(to bottom, rgba(98, 43, 20, 0.18) 0%, rgba(255, 255, 255, 0.22) 4%, transparent 40%, rgba(255, 255, 255, 0.12) 75%, rgba(98, 43, 20, 0.06) 100%),
+      url("data:image/svg+xml,%3Csvg width='120' height='12' viewBox='0 0 120 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 6 Q 30 1.5 60 6 T 120 6' fill='none' stroke='%23978F66' stroke-width='0.75' opacity='0.45'/%3E%3Cpath d='M0 12 Q 30 7.5 60 12 T 120 12' fill='none' stroke='%23978F66' stroke-width='0.75' opacity='0.45'/%3E%3C/svg%3E");
+  }
+}
+
+@container (max-width: 380px) {
+  .font-typewriter {
+    font-size: 0.75rem;
+  }
+  /* Keep each signature on one line of the narrow page. */
+  .font-signature.text-2xl {
+    font-size: 1.2rem;
+  }
+  .font-signature.text-lg {
+    font-size: 0.82rem;
+    white-space: nowrap;
+  }
+}
+
+/* The audit stamp lands on the card once, the first time it scrolls into view.
+   Scale only: the stamp's tilt comes from Tailwind's `rotate` property. */
+@keyframes stamp-thunk {
+  0% {
+    opacity: 0;
+    scale: 1.9;
+  }
+  60% {
+    opacity: 0.9;
+    scale: 0.94;
+  }
+  100% {
+    opacity: 0.85;
+    scale: 1;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html.js .dossier:not([data-stamped]) .audit-stamp {
+    opacity: 0;
+  }
+  html.js .dossier[data-stamped] .audit-stamp {
+    animation: stamp-thunk 0.5s cubic-bezier(0.5, 0, 0.6, 1) both;
+  }
+}

@@ -1,0 +1,699 @@
+/* ==========================================================================
+   STUDIO SHELL
+   Zero Work Studios' paper and mahogany ink, set in Bricolage Grotesque.
+   It frames every page; each package skins its own plate (plates.css) and
+   its own main column.
+   ========================================================================== */
+
+/* Combo Counter's display face (from the package's Editor/UI/Fonts), subset to Latin. */
+@font-face {
+  font-family: 'LEMON MILK';
+  src: url('/fonts/lemonmilk-bold.woff2') format('woff2');
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+:root {
+  --paper: #f4ecda;
+  --desk: #faf5ea;
+  --card: #fffbf2;
+  --line: #e6d9b8;
+  --line-strong: #d3c196;
+  --mahogany: #622b14;
+  --caramel: #995f2f;
+  --muted: #76654a;
+
+  --font-display: 'Bricolage Grotesque', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --sidebar-w: 308px;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-spring: cubic-bezier(0.3, 1.6, 0.5, 1);
+
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: 24px;
+  interpolate-size: allow-keywords;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--desk);
+  color: var(--mahogany);
+  font: 400 16px/1.6 var(--font-sans);
+  letter-spacing: -0.011em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html[data-theme='combo'] body {
+  background: #1b1927;
+}
+
+html[data-theme='kings'] body {
+  background: #0d1813;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: var(--mahogany);
+  color: var(--paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--caramel);
+  outline-offset: 2px;
+}
+
+.skip {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  z-index: 100;
+  padding: 8px 14px;
+  background: var(--mahogany);
+  color: var(--desk);
+  border-radius: 6px;
+  font: 600 14px var(--font-sans);
+  text-decoration: none;
+}
+.skip:focus {
+  top: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   Frame
+   -------------------------------------------------------------------------- */
+.frame {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+  min-height: 100dvh;
+}
+
+.main {
+  min-width: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Studio mark
+   -------------------------------------------------------------------------- */
+.studio {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.studio__mark {
+  inline-size: 30px;
+  block-size: 30px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--mahogany);
+  color: var(--paper);
+  font: 800 12px/1 var(--font-display);
+  letter-spacing: -0.02em;
+  transform: rotate(-4deg);
+  transition: transform 0.4s var(--ease-spring);
+}
+
+.studio__name {
+  font: 600 14px/1.2 var(--font-sans);
+  color: var(--muted);
+  transition: color 0.2s;
+}
+
+.studio:hover .studio__mark {
+  transform: rotate(4deg) scale(1.06);
+}
+.studio:hover .studio__name {
+  color: var(--mahogany);
+}
+
+/* --------------------------------------------------------------------------
+   Sidebar
+   -------------------------------------------------------------------------- */
+.sidebar {
+  position: sticky;
+  top: 0;
+  block-size: 100dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--paper);
+  /* The studio's ID-card guilloche, barely there. */
+  background-image: url("data:image/svg+xml,%3Csvg width='120' height='14' viewBox='0 0 120 14' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 7 Q 30 2 60 7 T 120 7' fill='none' stroke='%23C9B88C' stroke-width='0.7' opacity='0.35'/%3E%3C/svg%3E");
+  background-size: 120px 14px;
+  border-right: 1px solid var(--line);
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
+.side-head {
+  padding: 22px 20px 0;
+}
+
+/* The parts of the site, About, Games, Packages and Blog, each under its own sign. */
+.side-body {
+  flex: 1;
+  display: grid;
+  align-content: start;
+  gap: 28px;
+  padding: 24px 16px 28px;
+}
+
+.side-title {
+  display: inline-block;
+  margin: 0 4px 12px;
+  /* Fraunces at its softest and wonkiest: a warm, glazed-donut sign for the studio shelf. */
+  font: 900 34px/0.95 'Fraunces', var(--font-display);
+  font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1;
+  letter-spacing: -0.035em;
+  text-decoration: none;
+  color: var(--mahogany);
+  transition: color 0.2s;
+}
+.side-title:hover {
+  color: var(--caramel);
+}
+
+/* Page sections (the about page, a blog post): a quiet list with an ink bar on the one being read. */
+.side-links {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 4px;
+  border-left: 2px solid var(--line);
+}
+
+.side-links a {
+  position: relative;
+  display: block;
+  padding: 6px 12px 6px 16px;
+  color: var(--muted);
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  text-decoration: none;
+  border-radius: 0 7px 7px 0;
+  transition: color 0.15s, background-color 0.15s;
+}
+
+.side-links a::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  border-radius: 1px;
+  background: var(--mahogany);
+  transform: scaleY(0);
+  transition: transform 0.25s var(--ease-out);
+}
+
+.side-links a:hover {
+  color: var(--mahogany);
+  background: rgb(230 217 184 / 0.55);
+}
+
+.side-links a[aria-current] {
+  color: var(--mahogany);
+}
+.side-links a[aria-current]::before {
+  transform: scaleY(1);
+}
+
+/* ---- Blog posts: title and date; the open post lists its sections ---- */
+.posts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.post-link {
+  display: grid;
+  gap: 2px;
+  padding: 10px 12px;
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+.post-link:hover {
+  background: rgb(230 217 184 / 0.55);
+}
+.post-link[aria-current] {
+  background: var(--card);
+  border-color: var(--line-strong);
+}
+
+.post-link__title {
+  font: 700 15px/1.3 var(--font-display);
+  letter-spacing: -0.015em;
+}
+.post-link__date {
+  color: var(--muted);
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+.post-toc {
+  margin: 8px 0 0 12px;
+}
+.post-toc a {
+  font-size: 14px;
+  padding-block: 5px;
+}
+
+.pkgs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+
+/* The card (not just its plate) stacks above the tree: view-transition-name makes the
+   card a stacking context, so a z-index on the plate alone no longer reaches the tree. */
+.pkg__card {
+  position: relative;
+  z-index: 2;
+  display: block;
+  text-decoration: none;
+  border-radius: 12px;
+}
+
+.pkg__card[aria-disabled] {
+  cursor: default;
+}
+
+/* ---- Section tree (layout only; colours come from each package's skin) ---- */
+.tree {
+  position: relative;
+  z-index: 1;
+  margin: -8px 5px 0;
+  padding: 16px 8px 8px;
+}
+
+.tree__groups {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.grp__row {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  align-items: center;
+}
+
+.grp__toggle {
+  inline-size: 24px;
+  block-size: 28px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.grp__toggle svg {
+  inline-size: 10px;
+  block-size: 10px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.25s var(--ease-out);
+}
+
+.grp[data-open] .grp__toggle svg {
+  transform: rotate(90deg);
+}
+
+.grp__link {
+  display: block;
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+  text-decoration: none;
+  transition: color 0.15s, background-color 0.15s;
+}
+
+.grp__body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s var(--ease-out);
+}
+
+.grp__body > .grp__kids {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.grp[data-open] > .grp__body,
+html:not(.js) .grp__body {
+  grid-template-rows: 1fr;
+}
+
+.grp__kids {
+  list-style: none;
+  margin: 0 0 0 31px;
+  padding: 0;
+  border-left: 2px solid transparent;
+}
+
+.grp__kids li:first-child {
+  padding-top: 2px;
+}
+.grp__kids li:last-child {
+  padding-bottom: 6px;
+}
+
+.grp__kids a {
+  position: relative;
+  display: block;
+  padding: 4px 10px 4px 12px;
+  font-size: 13.5px;
+  line-height: 1.4;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.grp__kids a::before {
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: 5px;
+  bottom: 5px;
+  width: 2px;
+  border-radius: 1px;
+  transform: scaleY(0);
+  transition: transform 0.25s var(--ease-out);
+}
+
+.grp__kids a[aria-current]::before {
+  transform: scaleY(1);
+}
+
+.tree__changelog {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 8px 0 0;
+  padding: 8px 8px 6px 32px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  border-top: 1px dashed transparent;
+}
+
+/* ---- Footer ---- */
+.side-foot {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 14px 16px 18px;
+  border-top: 1px solid var(--line);
+}
+
+.foot-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--mahogany);
+  background: var(--card);
+  border: 1px solid var(--line-strong);
+  border-radius: 9px;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.foot-link svg {
+  inline-size: 16px;
+  block-size: 16px;
+  fill: currentColor;
+}
+
+.foot-link:hover {
+  background: var(--mahogany);
+  border-color: var(--mahogany);
+  color: var(--paper);
+}
+
+/* --------------------------------------------------------------------------
+   Mobile: top bar + drawer
+   -------------------------------------------------------------------------- */
+.topbar,
+.scrim {
+  display: none;
+}
+
+@media (max-width: 959px) {
+  .frame {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    block-size: 56px;
+    padding: 0 16px;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .topbar__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font: 900 23px/1 'Fraunces', var(--font-display);
+    font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1;
+    letter-spacing: -0.03em;
+    text-decoration: none;
+  }
+
+  .topbar__menu {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    background: var(--card);
+    color: var(--mahogany);
+    border: 1px solid var(--line-strong);
+    border-radius: 9px;
+    font: 600 14px/1 var(--font-sans);
+    cursor: pointer;
+  }
+
+  .topbar__bars,
+  .topbar__bars::before,
+  .topbar__bars::after {
+    display: block;
+    inline-size: 14px;
+    block-size: 1.5px;
+    background: currentColor;
+    border-radius: 1px;
+  }
+  .topbar__bars {
+    position: relative;
+  }
+  .topbar__bars::before,
+  .topbar__bars::after {
+    content: '';
+    position: absolute;
+    left: 0;
+  }
+  .topbar__bars::before {
+    top: -4.5px;
+  }
+  .topbar__bars::after {
+    top: 4.5px;
+  }
+
+  .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 50;
+    inline-size: min(var(--sidebar-w), 88vw);
+    transform: translateX(-102%);
+    transition:
+      transform 0.32s var(--ease-out),
+      box-shadow 0.32s var(--ease-out);
+  }
+
+  /* The shadow only while open: on the closed drawer its blur bled onto the page's left edge. */
+  body[data-nav-open] .sidebar {
+    transform: none;
+    box-shadow: 8px 0 30px rgb(98 43 20 / 0.18);
+  }
+
+  .scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background: rgb(40 20 10 / 0.35);
+  }
+  .scrim[hidden] {
+    display: none;
+  }
+
+  html[data-theme='combo'] .topbar {
+    border-bottom-color: #0c0a14;
+  }
+  html[data-theme='kings'] .topbar {
+    border-bottom-color: #0a1a12;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Page transitions (cross-document, no JavaScript)
+   -------------------------------------------------------------------------- */
+@view-transition {
+  navigation: auto;
+}
+
+.sidebar {
+  view-transition-name: sidebar;
+}
+.main {
+  view-transition-name: main;
+}
+
+@keyframes vt-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes vt-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+::view-transition-old(main) {
+  animation: 120ms ease-in both vt-out;
+}
+::view-transition-new(main) {
+  animation: 340ms var(--ease-out) both vt-in;
+}
+
+/* Sidebar: each plate and section tree is captured on its own (view-transition-name set
+   inline in Sidebar.astro), so opening a package slides its tree out from under the plate
+   and the plates below glide to their new places. */
+.pkg__card {
+  view-transition-class: pkg-plate;
+}
+.tree {
+  view-transition-class: pkg-tree;
+}
+
+::view-transition-group(*.pkg-plate),
+::view-transition-group(*.pkg-tree) {
+  animation-duration: 460ms;
+  animation-timing-function: var(--ease-out);
+}
+
+/* Transition layers stack in DOM order, which would put each tree above its plate.
+   Keep the plates on top, as on the page, so the tree slides out from underneath. */
+::view-transition-group(*.pkg-plate) {
+  z-index: 2;
+}
+::view-transition-group(*.pkg-tree) {
+  z-index: 1;
+}
+
+@keyframes tree-open {
+  from {
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(-14px);
+  }
+  to {
+    clip-path: inset(0 0 -12px 0);
+  }
+}
+@keyframes tree-close {
+  from {
+    clip-path: inset(0 0 -12px 0);
+  }
+  to {
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(-14px);
+  }
+}
+
+/* Opening a package: the tree exists only on the new page. */
+::view-transition-new(*.pkg-tree):only-child {
+  animation: 460ms var(--ease-out) both tree-open;
+}
+/* Leaving a package: the tree exists only on the old page. */
+::view-transition-old(*.pkg-tree):only-child {
+  animation: 280ms ease-in both tree-close;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

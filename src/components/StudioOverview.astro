@@ -1,0 +1,162 @@
+---
+import BrandIcon from './BrandIcon.astro';
+
+interface Props {
+  email: string;
+  unityAssetStore: string;
+  steam: string;
+  discord: string;
+}
+
+const { email, unityAssetStore, steam, discord } = Astro.props;
+
+const cards = [
+  { icon: 'unity', role: 'Publisher', title: 'Unity Asset Store', note: 'Developer Tools', href: unityAssetStore, external: true },
+  { icon: 'steam', role: 'Developer', title: 'Steam Profile', note: 'Coming Soon...', href: steam, external: true },
+  { icon: 'discord', role: 'Community', title: 'Discord HQ', note: 'Racket Kings Server', href: discord, external: true },
+  { icon: 'mail', role: 'Inquiries', title: 'Contact', note: email, href: `mailto:${email}`, external: false },
+];
+---
+
+<ul class="desk" role="list">
+  {
+    cards.map((c) => (
+      <li>
+        <a
+          class="spot"
+          href={c.href}
+          {...(c.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+        >
+          <span class="spot__icon">
+            <BrandIcon id={c.icon} class="spot__svg" />
+          </span>
+          <span class="spot__role">{c.role}</span>
+          <span class="spot__text">
+            <span class="spot__title">{c.title}</span>
+            <span class="spot__note">{c.note}</span>
+          </span>
+        </a>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .desk {
+    list-style: none;
+    margin: clamp(40px, 6vw, 64px) 0 0;
+    padding: 0;
+    display: grid;
+    /* Four across or two by two, never three and an orphan. */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  @media (min-width: 1300px) {
+    .desk {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .spot {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      'icon role'
+      'text text';
+    align-items: start;
+    row-gap: 28px;
+    block-size: 100%;
+    padding: 18px 18px 20px;
+    text-decoration: none;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    transition:
+      border-color 0.25s,
+      box-shadow 0.25s,
+      transform 0.35s var(--ease-out);
+  }
+
+  .spot:hover,
+  .spot:focus-visible {
+    border-color: var(--caramel);
+    box-shadow: 0 14px 30px -14px rgb(98 43 20 / 0.4);
+    transform: translateY(-3px);
+  }
+
+  .spot__icon {
+    grid-area: icon;
+    inline-size: 44px;
+    block-size: 44px;
+    display: grid;
+    place-items: center;
+    background: var(--desk);
+    border: 1px solid var(--line-strong);
+    border-radius: 11px;
+    transition: transform 0.4s var(--ease-spring);
+  }
+  .spot:hover .spot__icon {
+    transform: rotate(-6deg);
+  }
+
+  .spot__icon :global(.spot__svg) {
+    inline-size: 22px;
+    block-size: 22px;
+  }
+
+  .spot__role {
+    grid-area: role;
+    justify-self: end;
+    padding: 2px 9px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--muted);
+    font-size: 12.5px;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .spot__text {
+    grid-area: text;
+    display: grid;
+    gap: 3px;
+    min-width: 0;
+  }
+
+  .spot__title {
+    font: 700 19px/1.2 var(--font-display);
+    letter-spacing: -0.025em;
+  }
+
+  .spot__note {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+
+  /* Phones: one compact row per destination. */
+  @media (max-width: 520px) {
+    .desk {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 10px;
+    }
+    .spot {
+      grid-template-columns: auto 1fr;
+      grid-template-areas:
+        'icon text'
+        'icon role';
+      align-items: center;
+      column-gap: 14px;
+      row-gap: 8px;
+      padding: 14px;
+    }
+    .spot__role {
+      justify-self: start;
+    }
+    .spot__title {
+      font-size: 17px;
+    }
+  }
+</style>

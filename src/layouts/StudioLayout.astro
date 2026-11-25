@@ -1,0 +1,219 @@
+---
+// Every page of the site: the shared studio sidebar, the mobile top bar and drawer,
+// and a main column each page skins for itself.
+import '../styles/shell.css';
+import Sidebar, { type NavGroup, type SiteSection } from '../components/Sidebar.astro';
+import { href, home } from '../data/packages';
+import { gameHref } from '../data/games';
+import { postHref } from '../data/blog';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Which part of the site this page belongs to. */
+  section: SiteSection;
+  /** Visual theme of the main column. The sidebar keeps the studio look on every page. */
+  theme?: 'shell' | 'combo' | 'kings';
+  /** Slug of the game, package or post being shown. */
+  current?: string;
+  /** Docs: which page of that package is open. */
+  page?: 'guide' | 'changelog';
+  /** Docs: the guide's sections, H2 groups with their H3 children. */
+  sections?: NavGroup[];
+  image?: string;
+  imageAlt?: string;
+}
+
+const {
+  title,
+  description,
+  section,
+  theme = 'shell',
+  current,
+  page,
+  sections,
+  image = '/og-image.webp',
+  imageAlt = 'Zero Work Studios',
+} = Astro.props;
+
+// In production links point at the real site. In dev (including tunnel previews used to test
+// social cards) they follow the current host, forced to https because preview bots drop http images.
+const httpsUnlessLocal = (u: string) =>
+  /^http:\/\/(localhost|127\.0\.0\.1)/.test(u) ? u : u.replace(/^http:\/\//, 'https://');
+const origin = import.meta.env.PROD ? (Astro.site ?? new URL('https://zeroworkstudios.github.io')) : Astro.url;
+const canonical = httpsUnlessLocal(new URL(Astro.url.pathname, origin).href);
+const imageUrl = httpsUnlessLocal(new URL(image, origin).href);
+
+const themeColor = { shell: '#F4ECDA', combo: '#1B1927', kings: '#0D1813' }[theme];
+const brand = {
+  about: { label: 'About', to: home() },
+  games: { label: 'Games', to: gameHref() },
+  docs: { label: 'Packages', to: href() },
+  blog: { label: 'Blog', to: postHref() },
+}[section];
+---
+
+<!doctype html>
+<html lang="en" data-theme={theme}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content={themeColor} />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍩</text></svg>"
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:type" content="image/webp" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+    <meta name="twitter:site" content="@zeroworkstudios" />
+    <meta name="twitter:creator" content="@zeroworkstudios" />
+
+    <link rel="preload" href="/fonts/lemonmilk-bold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Studio faces: Bricolage Grotesque (display) and Inter (text). -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Inter:wght@400..700&display=swap"
+    />
+    <!-- Sidebar titles (Fraunces) and plate faces, subset to the few letters they use. -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Big+Shoulders+Display:wght@800&family=Fraunces:opsz,wght,SOFT,WONK@144,900,100,1&family=JetBrains+Mono:wght@600..800&text=AboutGamesPackagesBlogGASWORKSRACKETINLD%3BgasworkSceneStatsftp0123456789&display=swap"
+    />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="topbar">
+      <a class="topbar__brand" href={brand.to}>
+        <span class="studio__mark" aria-hidden="true">ZW</span>
+        <span>{brand.label}</span>
+      </a>
+      <button class="topbar__menu" type="button" aria-controls="sidebar" aria-expanded="false">
+        <span class="topbar__bars" aria-hidden="true"></span>
+        Menu
+      </button>
+    </header>
+
+    <div class="frame">
+      <Sidebar section={section} current={current} page={page} sections={sections} />
+      <div class="scrim" hidden></div>
+      <main id="main" class="main" data-theme={theme}>
+        <slot />
+      </main>
+    </div>
+
+    <script is:inline>
+      (() => {
+        const btn = document.querySelector('.topbar__menu');
+        const scrim = document.querySelector('.scrim');
+        const side = document.getElementById('sidebar');
+        const setDrawer = (open) => {
+          document.body.toggleAttribute('data-nav-open', open);
+          btn.setAttribute('aria-expanded', String(open));
+          scrim.hidden = !open;
+          if (open) side.querySelector('a')?.focus();
+        };
+        btn.addEventListener('click', () => setDrawer(!document.body.hasAttribute('data-nav-open')));
+        scrim.addEventListener('click', () => setDrawer(false));
+        addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && document.body.hasAttribute('data-nav-open')) {
+            setDrawer(false);
+            btn.focus();
+          }
+        });
+
+        // ---- Section tree: foldout groups --------------------------------------
+        const groups = new Map([...side.querySelectorAll('.grp')].map((g) => [g.dataset.group, g]));
+        const setOpen = (g, open, pinned) => {
+          if (!g) return;
+          g.toggleAttribute('data-open', open);
+          g.querySelector('.grp__toggle')?.setAttribute('aria-expanded', String(open));
+          if (pinned !== undefined) g.toggleAttribute('data-pinned', pinned);
+        };
+
+        side.addEventListener('click', (e) => {
+          const toggle = e.target.closest('.grp__toggle');
+          if (toggle) {
+            const g = toggle.closest('.grp');
+            const open = !g.hasAttribute('data-open');
+            setOpen(g, open, open);
+            return;
+          }
+          const link = e.target.closest('a');
+          if (!link) return;
+          if (link.classList.contains('grp__link')) setOpen(link.closest('.grp'), true);
+          if (matchMedia('(max-width: 959px)').matches) setDrawer(false);
+        });
+
+        // ---- Scroll spy: highlight the section being read, open its group ------
+        // Works for the docs section tree, the about page and a blog post's sections alike.
+        const links = new Map([...side.querySelectorAll('[data-section]')].map((a) => [a.dataset.section, a]));
+        const targets = [...links.keys()].map((id) => document.getElementById(id)).filter(Boolean);
+        if (!targets.length) return;
+
+        let active;
+        const activate = (id) => {
+          const a = links.get(id);
+          if (!a || a === active) return;
+          active?.removeAttribute('aria-current');
+          side.querySelector('.grp[data-active]')?.removeAttribute('data-active');
+          active = a;
+          a.setAttribute('aria-current', 'location');
+          const g = groups.get(a.dataset.parent ?? id);
+          g?.setAttribute('data-active', '');
+          // Follow the reader: open this group, fold the others they did not open themselves.
+          groups.forEach((other) => other !== g && !other.hasAttribute('data-pinned') && setOpen(other, false));
+          if (g?.querySelector('.grp__kids')) setOpen(g, true);
+          if (a.dataset.parent || g?.querySelector('.grp__kids')) {
+            const r = a.getBoundingClientRect();
+            const s = side.getBoundingClientRect();
+            // Scroll only the sidebar (scrollIntoView would also move the page).
+            if (r.top < s.top + 80 || r.bottom > s.bottom - 80) side.scrollBy({ top: r.top - s.top - s.height / 2, behavior: 'smooth' });
+          }
+        };
+
+        // The section being read is the last one whose heading has passed a line a third of the
+        // way down the window. Once the page can't scroll further, the last section wins: short
+        // final sections (Channels on the about page) never reach that line.
+        let queued = false;
+        const update = () => {
+          queued = false;
+          const root = document.documentElement;
+          if (root.scrollTop > 0 && innerHeight + root.scrollTop >= root.scrollHeight - 2) {
+            return activate(targets.at(-1).id);
+          }
+          const line = innerHeight / 3;
+          let current = targets[0];
+          for (const t of targets) if (t.getBoundingClientRect().top <= line) current = t;
+          activate(current.id);
+        };
+        const queue = () => {
+          if (!queued) (queued = true), requestAnimationFrame(update);
+        };
+        addEventListener('scroll', queue, { passive: true });
+        addEventListener('resize', queue, { passive: true });
+        update();
+      })();
+    </script>
+  </body>
+</html>

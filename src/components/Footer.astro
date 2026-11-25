@@ -1,0 +1,45 @@
+---
+interface Props {
+  name?: string;
+}
+
+const { name = 'Zero Work Studios' } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<footer class="colophon">
+  <a class="colophon__studio" href={import.meta.env.BASE_URL}>
+    <span class="studio__mark" aria-hidden="true">ZW</span>
+    <span>&copy; {year} {name}. All rights reserved.</span>
+  </a>
+  <span>No donuts were confiscated without cause</span>
+</footer>
+
+<style>
+  .colophon {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 24px;
+    margin-top: clamp(72px, 10vw, 120px);
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-size: 13.5px;
+    color: var(--muted);
+  }
+
+  .colophon__studio {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .colophon__studio:hover {
+    color: var(--mahogany);
+  }
+  .colophon__studio:hover .studio__mark {
+    transform: rotate(4deg) scale(1.06);
+  }
+</style>

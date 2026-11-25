@@ -1,0 +1,21 @@
+---
+// The about page lived at /about/ when it had its own repo. Send old links to the site root,
+// keeping any #anchor (/about/#hank lands on Hank). The meta refresh covers browsers without JS.
+const to = import.meta.env.BASE_URL;
+const canonical = new URL(to, Astro.site ?? 'https://zeroworkstudios.github.io').href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Zero Work Studios</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={canonical} />
+    <script is:inline define:vars={{ to }}>location.replace(to + location.search + location.hash);</script>
+    <meta http-equiv="refresh" content={`0;url=${to}`} />
+  </head>
+  <body>
+    <a href={to}>Zero Work Studios has moved to {canonical}</a>
+  </body>
+</html>
