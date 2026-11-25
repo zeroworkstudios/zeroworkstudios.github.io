@@ -4,7 +4,6 @@ import type { NavGroup } from '../../components/Sidebar.astro';
 // Shorter sidebar labels for long headings. Anything not listed keeps its heading text.
 const LABELS: Record<string, string> = {
   'ugui-textmesh-pro': 'uGUI',
-  'using-an-ai-coding-agent': 'AI coding agents',
   'breakcombo-and-resetscore': 'BreakCombo / ResetScore',
   'scene-layout-and-logging': 'Scene layout & logging',
 };

@@ -3,6 +3,7 @@ import StudioLayout from '../../../layouts/StudioLayout.astro';
 import ComboHero from '../../../packages/combo-counter/ComboHero.astro';
 import { Content } from '../../../content/combo-counter/Documentation.md';
 import { sections } from '../../../packages/combo-counter/sections';
+import { versions } from '../../../packages/combo-counter/versions';
 import { href } from '../../../data/packages';
 import '../../../packages/combo-counter/cc.css';
 ---
@@ -15,6 +16,7 @@ import '../../../packages/combo-counter/cc.css';
   current="combo-counter"
   page="guide"
   sections={sections}
+  versions={versions}
 >
   <div class="cc">
     <ComboHero />

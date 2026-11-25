@@ -151,16 +151,8 @@ a.pkg__card:active .plate--combo-counter {
   background: #e2e524;
 }
 
-.tree--combo-counter .tree__changelog {
-  color: #f4f1fa;
+.tree--combo-counter .tree__log {
   border-top-color: #3a3550;
-  border-radius: 0 0 6px 6px;
-}
-.tree--combo-counter .tree__changelog:hover {
-  color: #e2e524;
-}
-.tree--combo-counter .tree__changelog[aria-current] {
-  color: #e2e524;
 }
 .tree--combo-counter .tree__changelog-ver {
   padding: 1px 7px;

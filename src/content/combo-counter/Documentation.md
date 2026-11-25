@@ -24,10 +24,6 @@ public class PlayerCombat : MonoBehaviour
 
 Prefer to set it up by hand? Add **Combo Counter > Combo Counter** to a GameObject, pick the **Backend**, and follow the inspector: it says what the backend still needs and offers the fix. [Frameworks](#frameworks) lists what each backend needs.
 
-### Using an AI coding agent
-
-The package includes an agent skill, `Skills~/combo-counter/`, in the open Agent Skills format, and an `AGENTS.md` at the package root that points to it. Agents look for skills only in the project, so copy the `combo-counter` folder to `.agents/skills/` and `.claude/skills/` in your project. Claude Code, Codex, Cursor, Gemini CLI, GitHub Copilot and other agents will then use it when you ask them to work with Combo Counter. Copy it again after updating the package.
-
 ---
 
 ## The Setup window

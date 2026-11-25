@@ -12,8 +12,6 @@ export type PostLinks = {
   reddit?: string;
   /** The asset the post is about. */
   asset?: { name: string; url: string };
-  /** Subject line for the email button. */
-  emailSubject?: string;
 };
 
 export type PostEntry = {
@@ -38,16 +36,14 @@ const entries: PostEntry[] = [
         name: 'Combo Counter',
         url: 'https://assetstore.unity.com/packages/tools/gui/combo-counter-system-217635',
       },
-      emailSubject: 'UI framework benchmark',
     },
-    closing: 'Know one of these frameworks well, or ran the benchmark on other hardware? Reply on a thread or email me.',
+    closing: 'Know one of these frameworks well, or ran the benchmark on other hardware? Reply on a thread.',
     sectionLabels: {
-      'cpu-the-c-frameworks-are-cheap-the-javascript-ones-are-not': 'CPU time',
+      'cpu-the-c-frameworks-are-cheap-the-javascript-ones-are-not': 'CPU Time',
       'garbage-noesisgui-allocates-every-frame': 'Garbage',
-      'does-the-backend-or-the-graphics-api-change-anything': 'Backends and graphics APIs',
-      'scorecard-and-overall-ranking': 'Scorecard and ranking',
-      'high-stripping-and-the-linkxml-you-need-for-it': 'High stripping',
-      'what-i-take-from-it': 'What I take from it',
+      'does-the-backend-or-the-graphics-api-change-anything': 'Backends and Graphics APIs',
+      'scorecard-and-overall-ranking': 'Scorecard and Ranking',
+      'what-i-take-from-it': 'What I Take from It',
     },
   },
 ];

@@ -1,24 +1,21 @@
 ---
-// A blog post's link row: the same post elsewhere, the asset it is about, and email.
+// A blog post's link row: the same post elsewhere, and the asset it is about.
 // A forum or Reddit link left empty in src/data/blog.ts is hidden from the built site
 // and shown as a dashed placeholder in `npm run dev`, as a reminder to fill it in.
 import BrandIcon from './BrandIcon.astro';
-import links from '../data/links.json';
 import type { Post } from '../data/blog';
 
 interface Props {
   post: Post;
 }
 const { post } = Astro.props;
-const { forum, reddit, asset, emailSubject } = post.links;
-const email = `mailto:${links.studio.email}${emailSubject ? `?subject=${encodeURIComponent(emailSubject)}` : ''}`;
+const { forum, reddit, asset } = post.links;
 
 type Pill = { label: string; icon: string; url?: string };
 const pills: Pill[] = [
   { label: 'Unity Discussions thread', icon: 'unity', url: forum },
   { label: 'Reddit thread', icon: 'reddit', url: reddit },
   ...(asset ? [{ label: `Get ${asset.name}`, icon: 'bolt', url: asset.url }] : []),
-  { label: 'Email me', icon: 'mail', url: email },
 ].filter((p) => p.url || import.meta.env.DEV);
 ---
 
@@ -27,7 +24,7 @@ const pills: Pill[] = [
     pills.map((p) => (
       <li>
         {p.url ? (
-          <a class="post-pill" href={p.url} rel={p.url.startsWith('mailto:') ? undefined : 'noopener'}>
+          <a class="post-pill" href={p.url} rel="noopener">
             {p.icon === 'bolt' ? (
               <span class="post-pill__bolt" aria-hidden="true">
                 <svg viewBox="0 0 24 24">

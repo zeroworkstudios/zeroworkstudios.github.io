@@ -2,7 +2,7 @@
 // Every page of the site: the shared studio sidebar, the mobile top bar and drawer,
 // and a main column each page skins for itself.
 import '../styles/shell.css';
-import Sidebar, { type NavGroup, type SiteSection } from '../components/Sidebar.astro';
+import Sidebar, { type NavGroup, type NavLink, type SiteSection } from '../components/Sidebar.astro';
 import { href, home } from '../data/packages';
 import { gameHref } from '../data/games';
 import { postHref } from '../data/blog';
@@ -20,6 +20,8 @@ interface Props {
   page?: 'guide' | 'changelog';
   /** Docs: the guide's sections, H2 groups with their H3 children. */
   sections?: NavGroup[];
+  /** Docs: the changelog's releases, newest first. */
+  versions?: NavLink[];
   image?: string;
   imageAlt?: string;
 }
@@ -32,6 +34,7 @@ const {
   current,
   page,
   sections,
+  versions,
   image = '/og-image.webp',
   imageAlt = 'Zero Work Studios',
 } = Astro.props;
@@ -88,10 +91,10 @@ const brand = {
     <link rel="preload" href="/fonts/lemonmilk-bold.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Studio faces: Bricolage Grotesque (display) and Inter (text). -->
+    <!-- Studio faces: Bricolage Grotesque (display) and Manrope (text). -->
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Inter:wght@400..700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Manrope:wght@400..800&display=swap"
     />
     <!-- Sidebar titles (Fraunces) and plate faces, subset to the few letters they use. -->
     <link
@@ -115,7 +118,7 @@ const brand = {
     </header>
 
     <div class="frame">
-      <Sidebar section={section} current={current} page={page} sections={sections} />
+      <Sidebar section={section} current={current} page={page} sections={sections} versions={versions} />
       <div class="scrim" hidden></div>
       <main id="main" class="main" data-theme={theme}>
         <slot />
@@ -196,8 +199,36 @@ const brand = {
         // way down the window. Once the page can't scroll further, the last section wins: short
         // final sections (Channels on the about page) never reach that line.
         let queued = false;
+        // After a sidebar click the clicked section is shown at once, and the spy sits out the
+        // smooth scroll that follows. Otherwise every section it passes would light up and fold
+        // its group open and shut on the way. The hold ends once scrolling has been quiet briefly,
+        // or as soon as the reader takes the wheel or touches the screen.
+        let held = false;
+        let holdTimer;
+        const hold = (ms) => {
+          held = true;
+          clearTimeout(holdTimer);
+          holdTimer = setTimeout(() => (held = false), ms);
+        };
+        const release = () => {
+          if (!held) return;
+          held = false;
+          clearTimeout(holdTimer);
+        };
+        side.addEventListener('click', (e) => {
+          const a = e.target.closest('a[data-section]');
+          if (!a || a.pathname !== location.pathname || !document.getElementById(a.dataset.section)) return;
+          activate(a.dataset.section);
+          hold(400); // long enough for the smooth scroll to begin
+        });
+        addEventListener('wheel', release, { passive: true });
+        addEventListener('touchstart', release, { passive: true });
+        addEventListener('keydown', release);
+        addEventListener('mousedown', release); // includes dragging the scrollbar
+
         const update = () => {
           queued = false;
+          if (held) return;
           const root = document.documentElement;
           if (root.scrollTop > 0 && innerHeight + root.scrollTop >= root.scrollHeight - 2) {
             return activate(targets.at(-1).id);
@@ -208,11 +239,26 @@ const brand = {
           activate(current.id);
         };
         const queue = () => {
+          if (held) return hold(150); // still scrolling to a clicked section
           if (!queued) (queued = true), requestAnimationFrame(update);
         };
         addEventListener('scroll', queue, { passive: true });
         addEventListener('resize', queue, { passive: true });
-        update();
+
+        // Arriving on a section from another page (a guide section picked on the changelog): the
+        // page starts at the top and the browser then scrolls down to the section. Show that
+        // section at once and sit out the scroll, the same as for a click on this page. The hold
+        // is longer here because the scroll can wait on fonts and images.
+        let hash = '';
+        try {
+          hash = decodeURIComponent(location.hash.slice(1));
+        } catch {}
+        if (hash && links.has(hash) && document.getElementById(hash)) {
+          activate(hash);
+          hold(1000);
+        } else {
+          update();
+        }
       })();
     </script>
   </body>

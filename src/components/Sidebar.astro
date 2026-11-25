@@ -5,6 +5,7 @@ import GamePlate from './GamePlate.astro';
 import { packages, href, home } from '../data/packages';
 import { games, gameHref } from '../data/games';
 import { posts, postHref, formatDate } from '../data/blog';
+import links from '../data/links.json';
 
 export type NavLink = { id: string; label: string };
 export type NavGroup = NavLink & { children: NavLink[] };
@@ -19,9 +20,11 @@ interface Props {
   page?: 'guide' | 'changelog';
   /** Docs: the guide's sections, H2 groups with their H3 children. */
   sections?: NavGroup[];
+  /** Docs: the changelog's releases, newest first. */
+  versions?: NavLink[];
 }
 
-const { section, current, page, sections = [] } = Astro.props;
+const { section, current, page, sections = [], versions = [] } = Astro.props;
 const here = (s: SiteSection) => section === s && !current;
 
 /** The about page's sections. `platforms` is the studio section's long-standing anchor. */
@@ -97,6 +100,11 @@ const aboutLinks: NavLink[] = [
           const open = pkg.slug === current;
           const guide = href(`${pkg.slug}/`);
           const to = (id: string) => (page === 'guide' ? `#${id}` : `${guide}#${id}`);
+          // Only the guide drives the scroll spy. Other pages (the changelog) can share heading ids
+          // with it, such as #upgrading-from-1x, and would otherwise light up the guide's sections.
+          const spy = (id: string) => (page === 'guide' ? id : undefined);
+          const log = href(`${pkg.slug}/changelog/`);
+          const onLog = open && page === 'changelog';
           return (
             <li class:list={['pkg', { 'pkg--open': open }]}>
               {pkg.status === 'live' ? (
@@ -140,7 +148,7 @@ const aboutLinks: NavLink[] = [
                           ) : (
                             <span class="grp__spacer" aria-hidden="true" />
                           )}
-                          <a class="grp__link" href={to(g.id)} data-section={g.id}>
+                          <a class="grp__link" href={to(g.id)} data-section={spy(g.id)}>
                             {g.label}
                           </a>
                         </div>
@@ -149,7 +157,7 @@ const aboutLinks: NavLink[] = [
                             <ul class="grp__kids" role="list">
                               {g.children.map((c) => (
                                 <li>
-                                  <a href={to(c.id)} data-section={c.id} data-parent={g.id}>
+                                  <a href={to(c.id)} data-section={spy(c.id)} data-parent={g.id}>
                                     {c.label}
                                   </a>
                                 </li>
@@ -160,10 +168,48 @@ const aboutLinks: NavLink[] = [
                       </li>
                     ))}
                   </ul>
-                  <a class="tree__changelog" href={href(`${pkg.slug}/changelog/`)} aria-current={page === 'changelog' ? 'page' : undefined}>
-                    <span>Changelog</span>
-                    <span class="tree__changelog-ver">v{pkg.version}</span>
-                  </a>
+                  {/* The changelog: a group like the guide's, its releases newest first. It starts
+                      open on the changelog page, where its releases drive the scroll spy. */}
+                  <div class="grp tree__log" data-group="changelog" data-open={onLog ? '' : undefined}>
+                    <div class="grp__row">
+                      {versions.length > 0 ? (
+                        <button
+                          class="grp__toggle"
+                          type="button"
+                          aria-expanded={String(onLog)}
+                          aria-controls={`grp-changelog-${pkg.slug}`}
+                          aria-label="Changelog versions"
+                        >
+                          <svg viewBox="0 0 10 10" aria-hidden="true">
+                            <path d="M3 1.5 7 5 3 8.5" />
+                          </svg>
+                        </button>
+                      ) : (
+                        <span class="grp__spacer" aria-hidden="true" />
+                      )}
+                      <a class="grp__link tree__changelog" href={log} aria-current={onLog ? 'page' : undefined}>
+                        <span>Changelog</span>
+                        <span class="tree__changelog-ver">v{pkg.version}</span>
+                      </a>
+                    </div>
+                    {versions.length > 0 && (
+                      <div class="grp__body" id={`grp-changelog-${pkg.slug}`}>
+                        <ul class="grp__kids" role="list">
+                          {versions.map((v) => (
+                            <li>
+                              <a
+                                href={onLog ? `#${v.id}` : `${log}#${v.id}`}
+                                data-section={onLog ? v.id : undefined}
+                                data-parent="changelog"
+                              >
+                                {v.label}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
             </li>
@@ -175,7 +221,7 @@ const aboutLinks: NavLink[] = [
 
   <nav class="side-group" aria-labelledby="side-blog-title">
     <a class="side-title" id="side-blog-title" href={postHref()} aria-current={here('blog') ? 'page' : undefined}>
-      Blog
+      Blogs
     </a>
     <ul class="posts" role="list">
       {
@@ -209,15 +255,14 @@ const aboutLinks: NavLink[] = [
   </div>
 
   <div class="side-foot">
-    <a class="foot-link" href="https://assetstore.unity.com/publishers/66172" rel="noopener">
+    <a class="foot-link" href={`mailto:${links.studio.email}`}>
       <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path
-          d="m12.9288 4.2939 3.7997 2.1929c.1366.077.1415.2905 0 .3675l-4.515 2.6076a.4192.4192 0 0 1-.4246 0L7.274 6.8543c-.139-.0745-.1415-.293 0-.3675l3.7972-2.193V0L1.3758 5.5977V16.793l3.7177-2.1456v-4.3858c-.0025-.1565.1813-.2682.318-.1838l4.5148 2.6076a.4252.4252 0 0 1 .2136.3676v5.2127c.0025.1565-.1813.2682-.3179.1838l-3.7996-2.1929-3.7178 2.1457L12 24l9.6954-5.5977-3.7178-2.1457-3.7996 2.1929c-.1341.082-.3229-.0248-.3179-.1838V13.053c0-.1565.087-.2956.2136-.3676l4.5149-2.6076c.134-.082.3228.0224.3179.1838v4.3858l3.7177 2.1456V5.5977L12.9288 0Z"
-        ></path>
+        <rect x="2.5" y="4.5" width="19" height="15" rx="2.5" fill="none" stroke="currentColor" stroke-width="2.2"></rect>
+        <path d="m3 7 9 6 9-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
       </svg>
-      <span>Asset Store</span>
+      <span>Contact</span>
     </a>
-    <a class="foot-link" href="https://discord.gg/e2wWESQXw2" rel="noopener">
+    <a class="foot-link" href={links.studio.discord} rel="noopener">
       <svg viewBox="0 0 127.14 96.36" aria-hidden="true">
         <path
           d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.250a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.410,65.690,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"
