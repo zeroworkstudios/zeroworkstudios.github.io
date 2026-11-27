@@ -17,7 +17,7 @@ interface Props {
   /** Slug of the game, package or post being shown. */
   current?: string;
   /** Docs: which page of that package is open. */
-  page?: 'guide' | 'changelog';
+  page?: 'guide' | 'changelog' | 'license';
   /** Docs: the guide's sections, H2 groups with their H3 children. */
   sections?: NavGroup[];
   /** Docs: the changelog's releases, newest first. */
@@ -43,7 +43,7 @@ const {
 // social cards) they follow the current host, forced to https because preview bots drop http images.
 const httpsUnlessLocal = (u: string) =>
   /^http:\/\/(localhost|127\.0\.0\.1)/.test(u) ? u : u.replace(/^http:\/\//, 'https://');
-const origin = import.meta.env.PROD ? (Astro.site ?? new URL('https://zeroworkstudios.github.io')) : Astro.url;
+const origin = import.meta.env.PROD ? (Astro.site ?? new URL('https://zeroworkstudios.com')) : Astro.url;
 const canonical = httpsUnlessLocal(new URL(Astro.url.pathname, origin).href);
 const imageUrl = httpsUnlessLocal(new URL(image, origin).href);
 

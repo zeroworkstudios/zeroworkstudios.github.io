@@ -17,7 +17,7 @@ interface Props {
   /** Slug of the game, package or post being shown, or undefined on that part's home. */
   current?: string;
   /** Docs: which page of that package is open. */
-  page?: 'guide' | 'changelog';
+  page?: 'guide' | 'changelog' | 'license';
   /** Docs: the guide's sections, H2 groups with their H3 children. */
   sections?: NavGroup[];
   /** Docs: the changelog's releases, newest first. */
@@ -105,6 +105,8 @@ const aboutLinks: NavLink[] = [
           const spy = (id: string) => (page === 'guide' ? id : undefined);
           const log = href(`${pkg.slug}/changelog/`);
           const onLog = open && page === 'changelog';
+          const lic = href(`${pkg.slug}/license/`);
+          const onLic = open && page === 'license';
           return (
             <li class:list={['pkg', { 'pkg--open': open }]}>
               {pkg.status === 'live' ? (
@@ -209,6 +211,14 @@ const aboutLinks: NavLink[] = [
                         </ul>
                       </div>
                     )}
+                  </div>
+                  <div class="grp tree__license">
+                    <div class="grp__row">
+                      <span class="grp__spacer" aria-hidden="true" />
+                      <a class="grp__link" href={lic} aria-current={onLic ? 'page' : undefined}>
+                        License
+                      </a>
+                    </div>
                   </div>
                 </div>
               )}

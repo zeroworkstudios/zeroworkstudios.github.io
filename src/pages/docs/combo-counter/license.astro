@@ -1,0 +1,91 @@
+---
+// The package's LICENSE.md and Third Party Notices.md, synced into one License.md.
+// Package Manager links here through package.json's licensesUrl.
+import StudioLayout from '../../../layouts/StudioLayout.astro';
+import Tile from '../../../components/Tile.astro';
+import { Content } from '../../../content/combo-counter/License.md';
+import { sections } from '../../../packages/combo-counter/sections';
+import { versions } from '../../../packages/combo-counter/versions';
+import { packages, href } from '../../../data/packages';
+import '../../../packages/combo-counter/cc.css';
+
+const pkg = packages.find((p) => p.slug === 'combo-counter')!;
+---
+
+<StudioLayout
+  section="docs"
+  title="Combo Counter license | Zero Work Studios Docs"
+  description="Combo Counter's license (Unity Asset Store EULA) and the third-party components it includes."
+  theme="combo"
+  current="combo-counter"
+  page="license"
+  sections={sections}
+  versions={versions}
+>
+  <div class="cc">
+    <header class="lic-head" id="top">
+      <a class="lic-back" href={href('combo-counter/')}>
+        <Tile tile={pkg.tile} size={30} />
+        <span>Combo Counter</span>
+      </a>
+      <h1>License</h1>
+    </header>
+
+    <div class="cc-prose lic-body">
+      <Content />
+    </div>
+  </div>
+</StudioLayout>
+
+<style>
+  .lic-head {
+    padding-top: clamp(32px, 5vw, 64px);
+    scroll-margin-top: 80px;
+  }
+
+  .lic-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 14px 6px 6px;
+    font: 700 14px/1 var(--font-sans);
+    color: var(--cc-ink);
+    text-decoration: none;
+    background: var(--cc-yellow);
+    border: 2px solid var(--cc-ink);
+    border-radius: 10px;
+    box-shadow: 3px 4px 0 var(--cc-plate);
+    transition:
+      transform 0.2s var(--ease-out),
+      box-shadow 0.2s var(--ease-out);
+  }
+  .lic-back:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 5px 6px 0 var(--cc-plate);
+  }
+  .lic-back :global(.tile) {
+    transform: rotate(-4deg);
+  }
+
+  h1 {
+    margin: 22px 0 0;
+    font: 400 clamp(40px, 7vw, 76px) / 1 var(--cc-display);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--cc-yellow);
+    text-shadow: var(--outline-red);
+  }
+
+  /* LICENSE.md's own H1 duplicates the page title. */
+  .lic-body :global(h1) {
+    display: none;
+  }
+  .lic-body :global(h1 + p) {
+    margin-top: 28px;
+  }
+
+  /* The full license texts are long; keep the OFL block readable without a wide scroll. */
+  .lic-body :global(pre) {
+    white-space: pre-wrap;
+  }
+</style>

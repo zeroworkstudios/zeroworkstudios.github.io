@@ -7,6 +7,9 @@
 // - Documentation.md: drops the H1, intro and "Contents" list (the page hero and
 //   the sidebar replace them), up to the first `---` rule.
 // - Links to CHANGELOG.md point at the package's changelog page.
+// - LICENSE.md and "Third Party Notices.md" become one License.md for the license page:
+//   the license, then the notices one heading level down, with the links between the two
+//   files turned into anchors on that page.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -33,6 +36,36 @@ function rewriteLinks(md) {
   return md.replace(/\]\(CHANGELOG\.md(#[^)]*)?\)/g, (_, hash = '') => `](changelog/${hash})`);
 }
 
+/** One heading level down (# → ##), leaving fenced code blocks alone. */
+function demoteHeadings(md) {
+  let fenced = false;
+  return md
+    .split(/\r?\n/)
+    .map((line) => {
+      if (/^\s*(```|~~~)/.test(line)) fenced = !fenced;
+      return !fenced && /^#{1,5} /.test(line) ? '#' + line : line;
+    })
+    .join('\n');
+}
+
+/** LICENSE.md + "Third Party Notices.md" → License.md, or null when the package has no LICENSE.md. */
+function buildLicense(source) {
+  const licenseFile = path.join(source, 'LICENSE.md');
+  if (!fs.existsSync(licenseFile)) return null;
+  const license = fs
+    .readFileSync(licenseFile, 'utf8')
+    .replace(/\[Third Party Notices\.md\]/g, '[Third Party Notices]')
+    .replace(/\]\(Third%20Party%20Notices\.md(#[^)]*)?\)/g, (_, hash) => `](${hash ?? '#third-party-notices'})`);
+
+  const noticesFile = path.join(source, 'Third Party Notices.md');
+  if (!fs.existsSync(noticesFile)) return license;
+  // The license page's header carries id="top"; the notices' own "see LICENSE.md" points back up to it.
+  const notices = fs
+    .readFileSync(noticesFile, 'utf8')
+    .replace(/\[LICENSE\.md\]\(LICENSE\.md\)/g, '[the license above](#top)');
+  return `${license.trimEnd()}\n\n${demoteHeadings(notices)}`;
+}
+
 let failed = false;
 for (const pkg of packages) {
   const outDir = path.join(root, 'src', 'content', pkg.slug);
@@ -51,6 +84,12 @@ for (const pkg of packages) {
     const out = transform(fs.readFileSync(from, 'utf8'));
     fs.writeFileSync(path.join(outDir, file), out);
     console.log(`✓ ${pkg.slug}/${file}`);
+  }
+
+  const license = buildLicense(pkg.source);
+  if (license) {
+    fs.writeFileSync(path.join(outDir, 'License.md'), license);
+    console.log(`✓ ${pkg.slug}/License.md`);
   }
 
   const manifest = path.join(pkg.source, 'package.json');
