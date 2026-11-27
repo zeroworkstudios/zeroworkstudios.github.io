@@ -66,9 +66,11 @@ const brand = {
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <meta name="theme-color" content={themeColor} />
-    <!-- The brand mark, built by `npm run brand`. -->
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- Hank's donut. -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍩</text></svg>"
+    />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
@@ -107,7 +109,7 @@ const brand = {
 
     <header class="topbar">
       <a class="topbar__brand" href={brand.to}>
-        <span class="studio__mark" aria-hidden="true"><img src="/brand/mark.png" alt="" width="30" height="30" /></span>
+        <span class="studio__mark" aria-hidden="true">🍩</span>
         <span>{brand.label}</span>
       </a>
       <button class="topbar__menu" type="button" aria-controls="sidebar" aria-expanded="false">

@@ -2,9 +2,9 @@
 // Run with `npm run brand` after replacing that file, then commit what it writes:
 //
 //   public/brand/zero-work-studios-logo-static.svg   the finished logo, no animation (repeat visits)
-//   public/brand/mark.png                             the [0] with the character, the sidebar badge
-//   public/favicon.png, public/apple-touch-icon.png   the same mark as icons
 //   public/og-image.png                               1200x630 social card
+//
+// (The favicon and the sidebar mark are Hank's donut emoji, not built from the logo.)
 //
 // The still frame is the logo with every animation off. The logo already shows its finished pose
 // under prefers-reduced-motion, so its resting state is the final frame.
@@ -31,19 +31,6 @@ const still = source.replace(REDUCED, '* { animation: none !important; }');
 fs.writeFileSync(path.join(brand, 'zero-work-studios-logo-static.svg'), still);
 console.log('✓ brand/zero-work-studios-logo-static.svg');
 
-// ---- Mark: the still logo cropped to the [0], without the words, bars, clouds and speed lines ----
-// The [0] sits around (391, 133) in the 960x320 artboard.
-const MARK_BOX = { x: 258, y: 2, size: 266 };
-const hide = `
-      [clip-path], .anim-studios-pop, .anim-bar-left, .anim-bar-right,
-      [class^="anim-streak"], [class^="anim-cloud"] { display: none !important; }`;
-const mark = still
-  .replace(
-    /viewBox="[^"]*" width="\d+" height="\d+"/,
-    `viewBox="${MARK_BOX.x} ${MARK_BOX.y} ${MARK_BOX.size} ${MARK_BOX.size}" width="${MARK_BOX.size}" height="${MARK_BOX.size}"`,
-  )
-  .replace('* { animation: none !important; }', `* { animation: none !important; }${hide}`);
-
 /** Renders an SVG string to a PNG `size` wide, at a density that draws it sharp rather than upscaled. */
 const raster = (svg, viewWidth, width) =>
   sharp(Buffer.from(svg), { density: Math.ceil((72 * width) / viewWidth) * 2 }).resize({ width });
@@ -52,10 +39,6 @@ async function write(img, out) {
   const info = await img.png({ compressionLevel: 9 }).toFile(out);
   console.log(`✓ ${path.relative(pub, out).replace(/\\/g, '/')} (${info.width}x${info.height}, ${(info.size / 1024).toFixed(1)} kB)`);
 }
-
-await write(raster(mark, MARK_BOX.size, 96), path.join(brand, 'mark.png'));
-await write(raster(mark, MARK_BOX.size, 64), path.join(pub, 'favicon.png'));
-await write(raster(mark, MARK_BOX.size, 180), path.join(pub, 'apple-touch-icon.png'));
 
 // Social card: the logo 1110 px wide, centred on its own charcoal.
 const logo = await raster(still, 960, 1110).png().toBuffer();

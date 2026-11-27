@@ -136,29 +136,29 @@ button {
   text-decoration: none;
 }
 
-/* The brand mark: the logo's [0] with the character, on the logo's charcoal (public/brand/mark.png). */
+/* The brand mark: Hank's donut, the same emoji as the favicon. */
 .studio__mark {
   inline-size: 30px;
   block-size: 30px;
   flex: none;
-  overflow: hidden;
-  border-radius: 8px;
-  background: #313131;
-  box-shadow: 0 0 0 1.5px var(--mahogany);
+  display: grid;
+  place-items: center;
+  font: 26px/1 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
   transform: rotate(-4deg);
   transition: transform 0.4s var(--ease-spring);
-}
-.studio__mark img {
-  inline-size: 100%;
-  block-size: 100%;
 }
 
 /* The logo's lettering, unwarped: League Spartan Caps in white with the logo's ink outline and a hard
    drop in the same ink, like the Combo Counter HUD text. At this size an 8-way text-shadow outline
    notches the corners (Z, K), so the outline is a real stroke painted under the fill (half of it
-   shows, 1.5px), and the drop is a drop-shadow of the outlined word as one shape. */
+   shows, 1.5px), and the drop is a drop-shadow of the outlined word as one shape.
+   Underneath, a white bar with an ink border, like the bars beside STUDIOS in the logo; the same
+   drop-shadow falls on it. */
 .studio__name {
   --ink: #0b0c10;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 9px;
   font: 400 17px/1 'League Spartan Caps', 'Arial Black', var(--font-sans);
   letter-spacing: 0.05em;
   white-space: nowrap;
@@ -166,6 +166,18 @@ button {
   -webkit-text-stroke: 3px var(--ink);
   paint-order: stroke fill;
   filter: drop-shadow(1.5px 2px 0 var(--ink));
+}
+.studio__name::after {
+  content: '';
+  position: absolute;
+  left: -1px;
+  /* The trailing letter-spacing would push the bar past the last letter. */
+  right: calc(0.05em - 1px);
+  bottom: 0;
+  block-size: 6px;
+  background: #fefefd;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
 }
 
 .studio:hover .studio__mark {
