@@ -153,25 +153,19 @@ button {
   block-size: 100%;
 }
 
-/* The logo's lettering, unwarped: League Spartan Caps in white with the logo's ink, outlined the way
-   the Combo Counter page outlines its HUD text (cc.css --outline-red): an 8-way outline and a hard
-   drop in the same colour, so the drop reads as part of the outline. Scaled to this size. */
+/* The logo's lettering, unwarped: League Spartan Caps in white with the logo's ink outline and a hard
+   drop in the same ink, like the Combo Counter HUD text. At this size an 8-way text-shadow outline
+   notches the corners (Z, K), so the outline is a real stroke painted under the fill (half of it
+   shows, 1.5px), and the drop is a drop-shadow of the outlined word as one shape. */
 .studio__name {
   --ink: #0b0c10;
   font: 400 17px/1 'League Spartan Caps', 'Arial Black', var(--font-sans);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   white-space: nowrap;
   color: #fefefd;
-  text-shadow:
-    -1.25px -1.25px 0 var(--ink),
-    1.25px -1.25px 0 var(--ink),
-    -1.25px 1.25px 0 var(--ink),
-    1.25px 1.25px 0 var(--ink),
-    0 -1.5px 0 var(--ink),
-    0 1.5px 0 var(--ink),
-    -1.5px 0 0 var(--ink),
-    1.5px 0 0 var(--ink),
-    1.5px 2.5px 0 var(--ink);
+  -webkit-text-stroke: 3px var(--ink);
+  paint-order: stroke fill;
+  filter: drop-shadow(1.5px 2px 0 var(--ink));
 }
 
 .studio:hover .studio__mark {
