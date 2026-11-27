@@ -4,16 +4,135 @@ interface Props {
   tagline: string;
 }
 const { heroTitle, tagline } = Astro.props;
+
+// The animated logo plays once per visit; later page loads in the same session show the finished
+// still, and a click replays it. Both files come from `npm run brand` (scripts/brand.mjs).
+// It's an <img>, not inline SVG, so the logo's own CSS (generic class names and a page-wide
+// prefers-reduced-motion rule) can't leak into the page. The SVG handles reduced motion itself.
+const logo = {
+  animated: '/brand/zero-work-studios-logo.svg',
+  still: '/brand/zero-work-studios-logo-static.svg',
+};
 ---
 
 <div class="hero">
   <div id="landing-text" class="sr-only"></div>
   <div id="landing" class="sr-only"></div>
+  <button class="logo-card" type="button" aria-label="Replay the Zero Work Studios intro">
+    <img
+      id="brand-logo"
+      src={logo.animated}
+      width="960"
+      height="320"
+      alt="Zero Work Studios"
+      fetchpriority="high"
+      data-animated={logo.animated}
+      data-still={logo.still}
+    />
+    <span class="logo-card__replay" aria-hidden="true">
+      <svg viewBox="0 0 16 16"><path d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9M13.5 2v3.5H10" /></svg>
+      Replay
+    </span>
+  </button>
+  <script is:inline>
+    (() => {
+      const img = document.getElementById('brand-logo');
+      let seen = false;
+      try {
+        seen = sessionStorage.getItem('zws-intro') === '1';
+        sessionStorage.setItem('zws-intro', '1');
+      } catch {}
+      if (seen) img.src = img.dataset.still;
+      // A fresh URL restarts the animation; the same URL would show the cached last frame.
+      let plays = 0;
+      img.parentElement.addEventListener('click', () => {
+        img.src = `${img.dataset.animated}?play=${++plays}`;
+      });
+    })();
+  </script>
   <h1>{heroTitle}</h1>
   <p>{tagline}</p>
 </div>
 
 <style>
+  /* A title card on the paper: the logo keeps its own charcoal, framed like the sidebar plates. */
+  .logo-card {
+    position: relative;
+    display: block;
+    inline-size: 100%;
+    max-inline-size: 780px;
+    margin: 0 0 clamp(32px, 4.5vw, 52px);
+    padding: 0;
+    overflow: hidden;
+    background: #313131;
+    border: 2px solid #0b0c10;
+    border-radius: 18px;
+    box-shadow: 6px 7px 0 var(--mahogany);
+    cursor: pointer;
+    transition:
+      transform 0.25s var(--ease-out),
+      box-shadow 0.25s var(--ease-out);
+  }
+  .logo-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 9px 0 var(--mahogany);
+  }
+  .logo-card:active {
+    transform: translate(2px, 2px);
+    box-shadow: 3px 4px 0 var(--mahogany);
+  }
+  .logo-card:focus-visible {
+    outline: 3px solid var(--caramel);
+    outline-offset: 4px;
+  }
+
+  .logo-card img {
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: 3 / 1;
+  }
+
+  .logo-card__replay {
+    position: absolute;
+    right: 14px;
+    bottom: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font: 700 12px/1 var(--font-sans);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #c5f92a;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .logo-card__replay svg {
+    inline-size: 13px;
+    block-size: 13px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .logo-card:hover .logo-card__replay,
+  .logo-card:focus-visible .logo-card__replay {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo-card,
+    .logo-card:hover,
+    .logo-card:active {
+      transform: none;
+      transition: none;
+    }
+    /* The logo stays still under reduced motion, so there is nothing to replay. */
+    .logo-card__replay {
+      display: none;
+    }
+  }
+
   .hero h1 {
     margin: 0;
     max-width: 15ch;

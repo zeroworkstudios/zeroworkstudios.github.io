@@ -12,6 +12,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "sync": "node scripts/sync-docs.mjs",
+    "brand": "node scripts/brand.mjs",
     "astro": "astro"
   },
   "dependencies": {

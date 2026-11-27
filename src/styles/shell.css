@@ -136,19 +136,21 @@ button {
   text-decoration: none;
 }
 
+/* The brand mark: the logo's [0] with the character, on the logo's charcoal (public/brand/mark.png). */
 .studio__mark {
   inline-size: 30px;
   block-size: 30px;
   flex: none;
-  display: grid;
-  place-items: center;
+  overflow: hidden;
   border-radius: 8px;
-  background: var(--mahogany);
-  color: var(--paper);
-  font: 800 12px/1 var(--font-display);
-  letter-spacing: -0.02em;
+  background: #313131;
+  box-shadow: 0 0 0 1.5px var(--mahogany);
   transform: rotate(-4deg);
   transition: transform 0.4s var(--ease-spring);
+}
+.studio__mark img {
+  inline-size: 100%;
+  block-size: 100%;
 }
 
 .studio__name {

@@ -1,0 +1,1076 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 320" width="960" height="320" role="img" aria-label="Zero Work Studios animated brand logo">
+  <title>Zero Work Studios</title>
+  <defs>
+    <clipPath id="left-title-clip">
+      <rect x="-320" y="0" width="320" height="230" transform="translate(340, 20)" class="anim-left-clip" />
+    </clipPath>
+    <clipPath id="right-title-clip">
+      <rect x="0" y="0" width="490" height="230" transform="translate(430, 20)" class="anim-right-clip" />
+    </clipPath>
+    <style>
+      /* Walk and mid-turn line weights */
+      .ink { stroke: #0B0C10; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; }
+      .ink-fine { stroke: #0B0C10; stroke-width: 2.0; stroke-linecap: round; stroke-linejoin: round; }
+      .ink-face { stroke: #0B0C10; stroke-width: 1.85; stroke-linecap: round; stroke-linejoin: round; }
+      .ink-hair { stroke: #0B0C10; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+      .ink-cloud { stroke: #0B0C10; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+
+      /* Final seated character refined line weights */
+      .pose-ink { stroke: #0B0C10; stroke-width: 2.3; stroke-linecap: round; stroke-linejoin: round; }
+      .pose-ink-hair { stroke: #0B0C10; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+      .pose-ink-hand { stroke: #0B0C10; stroke-width: 2.0; stroke-linecap: round; stroke-linejoin: round; }
+      .pose-ink-fine { stroke: #0B0C10; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+      .pose-ink-face { stroke: #0B0C10; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+      .pose-ink-subtle { stroke: #0B0C10; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+      .walk-ink-hand { stroke: #0B0C10; stroke-width: 2.1; stroke-linecap: round; stroke-linejoin: round; }
+      .walk-ink-subtle { stroke: #0B0C10; stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
+
+      /* Snappy 4.5s Master Timeline */
+      .anim-stage-slide { animation: stageSlide 4.5s linear forwards; }
+      .anim-zero-bowl { animation: zeroBowlSquash 4.5s linear forwards; }
+      .anim-rest-ctrl { animation: restCtrl 4.5s linear forwards; }
+
+      /* Upgraded 3/4 Walking Character (knee-articulated, foot-locked steps from off-canvas right) */
+      .anim-walk-root { animation: walkRoot 4.5s linear forwards; }
+      .anim-walk-bob { animation: walkBob 4.5s linear forwards; }
+      .anim-walk-torso { animation: walkTorso 4.5s linear forwards; }
+      .anim-walk-head { animation: walkHead 4.5s linear forwards; }
+      .anim-walk-leg-f { animation: walkLegF 4.5s linear forwards; }
+      .anim-walk-knee-f { animation: walkKneeF 4.5s linear forwards; }
+      .anim-walk-shoe-f { animation: walkShoeF 4.5s linear forwards; }
+      .anim-walk-leg-b { animation: walkLegB 4.5s linear forwards; }
+      .anim-walk-knee-b { animation: walkKneeB 4.5s linear forwards; }
+      .anim-walk-shoe-b { animation: walkShoeB 4.5s linear forwards; }
+      .anim-walk-arm-f { animation: walkArmF 4.5s linear forwards; }
+      .anim-walk-arm-b { animation: walkArmB 4.5s linear forwards; }
+      .anim-walk-ctrl { animation: walkCtrl 4.5s linear forwards; }
+
+      /* Mid-Air Front-Facing Hop Breakdown Pose */
+      .anim-mid-turn { animation: midTurn 4.5s linear forwards; }
+
+      /* Integrated Final Seated Character (Open eyes during sit and dash, Winks AFTER reveal) */
+      .anim-seated-rig { animation: seatedRig 4.5s linear forwards; }
+      .anim-seated-sway { animation: seatedSway 4.5s linear forwards; }
+      .anim-seated-torso { animation: seatedTorso 4.5s linear forwards; }
+      .anim-seated-head { animation: seatedHead 4.5s linear forwards; }
+      .anim-seated-leg-top { animation: seatedLegTop 4.5s linear forwards; }
+      .anim-seated-leg-bot { animation: seatedLegBot 4.5s linear forwards; }
+      .anim-seated-arms { animation: seatedArms 4.5s linear forwards; }
+      .anim-eye-open { animation: eyeOpen 4.5s linear forwards; }
+      .anim-eye-wink { animation: eyeWink 4.5s linear forwards; }
+      .anim-brow-left { animation: browLeft 4.5s linear forwards; }
+      .anim-wink-spark { animation: winkSpark 4.5s linear forwards; }
+
+      /* Ground-locked Dust Puffs (every visible step) and Hand-locked Pickup Spark */
+      .anim-puff-0 { animation: puff0 4.5s linear forwards; }
+      .anim-puff-1 { animation: puff1 4.5s linear forwards; }
+      .anim-puff-2 { animation: puff2 4.5s linear forwards; }
+      .anim-puff-3 { animation: puff3 4.5s linear forwards; }
+      .anim-puff-4 { animation: puff4 4.5s linear forwards; }
+      .anim-pickup-spark { animation: pickupSpark 4.5s linear forwards; }
+
+      /* Wordmark Dual-Side Reveal and Centered STUDIOS + Flanking Lines */
+      .anim-left-clip { animation: leftClip 4.5s linear forwards; }
+      .anim-right-clip { animation: rightClip 4.5s linear forwards; }
+      .anim-zer-pop { animation: zerPop 4.5s linear forwards; }
+      .anim-work-pop { animation: workPop 4.5s linear forwards; }
+      .anim-studios-pop { animation: studiosPop 4.5s linear forwards; }
+      .anim-bar-left { animation: accentBar 4.5s linear forwards; }
+      .anim-bar-right { animation: accentBar 4.5s linear forwards; }
+
+      .anim-cloud-launch { animation: cloudLaunch 4.5s linear forwards; }
+      .anim-cloud-curtain { animation: cloudCurtain 4.5s linear forwards; }
+      .anim-streak-1 { animation: streak1 4.5s linear forwards; }
+      .anim-streak-2 { animation: streak2 4.5s linear forwards; }
+      .anim-streak-3 { animation: streak3 4.5s linear forwards; }
+      .anim-streak-l1 { animation: streakL1 4.5s linear forwards; }
+      .anim-streak-l2 { animation: streakL2 4.5s linear forwards; }
+      .anim-streak-l3 { animation: streakL3 4.5s linear forwards; }
+
+      @media (prefers-reduced-motion: reduce) {
+        * { animation: none !important; }
+      }
+
+      /* ================================================================
+         1. STAGE SLIDE: Centered (480,160) -> Slingshot -> Lock into O of ZERO (390, 133)
+         ================================================================ */
+      @keyframes stageSlide {
+        0%, 55.6% {
+          transform: translate(0px, 0px) scale(1.20) skewX(0deg);
+          animation-timing-function: cubic-bezier(0.45, 0.0, 0.55, 1.0);
+        }
+        60.0% {
+          transform: translate(36px, 2px) scale(1.16, 1.22) skewX(-5deg);
+          animation-timing-function: ease-out;
+        }
+        61.7% {
+          transform: translate(40px, 2px) scale(1.16, 1.22) skewX(-5.5deg);
+          animation-timing-function: cubic-bezier(0.55, 0.05, 0.80, 0.45);
+        }
+        66.1% {
+          transform: translate(-38px, -17px) scale(1.04, 1.00) skewX(4.5deg);
+          animation-timing-function: cubic-bezier(0.18, 0.85, 0.30, 1.0);
+        }
+        70.6% {
+          transform: translate(-106px, -30px) scale(0.91, 0.93) skewX(2.5deg);
+          animation-timing-function: cubic-bezier(0.35, 0.0, 0.45, 1.0);
+        }
+        73.9% {
+          transform: translate(-82px, -26px) scale(0.93, 0.91) skewX(-1.5deg);
+          animation-timing-function: ease-out;
+        }
+        77.2%, 100% {
+          transform: translate(-90.0px, -27.0px) scale(0.92, 0.92) skewX(0deg);
+        }
+      }
+
+      @keyframes zeroBowlSquash {
+        0%, 49.1% {
+          transform: scale(1, 1);
+          animation-timing-function: cubic-bezier(0.2, 0.9, 0.3, 1.0);
+        }
+        50.6% {
+          transform: scale(1.08, 0.91);
+          animation-timing-function: cubic-bezier(0.35, 0.0, 0.55, 1.0);
+        }
+        53.6% {
+          transform: scale(0.97, 1.03);
+          animation-timing-function: ease-out;
+        }
+        55.6%, 100% {
+          transform: scale(1, 1);
+        }
+      }
+
+      @keyframes restCtrl {
+        0% {
+          opacity: 1; transform: scale(0.88, 1.10) translateY(-5px);
+          animation-timing-function: cubic-bezier(0.2, 0.9, 0.3, 1.0);
+        }
+        3.9% {
+          opacity: 1; transform: scale(1.08, 0.92) translateY(2px);
+          animation-timing-function: ease-out;
+        }
+        7.2%, 33.2% {
+          opacity: 1; transform: scale(1, 1) translateY(0px);
+        }
+        33.7%, 100% {
+          opacity: 0; transform: scale(0.9, 0.9);
+        }
+      }
+
+      /* ================================================================
+         2. STRIDE-LOCKED WALK FROM RIGHT (44px per 3% step -> ZERO foot slip)
+         ================================================================ */
+      @keyframes walkRoot {
+        0%   { opacity: 1; transform: translate(532px, 160px); animation-timing-function: linear; }
+        3.3% { opacity: 1; transform: translate(488px, 160px); animation-timing-function: linear; }
+        6.7% { opacity: 1; transform: translate(444px, 160px); animation-timing-function: linear; }
+        10.0% { opacity: 1; transform: translate(400px, 160px); animation-timing-function: linear; }
+        13.3% { opacity: 1; transform: translate(356px, 160px); animation-timing-function: linear; }
+        16.7% { opacity: 1; transform: translate(312px, 160px); animation-timing-function: linear; }
+        20.0% { opacity: 1; transform: translate(268px, 160px); animation-timing-function: linear; }
+        22.2% { opacity: 1; transform: translate(252px, 160px); animation-timing-function: linear; }
+        24.4% { opacity: 1; transform: translate(236px, 160px); animation-timing-function: linear; }
+        26.8% { opacity: 1; transform: translate(216px, 160px); animation-timing-function: linear; }
+        29.5% { opacity: 1; transform: translate(194px, 160px); animation-timing-function: ease-out; }
+        32.2%, 35.2% { opacity: 1; transform: translate(182px, 160px); animation-timing-function: ease-in-out; }
+        37.6%, 40.2% { opacity: 1; transform: translate(186px, 160px); animation-timing-function: cubic-bezier(0.22, 0.85, 0.35, 1.0); }
+        43.2% { opacity: 1; transform: translate(166px, 114px); }
+        43.4%, 100% { opacity: 0; transform: translate(164px, 112px); }
+      }
+
+      @keyframes walkBob {
+        0%     { transform: translate(0px, 2px) scale(1.03, 0.97); animation-timing-function: ease-out; }
+        1.7%   { transform: translate(0px, -2.5px) scale(0.99, 1.01); animation-timing-function: ease-in; }
+        3.3%   { transform: translate(0px, 2px) scale(1.03, 0.97); animation-timing-function: ease-out; }
+        5.0%   { transform: translate(0px, -2.5px) scale(0.99, 1.01); animation-timing-function: ease-in; }
+        6.7%   { transform: translate(0px, 2px) scale(1.03, 0.97); animation-timing-function: ease-out; }
+        8.3%   { transform: translate(0px, -2.5px) scale(0.99, 1.01); animation-timing-function: ease-in; }
+        10.0%  { transform: translate(0px, 2px) scale(1.03, 0.97); animation-timing-function: ease-out; }
+        11.7%  { transform: translate(0px, -2.5px) scale(0.99, 1.01); animation-timing-function: ease-in; }
+        13.3%  { transform: translate(0px, 2px) scale(1.03, 0.97); animation-timing-function: ease-out; }
+        15.0%  { transform: translate(0px, -2.5px) scale(0.99, 1.01); animation-timing-function: ease-in; }
+        16.7%  { transform: translate(0px, 2px) scale(1.03, 0.97); animation-timing-function: ease-out; }
+        18.3%  { transform: translate(0px, -2.5px) scale(0.99, 1.01); animation-timing-function: ease-in; }
+        20.0%  { transform: translate(0px, 2px) scale(1.03, 0.97); animation-timing-function: ease-out; }
+        22.2%  { transform: translate(0px, -1.5px) scale(0.99, 1.01); animation-timing-function: ease-in; }
+        24.4%  { transform: translate(0px, 1.5px) scale(1.02, 0.98); animation-timing-function: ease-out; }
+        26.8%  { transform: translate(0px, -1.0px) scale(0.99, 1.01); animation-timing-function: ease-in; }
+        29.5%  { transform: translate(0px, 1.5px) scale(1.02, 0.98); animation-timing-function: ease-out; }
+        32.2%, 35.2% { transform: translate(0px, 1.5px) scale(1.02, 0.98); animation-timing-function: cubic-bezier(0.25, 0.85, 0.35, 1.0); }
+        37.6%, 40.2% { transform: translate(0px, 8.5px) scale(1.04, 0.96); animation-timing-function: cubic-bezier(0.2, 0.9, 0.35, 1.0); }
+        43.2%, 100%  { transform: translate(0px, -6px) scale(0.93, 1.08); }
+      }
+
+      @keyframes walkTorso {
+        0%     { transform: rotate(-3deg); animation-timing-function: ease-in-out; }
+        6.7%   { transform: rotate(-2deg); animation-timing-function: ease-in-out; }
+        13.3%  { transform: rotate(-3.5deg); animation-timing-function: ease-in-out; }
+        20.0%  { transform: rotate(-2.5deg); animation-timing-function: ease-out; }
+        24.4%  { transform: rotate(-1deg); animation-timing-function: ease-in-out; }
+        29.5%  { transform: rotate(-8deg); animation-timing-function: cubic-bezier(0.35, 0.85, 0.35, 1.0); }
+        32.2%, 34.8% { transform: rotate(-22deg); animation-timing-function: ease-in-out; }
+        37.6%, 40.2% { transform: rotate(-16deg); animation-timing-function: ease-out; }
+        43.2%, 100%  { transform: rotate(6deg); }
+      }
+
+      @keyframes walkHead {
+        0%     { transform: rotate(3deg) translateY(0px); animation-timing-function: ease-in-out; }
+        5.0%   { transform: rotate(1deg) translateY(1.2px); animation-timing-function: ease-in-out; }
+        10.0%  { transform: rotate(4deg) translateY(-1px); animation-timing-function: ease-in-out; }
+        15.0%  { transform: rotate(1.5deg) translateY(1.2px); animation-timing-function: ease-in-out; }
+        20.0%  { transform: rotate(3deg) translateY(0px); animation-timing-function: ease-out; }
+        24.4%  { transform: rotate(1deg) translateY(0px); animation-timing-function: ease-in-out; }
+        29.5%  { transform: rotate(4deg) translateY(0px); animation-timing-function: ease-in-out; }
+        33.2%  { transform: rotate(12deg) translateY(2px); animation-timing-function: ease-in-out; }
+        38.5%  { transform: rotate(10deg) translateY(1px); animation-timing-function: ease-out; }
+        43.2%, 100% { transform: rotate(-5deg) translateY(0px); }
+      }
+
+      /* Knee-Articulated Stride and Crouch Legs (ZERO foot slip + deep crouch bend) */
+      @keyframes walkLegF {
+        0%     { transform: rotate(24deg); animation-timing-function: linear; }
+        1.7%   { transform: rotate(2deg); animation-timing-function: linear; }
+        3.3%   { transform: rotate(-22deg); animation-timing-function: ease-in-out; }
+        5.0%   { transform: rotate(20deg); animation-timing-function: ease-in-out; }
+        6.7%   { transform: rotate(24deg); animation-timing-function: linear; }
+        8.3%   { transform: rotate(2deg); animation-timing-function: linear; }
+        10.0%  { transform: rotate(-22deg); animation-timing-function: ease-in-out; }
+        11.7%  { transform: rotate(20deg); animation-timing-function: ease-in-out; }
+        13.3%  { transform: rotate(24deg); animation-timing-function: linear; }
+        15.0%  { transform: rotate(2deg); animation-timing-function: linear; }
+        16.7%  { transform: rotate(-22deg); animation-timing-function: ease-in-out; }
+        18.3%  { transform: rotate(20deg); animation-timing-function: ease-in-out; }
+        20.0%  { transform: rotate(24deg); animation-timing-function: linear; }
+        22.2%  { transform: rotate(0deg); animation-timing-function: linear; }
+        24.4%  { transform: rotate(-18deg); animation-timing-function: ease-in-out; }
+        26.8%  { transform: rotate(26deg); animation-timing-function: ease-in-out; }
+        29.5%  { transform: rotate(22deg); animation-timing-function: ease-out; }
+        32.2%, 35.2% { transform: rotate(14deg); animation-timing-function: cubic-bezier(0.3, 0.85, 0.4, 1.0); }
+        37.6%, 40.2% { transform: rotate(42deg); animation-timing-function: cubic-bezier(0.25, 0.9, 0.35, 1.0); }
+        43.2%, 100%  { transform: rotate(-10deg); }
+      }
+      @keyframes walkKneeF {
+        0%     { transform: rotate(0deg); animation-timing-function: linear; }
+        1.7%   { transform: rotate(0deg); animation-timing-function: linear; }
+        3.3%   { transform: rotate(-10deg); animation-timing-function: ease-in-out; }
+        5.0%   { transform: rotate(-38deg); animation-timing-function: ease-in-out; }
+        6.7%   { transform: rotate(0deg); animation-timing-function: linear; }
+        8.3%   { transform: rotate(0deg); animation-timing-function: linear; }
+        10.0%  { transform: rotate(-10deg); animation-timing-function: ease-in-out; }
+        11.7%  { transform: rotate(-38deg); animation-timing-function: ease-in-out; }
+        13.3%  { transform: rotate(0deg); animation-timing-function: linear; }
+        15.0%  { transform: rotate(0deg); animation-timing-function: linear; }
+        16.7%  { transform: rotate(-10deg); animation-timing-function: ease-in-out; }
+        18.3%  { transform: rotate(-38deg); animation-timing-function: ease-in-out; }
+        20.0%  { transform: rotate(0deg); animation-timing-function: linear; }
+        22.2%  { transform: rotate(0deg); animation-timing-function: linear; }
+        24.4%  { transform: rotate(-8deg); animation-timing-function: ease-in-out; }
+        26.8%  { transform: rotate(-34deg); animation-timing-function: ease-in-out; }
+        29.5%  { transform: rotate(0deg); animation-timing-function: ease-out; }
+        32.2%, 35.2% { transform: rotate(-20deg); animation-timing-function: cubic-bezier(0.3, 0.85, 0.4, 1.0); }
+        37.6%, 40.2% { transform: rotate(-78deg); animation-timing-function: cubic-bezier(0.25, 0.9, 0.35, 1.0); }
+        43.2%, 100%  { transform: rotate(8deg); }
+      }
+      @keyframes walkShoeF {
+        0%     { transform: rotate(-18deg); animation-timing-function: ease-out; }
+        1.7%   { transform: rotate(-2deg); animation-timing-function: linear; }
+        3.3%   { transform: rotate(16deg); animation-timing-function: ease-in-out; }
+        5.0%   { transform: rotate(14deg); animation-timing-function: ease-in; }
+        6.7%   { transform: rotate(-18deg); animation-timing-function: ease-out; }
+        8.3%   { transform: rotate(-2deg); animation-timing-function: linear; }
+        10.0%  { transform: rotate(16deg); animation-timing-function: ease-in-out; }
+        11.7%  { transform: rotate(14deg); animation-timing-function: ease-in; }
+        13.3%  { transform: rotate(-18deg); animation-timing-function: ease-out; }
+        15.0%  { transform: rotate(-2deg); animation-timing-function: linear; }
+        16.7%  { transform: rotate(16deg); animation-timing-function: ease-in-out; }
+        18.3%  { transform: rotate(14deg); animation-timing-function: ease-in; }
+        20.0%  { transform: rotate(-18deg); animation-timing-function: ease-out; }
+        22.2%  { transform: rotate(0deg); animation-timing-function: linear; }
+        24.4%  { transform: rotate(16deg); animation-timing-function: ease-in-out; }
+        26.8%  { transform: rotate(4deg); animation-timing-function: ease-out; }
+        29.5%  { transform: rotate(-16deg); animation-timing-function: ease-out; }
+        32.2%, 35.2% { transform: rotate(4deg); }
+        37.6%, 40.2% { transform: rotate(32deg); }
+        43.2%, 100%  { transform: rotate(16deg); }
+      }
+
+      @keyframes walkLegB {
+        0%     { transform: rotate(-22deg); animation-timing-function: ease-in-out; }
+        1.7%   { transform: rotate(20deg); animation-timing-function: ease-in-out; }
+        3.3%   { transform: rotate(24deg); animation-timing-function: linear; }
+        5.0%   { transform: rotate(2deg); animation-timing-function: linear; }
+        6.7%   { transform: rotate(-22deg); animation-timing-function: ease-in-out; }
+        8.3%   { transform: rotate(20deg); animation-timing-function: ease-in-out; }
+        10.0%  { transform: rotate(24deg); animation-timing-function: linear; }
+        11.7%  { transform: rotate(2deg); animation-timing-function: linear; }
+        13.3%  { transform: rotate(-22deg); animation-timing-function: ease-in-out; }
+        15.0%  { transform: rotate(20deg); animation-timing-function: ease-in-out; }
+        16.7%  { transform: rotate(24deg); animation-timing-function: linear; }
+        18.3%  { transform: rotate(2deg); animation-timing-function: linear; }
+        20.0%  { transform: rotate(-22deg); animation-timing-function: ease-in-out; }
+        22.2%  { transform: rotate(16deg); animation-timing-function: ease-in-out; }
+        24.4%  { transform: rotate(22deg); animation-timing-function: linear; }
+        26.8%  { transform: rotate(-6deg); animation-timing-function: ease-in-out; }
+        29.5%  { transform: rotate(-20deg); animation-timing-function: ease-out; }
+        32.2%, 35.2% { transform: rotate(-10deg); animation-timing-function: cubic-bezier(0.3, 0.85, 0.4, 1.0); }
+        37.6%, 40.2% { transform: rotate(36deg); animation-timing-function: cubic-bezier(0.25, 0.9, 0.35, 1.0); }
+        43.2%, 100%  { transform: rotate(-20deg); }
+      }
+      @keyframes walkKneeB {
+        0%     { transform: rotate(-10deg); animation-timing-function: ease-in-out; }
+        1.7%   { transform: rotate(-38deg); animation-timing-function: ease-in-out; }
+        3.3%   { transform: rotate(0deg); animation-timing-function: linear; }
+        5.0%   { transform: rotate(0deg); animation-timing-function: linear; }
+        6.7%   { transform: rotate(-10deg); animation-timing-function: ease-in-out; }
+        8.3%   { transform: rotate(-38deg); animation-timing-function: ease-in-out; }
+        10.0%  { transform: rotate(0deg); animation-timing-function: linear; }
+        11.7%  { transform: rotate(0deg); animation-timing-function: linear; }
+        13.3%  { transform: rotate(-10deg); animation-timing-function: ease-in-out; }
+        15.0%  { transform: rotate(-38deg); animation-timing-function: ease-in-out; }
+        16.7%  { transform: rotate(0deg); animation-timing-function: linear; }
+        18.3%  { transform: rotate(0deg); animation-timing-function: linear; }
+        20.0%  { transform: rotate(-12deg); animation-timing-function: ease-in-out; }
+        22.2%  { transform: rotate(-28deg); animation-timing-function: ease-in-out; }
+        24.4%  { transform: rotate(0deg); animation-timing-function: linear; }
+        26.8%  { transform: rotate(-6deg); animation-timing-function: ease-in-out; }
+        29.5%  { transform: rotate(-10deg); animation-timing-function: ease-out; }
+        32.2%, 35.2% { transform: rotate(-8deg); animation-timing-function: cubic-bezier(0.3, 0.85, 0.4, 1.0); }
+        37.6%, 40.2% { transform: rotate(-70deg); animation-timing-function: cubic-bezier(0.25, 0.9, 0.35, 1.0); }
+        43.2%, 100%  { transform: rotate(10deg); }
+      }
+      @keyframes walkShoeB {
+        0%     { transform: rotate(16deg); animation-timing-function: ease-in-out; }
+        1.7%   { transform: rotate(14deg); animation-timing-function: ease-in; }
+        3.3%   { transform: rotate(-18deg); animation-timing-function: ease-out; }
+        5.0%   { transform: rotate(-2deg); animation-timing-function: linear; }
+        6.7%   { transform: rotate(16deg); animation-timing-function: ease-in-out; }
+        8.3%   { transform: rotate(14deg); animation-timing-function: ease-in; }
+        10.0%  { transform: rotate(-18deg); animation-timing-function: ease-out; }
+        11.7%  { transform: rotate(-2deg); animation-timing-function: linear; }
+        13.3%  { transform: rotate(16deg); animation-timing-function: ease-in-out; }
+        15.0%  { transform: rotate(14deg); animation-timing-function: ease-in; }
+        16.7%  { transform: rotate(-18deg); animation-timing-function: ease-out; }
+        18.3%  { transform: rotate(-2deg); animation-timing-function: linear; }
+        20.0%  { transform: rotate(14deg); animation-timing-function: ease-out; }
+        22.2%  { transform: rotate(8deg); animation-timing-function: ease-out; }
+        24.4%  { transform: rotate(-16deg); animation-timing-function: ease-in-out; }
+        26.8%  { transform: rotate(8deg); animation-timing-function: ease-in-out; }
+        29.5%  { transform: rotate(16deg); animation-timing-function: ease-out; }
+        32.2%, 35.2% { transform: rotate(14deg); }
+        37.6%, 40.2% { transform: rotate(30deg); }
+        43.2%, 100%  { transform: rotate(18deg); }
+      }
+
+      @keyframes walkArmF {
+        0%     { transform: rotate(-14deg); animation-timing-function: ease-in-out; }
+        3.3%   { transform: rotate(22deg); animation-timing-function: ease-in-out; }
+        6.7%   { transform: rotate(-16deg); animation-timing-function: ease-in-out; }
+        10.0%  { transform: rotate(22deg); animation-timing-function: ease-in-out; }
+        13.3%  { transform: rotate(-16deg); animation-timing-function: ease-in-out; }
+        16.7%  { transform: rotate(22deg); animation-timing-function: ease-in-out; }
+        20.0%  { transform: rotate(-14deg); animation-timing-function: ease-out; }
+        24.4%  { transform: rotate(12deg); animation-timing-function: ease-in-out; }
+        29.5%  { transform: rotate(28deg); animation-timing-function: cubic-bezier(0.25, 0.85, 0.35, 1.0); }
+        32.2%, 34.4% { transform: translate(-2px, 3px) rotate(56deg); animation-timing-function: cubic-bezier(0.2, 0.85, 0.35, 1.0); }
+        37.6%, 43.2%, 100% { transform: rotate(30deg); }
+      }
+
+      @keyframes walkArmB {
+        0%     { transform: rotate(22deg); animation-timing-function: ease-in-out; }
+        3.3%   { transform: rotate(-14deg); animation-timing-function: ease-in-out; }
+        6.7%   { transform: rotate(22deg); animation-timing-function: ease-in-out; }
+        10.0%  { transform: rotate(-14deg); animation-timing-function: ease-in-out; }
+        13.3%  { transform: rotate(22deg); animation-timing-function: ease-in-out; }
+        16.7%  { transform: rotate(-14deg); animation-timing-function: ease-in-out; }
+        20.0%  { transform: rotate(18deg); animation-timing-function: ease-out; }
+        24.4%  { transform: rotate(-6deg); animation-timing-function: ease-in-out; }
+        29.5%  { transform: rotate(18deg); animation-timing-function: ease-out; }
+        32.2%, 34.4% { transform: translate(-2px, 3px) rotate(44deg); animation-timing-function: ease-in-out; }
+        37.6%, 43.2%, 100% { transform: rotate(26deg); }
+      }
+
+      @keyframes walkCtrl {
+        0%, 33.2% { opacity: 0; }
+        33.6%, 100% { opacity: 1; }
+      }
+
+      /* ================================================================
+         3. AIRBORNE FRONT-FACING TURN BREAKDOWN
+         ================================================================ */
+      @keyframes midTurn {
+        0%, 43.1% { opacity: 0; transform: translate(168px, 114px) scale(0.88, 1.06); }
+        43.4%     {
+          opacity: 1; transform: translate(162px, 108px) scale(0.92, 1.06) rotate(-4deg);
+          animation-timing-function: ease-out;
+        }
+        45.1%     {
+          opacity: 1; transform: translate(144px, 98px) scale(1.0, 1.02) rotate(2deg);
+          animation-timing-function: ease-in;
+        }
+        46.8%     { opacity: 1; transform: translate(128px, 104px) scale(0.94, 1.04) rotate(5deg); }
+        47.0%, 100% { opacity: 0; transform: translate(124px, 108px); }
+      }
+
+      /* ================================================================
+         4. SEATED CHARACTER (Open eyes through reveal, Winks AFTER reveal)
+         ================================================================ */
+      @keyframes seatedRig {
+        0%, 46.7% { opacity: 0; transform: translate(124px, 92px) scale(0.96, 1.04); }
+        46.9%     {
+          opacity: 1; transform: translate(124px, 94px) scale(0.96, 1.04);
+          animation-timing-function: cubic-bezier(0.55, 0.05, 0.85, 0.4);
+        }
+        50.0%     {
+          opacity: 1; transform: translate(124px, 130px) scale(1.03, 0.97);
+          animation-timing-function: cubic-bezier(0.25, 0.85, 0.35, 1.0);
+        }
+        53.1%     {
+          opacity: 1; transform: translate(124px, 124px) scale(0.99, 1.01);
+          animation-timing-function: ease-out;
+        }
+        55.4%, 100% { opacity: 1; transform: translate(124px, 126px) scale(1, 1); }
+      }
+
+      @keyframes seatedSway {
+        0%, 56.1% { transform: rotate(0deg); animation-timing-function: ease-in-out; }
+        61.1%     { transform: rotate(4deg); animation-timing-function: ease-out; }
+        66.1%     { transform: rotate(-5.5deg); animation-timing-function: ease-in-out; }
+        71.1%     { transform: rotate(2.5deg); animation-timing-function: ease-out; }
+        75.6%, 100% { transform: rotate(0deg); }
+      }
+
+      @keyframes seatedTorso {
+        0%, 46.9% { transform: rotate(6deg); animation-timing-function: ease-in; }
+        50.2%     { transform: rotate(9deg) translateY(3px); animation-timing-function: cubic-bezier(0.2, 0.85, 0.35, 1.0); }
+        53.9%     { transform: rotate(-3deg) translateY(-1px); animation-timing-function: ease-out; }
+        55.8%, 100% { transform: rotate(0deg) translateY(0px); }
+      }
+
+      @keyframes seatedHead {
+        0%, 46.9% { transform: rotate(8deg); animation-timing-function: ease-in; }
+        51.3%     { transform: rotate(12deg) translateY(4px); animation-timing-function: cubic-bezier(0.2, 0.85, 0.35, 1.0); }
+        54.4%     { transform: rotate(-4.5deg) translateY(-1px); animation-timing-function: ease-out; }
+        56.2%, 58.9% { transform: rotate(0deg) translateY(0px); animation-timing-function: ease-in-out; }
+        61.7%     { transform: rotate(4deg); animation-timing-function: ease-out; }
+        67.8%     { transform: rotate(-6deg); animation-timing-function: ease-in-out; }
+        72.8%     { transform: rotate(2.5deg); animation-timing-function: ease-out; }
+        76.7%, 80.6% { transform: rotate(0deg); animation-timing-function: ease-in-out; }
+        82.4%     { transform: rotate(-2.5deg) translateY(1px); animation-timing-function: ease-out; }
+        85.3%     { transform: rotate(2.0deg) translateY(-1px); animation-timing-function: ease-in-out; }
+        88.3%, 100% { transform: rotate(0deg) translateY(0px); }
+      }
+
+      @keyframes seatedLegTop {
+        0%, 46.9% { transform: rotate(28deg) translateY(6px); }
+        50.6%     { transform: rotate(22deg) translateY(4px); animation-timing-function: cubic-bezier(0.2, 0.9, 0.35, 1.0); }
+        54.2%     { transform: rotate(-6deg) translateY(-2px); animation-timing-function: ease-out; }
+        56.2%, 63.9% { transform: rotate(0deg) translateY(0px); animation-timing-function: ease-out; }
+        68.3%     { transform: rotate(-4deg); animation-timing-function: ease-in-out; }
+        73.3%     { transform: rotate(2deg); animation-timing-function: ease-out; }
+        77.8%, 81.1% { transform: rotate(0deg); animation-timing-function: ease-in-out; }
+        83.6%     { transform: rotate(-2.8deg); animation-timing-function: ease-in-out; }
+        87.2%, 100% { transform: rotate(0deg); }
+      }
+
+      @keyframes seatedLegBot {
+        0%, 46.9% { transform: rotate(-10deg); }
+        50.6%     { transform: rotate(7deg); animation-timing-function: ease-out; }
+        54.2%, 63.9% { transform: rotate(0deg); }
+        68.3%     { transform: rotate(-5deg); animation-timing-function: ease-in-out; }
+        72.8%     { transform: rotate(2deg); animation-timing-function: ease-out; }
+        76.7%, 100% { transform: rotate(0deg); }
+      }
+
+      @keyframes seatedArms {
+        0%, 46.9% { transform: translate(-4px, -6px) rotate(-8deg); }
+        51.1%     { transform: translate(0px, 4px) rotate(5deg); animation-timing-function: ease-out; }
+        54.7%     { transform: translate(0px, -2px) rotate(-2deg); animation-timing-function: ease-in-out; }
+        56.4%, 80.6% { transform: translate(0px, 0px) rotate(0deg); animation-timing-function: ease-in-out; }
+        83.6%     { transform: translate(0px, -1.5px) rotate(-1.8deg); animation-timing-function: ease-out; }
+        87.2%, 100% { transform: translate(0px, 0px) rotate(0deg); }
+      }
+
+      /* Wink occurs cleanly AFTER brand name and STUDIOS reveal (~82.0%, ~3.69s) */
+      @keyframes eyeOpen {
+        0%, 81.1% { opacity: 1; }
+        82.0%, 100% { opacity: 0; }
+      }
+      @keyframes eyeWink {
+        0%, 81.1% { opacity: 0; transform: scaleY(0.3); }
+        82.8%     { opacity: 1; transform: scaleY(1.24); animation-timing-function: ease-out; }
+        85.6%, 100% { opacity: 1; transform: scaleY(1); }
+      }
+      @keyframes browLeft {
+        0%, 80.9% { opacity: 1; transform: translateY(0px); animation-timing-function: ease-in-out; }
+        82.0%, 100% { opacity: 0; transform: translateY(2px); }
+      }
+      @keyframes winkSpark {
+        0%, 81.8% { opacity: 0; transform: scale(0.2) rotate(-15deg); }
+        84.0%     { opacity: 1; transform: scale(1.15) rotate(8deg); animation-timing-function: ease-out; }
+        89.1%, 100% { opacity: 0; transform: scale(1.45) rotate(22deg); }
+      }
+
+      /* ================================================================
+         5. GROUND-LOCKED DUST PUFFS AND HAND-LOCKED SPARK
+         ================================================================ */
+      @keyframes puff0 {
+        0%, 6.7%  { opacity: 0; transform: translate(0px, 0px) scale(0.2); }
+        8.5%      { opacity: 0.9; transform: translate(8px, -2px) scale(1.0); animation-timing-function: ease-out; }
+        11.8%, 100% { opacity: 0; transform: translate(20px, -6px) scale(0.15); }
+      }
+      @keyframes puff1 {
+        0%, 10.0% { opacity: 0; transform: translate(0px, 0px) scale(0.2); }
+        11.8%     { opacity: 0.9; transform: translate(8px, -2px) scale(1.0); animation-timing-function: ease-out; }
+        15.2%, 100% { opacity: 0; transform: translate(20px, -6px) scale(0.15); }
+      }
+      @keyframes puff2 {
+        0%, 13.3% { opacity: 0; transform: translate(0px, 0px) scale(0.2); }
+        15.1%     { opacity: 0.9; transform: translate(8px, -2px) scale(1.0); animation-timing-function: ease-out; }
+        18.5%, 100% { opacity: 0; transform: translate(20px, -6px) scale(0.15); }
+      }
+      @keyframes puff3 {
+        0%, 16.7% { opacity: 0; transform: translate(0px, 0px) scale(0.2); }
+        18.5%     { opacity: 0.9; transform: translate(8px, -2px) scale(1.0); animation-timing-function: ease-out; }
+        21.8%, 100% { opacity: 0; transform: translate(20px, -6px) scale(0.15); }
+      }
+      @keyframes puff4 {
+        0%, 20.0% { opacity: 0; transform: translate(0px, 0px) scale(0.2); }
+        21.8%     { opacity: 0.9; transform: translate(8px, -2px) scale(0.95); animation-timing-function: ease-out; }
+        25.2%, 100% { opacity: 0; transform: translate(20px, -6px) scale(0.15); }
+      }
+
+      @keyframes pickupSpark {
+        0%, 32.8% { opacity: 0; transform: scale(0.2) rotate(-18deg); }
+        34.6%     { opacity: 1; transform: scale(1.25) rotate(12deg); animation-timing-function: ease-out; }
+        37.6%, 100% { opacity: 0; transform: scale(1.55) rotate(35deg); }
+      }
+
+      /* ================================================================
+         6. DUAL-SIDE REVEAL: ZER left, WORK right, STUDIOS left-aligned + line
+         ================================================================ */
+      @keyframes leftClip {
+        0%, 66.1% { transform: translate(340px, 20px) scaleX(0); animation-timing-function: linear; }
+        73.9%, 100% { transform: translate(340px, 20px) scaleX(1); }
+      }
+      @keyframes zerPop {
+        0%, 66.1% { transform: translate(64px, 0px) scale(0.92); animation-timing-function: cubic-bezier(0.2, 0.9, 0.35, 1.0); }
+        72.8%     { transform: translate(-6px, -2px) scale(1.03); animation-timing-function: ease-out; }
+        76.7%, 100% { transform: translate(0px, 0px) scale(1); }
+      }
+
+      @keyframes rightClip {
+        0%, 65.0% { transform: translate(430px, 20px) scaleX(0); animation-timing-function: linear; }
+        69.4%     { transform: translate(430px, 20px) scaleX(0.50); animation-timing-function: linear; }
+        73.9%, 100% { transform: translate(430px, 20px) scaleX(1.0); }
+      }
+      @keyframes workPop {
+        0%, 65.0% { transform: translate(-52px, 0px); animation-timing-function: cubic-bezier(0.2, 0.88, 0.35, 1.0); }
+        72.8%     { transform: translate(6px, 0px); animation-timing-function: ease-out; }
+        76.7%, 100% { transform: translate(0px, 0px); }
+      }
+
+      @keyframes studiosPop {
+        0%, 68.3% { opacity: 0; transform: translate(0px, 14px) scale(0.94); animation-timing-function: cubic-bezier(0.2, 0.9, 0.35, 1.0); }
+        73.9%     { opacity: 1; transform: translate(0px, -2px) scale(1.03); animation-timing-function: ease-out; }
+        77.8%, 100% { opacity: 1; transform: translate(0px, 0px) scale(1); }
+      }
+      @keyframes accentBar {
+        0%, 69.8% { opacity: 0; transform: scaleX(0); animation-timing-function: cubic-bezier(0.2, 0.9, 0.35, 1.0); }
+        76.1%     { opacity: 1; transform: scaleX(1.03); animation-timing-function: ease-out; }
+        79.1%, 100% { opacity: 1; transform: scaleX(1); }
+      }
+
+      /* Left curtain tracks leftClip (340 -> 20) and expands vertically to cover flared Z; Right tracks rightClip (430 -> 920) and flared K */
+      @keyframes cloudLaunch {
+        0%, 65.9% { opacity: 0; transform: translate(340px, 133px) scale(0.25, 0.65); }
+        66.1%     { opacity: 1; transform: translate(338px, 133px) scale(0.88, 0.92); animation-timing-function: linear; }
+        73.9%     { opacity: 1; transform: translate(20px, 133px) scale(1.02, 1.18); animation-timing-function: ease-out; }
+        76.4%, 100% { opacity: 0; transform: translate(-25px, 131px) scale(0.10); }
+      }
+      @keyframes cloudCurtain {
+        0%, 64.8% { opacity: 0; transform: translate(430px, 133px) scale(0.25, 0.65); }
+        65.0%     { opacity: 1; transform: translate(432px, 133px) scale(0.90, 0.94); animation-timing-function: linear; }
+        69.4%     { opacity: 1; transform: translate(675px, 133px) scale(0.98, 1.06); animation-timing-function: linear; }
+        73.9%     { opacity: 1; transform: translate(920px, 133px) scale(1.02, 1.18); animation-timing-function: ease-out; }
+        76.4%, 100% { opacity: 0; transform: translate(965px, 131px) scale(0.10); }
+      }
+
+      /* Dual-side #C5F92A wake streaks trailing strictly BEHIND the outward clouds */
+      @keyframes streak1 {
+        0%, 65.2% { opacity: 0; transform: translate(445px, 56px) scaleX(0.12); animation-timing-function: ease-out; }
+        68.5%     { opacity: 1; transform: translate(605px, 56px) scaleX(1.00); animation-timing-function: linear; }
+        71.4%     { opacity: 0.92; transform: translate(740px, 56px) scaleX(0.82); animation-timing-function: ease-in; }
+        74.2%, 100% { opacity: 0; transform: translate(880px, 56px) scaleX(0.05); }
+      }
+      @keyframes streak2 {
+        0%, 65.6% { opacity: 0; transform: translate(450px, 210px) scaleX(0.12); animation-timing-function: ease-out; }
+        68.8%     { opacity: 1; transform: translate(615px, 210px) scaleX(1.00); animation-timing-function: linear; }
+        71.6%     { opacity: 0.92; transform: translate(745px, 210px) scaleX(0.80); animation-timing-function: ease-in; }
+        74.4%, 100% { opacity: 0; transform: translate(875px, 210px) scaleX(0.05); }
+      }
+      @keyframes streak3 {
+        0%, 65.4% { opacity: 0; transform: translate(455px, 146px) scaleX(0.10); animation-timing-function: ease-out; }
+        68.5%     { opacity: 0.95; transform: translate(605px, 146px) scaleX(0.95); animation-timing-function: linear; }
+        71.2%     { opacity: 0.82; transform: translate(735px, 146px) scaleX(0.68); animation-timing-function: ease-in; }
+        74.0%, 100% { opacity: 0; transform: translate(855px, 146px) scaleX(0.05); }
+      }
+      @keyframes streakL1 {
+        0%, 66.1% { opacity: 0; transform: translate(350px, 56px) scaleX(0.12); animation-timing-function: ease-out; }
+        69.0%     { opacity: 1; transform: translate(230px, 56px) scaleX(0.92); animation-timing-function: linear; }
+        71.6%     { opacity: 0.92; transform: translate(126px, 56px) scaleX(0.85); animation-timing-function: ease-in; }
+        74.2%, 100% { opacity: 0; transform: translate(45px, 56px) scaleX(0.05); }
+      }
+      @keyframes streakL2 {
+        0%, 66.4% { opacity: 0; transform: translate(345px, 210px) scaleX(0.12); animation-timing-function: ease-out; }
+        69.2%     { opacity: 1; transform: translate(222px, 210px) scaleX(0.92); animation-timing-function: linear; }
+        71.8%     { opacity: 0.92; transform: translate(118px, 210px) scaleX(0.82); animation-timing-function: ease-in; }
+        74.4%, 100% { opacity: 0; transform: translate(40px, 210px) scaleX(0.05); }
+      }
+      @keyframes streakL3 {
+        0%, 66.2% { opacity: 0; transform: translate(348px, 146px) scaleX(0.10); animation-timing-function: ease-out; }
+        68.9%     { opacity: 0.95; transform: translate(232px, 146px) scaleX(0.90); animation-timing-function: linear; }
+        71.4%     { opacity: 0.82; transform: translate(132px, 146px) scaleX(0.68); animation-timing-function: ease-in; }
+        74.0%, 100% { opacity: 0; transform: translate(55px, 146px) scaleX(0.05); }
+      }
+    </style>
+  </defs>
+
+  <!-- Matte Charcoal Background (#313131) -->
+  <rect width="960" height="320" fill="#313131" />
+
+  <!-- Dual-side #C5F92A Comic Speed Lines (behind clouds, text, [0], and character) -->
+  <g opacity="0" class="anim-streak-1">
+    <path d="M -130 0 L -16 -3.8 Q 0 0 -16 3.8 L -130 0 Z" fill="#C5F92A" stroke="#0B0C10" stroke-width="2.2" stroke-linejoin="round" />
+  </g>
+  <g opacity="0" class="anim-streak-2">
+    <path d="M -120 0 L -14 -3.8 Q 0 0 -14 3.8 L -120 0 Z" fill="#C5F92A" stroke="#0B0C10" stroke-width="2.2" stroke-linejoin="round" />
+  </g>
+  <g opacity="0" class="anim-streak-3">
+    <path d="M -118 0 L -14 -3.4 Q 0 0 -14 3.4 L -118 0 Z" fill="#C5F92A" stroke="#0B0C10" stroke-width="2.0" stroke-linejoin="round" />
+  </g>
+  <g opacity="0" class="anim-streak-l1">
+    <path d="M 130 0 L 16 -3.8 Q 0 0 16 3.8 L 130 0 Z" fill="#C5F92A" stroke="#0B0C10" stroke-width="2.2" stroke-linejoin="round" />
+  </g>
+  <g opacity="0" class="anim-streak-l2">
+    <path d="M 120 0 L 14 -3.8 Q 0 0 14 3.8 L 120 0 Z" fill="#C5F92A" stroke="#0B0C10" stroke-width="2.2" stroke-linejoin="round" />
+  </g>
+  <g opacity="0" class="anim-streak-l3">
+    <path d="M 118 0 L 14 -3.4 Q 0 0 14 3.4 L 118 0 Z" fill="#C5F92A" stroke="#0B0C10" stroke-width="2.0" stroke-linejoin="round" />
+  </g>
+
+  <!-- ZER emerging left out from behind [0] -->
+  <g clip-path="url(#left-title-clip)">
+    <g transform="translate(300, 133)">
+      <g class="anim-zer-pop">
+        <g transform="translate(-300, -133)">
+          <path d="M 102.09 173.77 L 106.31 172.98 L 110.53 172.20 L 114.75 171.43 L 118.97 170.69 L 123.19 169.96 L 127.41 169.25 L 131.62 168.56 L 135.84 167.89 L 140.06 167.23 L 140.06 173.34 L 140.06 179.45 L 140.06 185.56 L 140.06 191.67 L 140.06 197.78 L 135.66 199.07 L 131.25 200.41 L 126.85 201.78 L 122.44 203.19 L 118.03 204.63 L 113.63 206.11 L 109.22 207.62 L 104.82 209.18 L 100.41 210.76 L 96.01 212.39 L 91.60 214.04 L 87.20 215.74 L 82.79 217.47 L 78.39 219.24 L 73.98 221.04 L 69.57 222.88 L 69.57 213.38 L 69.57 203.88 L 69.57 194.38 L 69.57 184.89 L 72.34 177.21 L 75.12 169.71 L 77.89 162.41 L 80.66 155.29 L 83.43 148.34 L 86.20 141.58 L 88.97 134.98 L 91.74 128.55 L 94.51 122.29 L 97.28 116.20 L 100.05 110.26 L 102.82 104.48 L 105.59 98.85 L 108.36 93.36 L 104.32 92.61 L 100.28 91.84 L 96.23 91.05 L 92.19 90.24 L 88.15 89.42 L 84.11 88.59 L 80.06 87.74 L 76.02 86.87 L 71.98 85.98 L 71.98 77.60 L 71.98 69.22 L 71.98 60.84 L 71.98 52.46 L 71.98 44.08 L 76.43 45.92 L 80.89 47.72 L 85.35 49.49 L 89.80 51.22 L 94.26 52.92 L 98.72 54.57 L 103.18 56.19 L 107.63 57.78 L 112.09 59.32 L 116.55 60.83 L 121.00 62.31 L 125.46 63.74 L 129.92 65.14 L 134.38 66.50 L 138.83 67.83 L 138.83 74.67 L 138.83 81.50 L 138.83 88.34 L 138.83 95.18 L 136.21 99.95 L 133.58 104.84 L 130.96 109.85 L 128.34 114.98 L 125.71 120.24 L 123.09 125.63 L 120.46 131.15 L 117.84 136.81 L 115.21 142.61 L 112.59 148.54 L 109.97 154.63 L 107.34 160.86 L 104.72 167.24 L 102.09 173.77 Z M 154.80 193.69 L 154.80 187.30 L 154.80 180.91 L 154.80 174.52 L 154.80 168.13 L 154.80 161.74 L 154.80 155.35 L 154.80 148.96 L 154.80 142.57 L 154.80 136.18 L 154.80 129.79 L 154.80 123.40 L 154.80 117.01 L 154.80 110.62 L 154.80 104.23 L 154.80 97.83 L 154.80 91.44 L 154.80 85.05 L 154.80 78.66 L 154.80 72.27 L 159.16 73.40 L 163.52 74.50 L 167.88 75.56 L 172.24 76.59 L 176.60 77.58 L 180.96 78.53 L 185.32 79.45 L 189.68 80.34 L 194.04 81.19 L 198.40 82.00 L 202.76 82.78 L 207.12 83.52 L 207.12 88.18 L 207.12 92.85 L 207.12 97.51 L 207.12 102.18 L 207.12 106.84 L 203.26 106.49 L 199.40 106.13 L 195.54 105.75 L 191.68 105.36 L 187.83 104.96 L 183.97 104.54 L 180.11 104.10 L 180.11 109.41 L 180.11 114.72 L 180.11 120.03 L 184.34 120.24 L 188.56 120.45 L 192.79 120.65 L 197.02 120.84 L 201.25 121.02 L 205.48 121.19 L 205.48 125.88 L 205.48 130.57 L 205.48 135.26 L 205.48 139.95 L 205.48 144.64 L 201.25 144.81 L 197.02 144.99 L 192.79 145.18 L 188.56 145.37 L 184.34 145.58 L 180.11 145.79 L 180.11 151.15 L 180.11 156.51 L 180.11 161.86 L 184.24 161.40 L 188.38 160.95 L 192.51 160.52 L 196.65 160.11 L 200.78 159.71 L 204.92 159.33 L 209.05 158.97 L 209.05 163.60 L 209.05 168.23 L 209.05 172.87 L 209.05 177.50 L 209.05 182.13 L 204.88 182.83 L 200.71 183.56 L 196.53 184.32 L 192.36 185.11 L 188.18 185.93 L 184.01 186.79 L 179.84 187.68 L 175.66 188.60 L 171.49 189.55 L 167.32 190.54 L 163.14 191.56 L 158.97 192.61 L 154.80 193.69 Z M 268.20 175.76 L 266.95 172.13 L 265.69 168.50 L 264.44 164.85 L 263.18 161.20 L 261.93 157.53 Q 261.32 155.73 260.60 154.19 Q 259.87 152.64 259.03 151.36 Q 258.18 150.07 257.21 149.05 Q 255.76 147.51 254.19 146.76 Q 252.61 146.00 250.91 146.05 L 249.92 146.07 L 249.92 150.50 L 249.92 154.92 L 249.92 159.34 L 249.92 163.76 L 249.92 168.19 L 249.92 172.61 L 249.92 177.03 L 245.70 177.42 L 241.48 177.83 L 237.26 178.28 L 233.04 178.76 L 228.82 179.28 L 224.61 179.83 L 224.61 174.90 L 224.61 169.97 L 224.61 165.04 L 224.61 160.11 L 224.61 155.17 L 224.61 150.24 L 224.61 145.31 L 224.61 140.38 L 224.61 135.45 L 224.61 130.52 L 224.61 125.59 L 224.61 120.66 L 224.61 115.73 L 224.61 110.80 L 224.61 105.87 L 224.61 100.94 L 224.61 96.01 L 224.61 91.08 L 224.61 86.15 L 228.81 86.69 L 233.01 87.21 L 237.22 87.69 L 241.42 88.14 L 245.63 88.55 L 249.83 88.93 L 254.03 89.28 L 258.24 89.60 Q 260.76 89.77 263.09 90.05 Q 265.42 90.31 267.56 90.67 Q 269.71 91.02 271.66 91.47 Q 273.62 91.91 275.38 92.46 Q 277.15 93.00 278.73 93.64 Q 280.30 94.28 281.69 95.03 Q 283.08 95.77 284.28 96.62 Q 285.97 97.81 287.31 99.22 Q 288.66 100.63 289.67 102.25 Q 290.67 103.88 291.35 105.73 Q 292.02 107.59 292.36 109.67 Q 292.69 111.75 292.69 114.06 Q 292.69 116.22 292.39 118.22 Q 292.08 120.21 291.47 122.02 Q 290.86 123.84 289.94 125.48 Q 289.02 127.12 287.80 128.59 Q 286.58 130.05 285.05 131.32 Q 283.53 132.58 281.71 133.65 Q 279.89 134.72 277.77 135.59 Q 275.66 136.46 273.24 137.14 L 273.24 137.38 Q 275.02 137.92 276.60 138.70 Q 278.17 139.47 279.55 140.47 Q 280.93 141.47 282.12 142.70 Q 283.30 143.93 284.40 145.56 Q 285.50 147.18 286.52 149.20 Q 287.54 151.23 288.47 153.64 L 289.85 157.20 L 291.23 160.76 L 292.60 164.32 L 293.98 167.88 L 295.36 171.44 L 296.74 175.00 L 292.66 175.02 L 288.58 175.06 L 284.51 175.14 L 280.43 175.25 L 276.35 175.39 L 272.28 175.56 L 268.20 175.76 Z M 265.80 117.31 Q 265.80 115.16 265.15 113.44 Q 264.51 111.71 263.22 110.41 Q 262.36 109.54 261.18 108.94 Q 259.99 108.33 258.48 107.99 Q 256.97 107.64 255.13 107.56 L 252.53 107.44 L 249.92 107.31 L 249.92 111.34 L 249.92 115.37 L 249.92 119.40 L 249.92 123.43 L 249.92 127.46 L 252.20 127.48 L 254.49 127.51 Q 256.19 127.52 257.67 127.21 Q 259.14 126.89 260.40 126.25 Q 261.66 125.61 262.69 124.63 Q 264.24 123.18 265.02 121.35 Q 265.80 119.53 265.80 117.31 Z" transform="translate(5.5, 6.5)" fill="#171717" stroke="#171717" stroke-width="5.5" stroke-linejoin="round" />
+          <path d="M 102.09 173.77 L 106.31 172.98 L 110.53 172.20 L 114.75 171.43 L 118.97 170.69 L 123.19 169.96 L 127.41 169.25 L 131.62 168.56 L 135.84 167.89 L 140.06 167.23 L 140.06 173.34 L 140.06 179.45 L 140.06 185.56 L 140.06 191.67 L 140.06 197.78 L 135.66 199.07 L 131.25 200.41 L 126.85 201.78 L 122.44 203.19 L 118.03 204.63 L 113.63 206.11 L 109.22 207.62 L 104.82 209.18 L 100.41 210.76 L 96.01 212.39 L 91.60 214.04 L 87.20 215.74 L 82.79 217.47 L 78.39 219.24 L 73.98 221.04 L 69.57 222.88 L 69.57 213.38 L 69.57 203.88 L 69.57 194.38 L 69.57 184.89 L 72.34 177.21 L 75.12 169.71 L 77.89 162.41 L 80.66 155.29 L 83.43 148.34 L 86.20 141.58 L 88.97 134.98 L 91.74 128.55 L 94.51 122.29 L 97.28 116.20 L 100.05 110.26 L 102.82 104.48 L 105.59 98.85 L 108.36 93.36 L 104.32 92.61 L 100.28 91.84 L 96.23 91.05 L 92.19 90.24 L 88.15 89.42 L 84.11 88.59 L 80.06 87.74 L 76.02 86.87 L 71.98 85.98 L 71.98 77.60 L 71.98 69.22 L 71.98 60.84 L 71.98 52.46 L 71.98 44.08 L 76.43 45.92 L 80.89 47.72 L 85.35 49.49 L 89.80 51.22 L 94.26 52.92 L 98.72 54.57 L 103.18 56.19 L 107.63 57.78 L 112.09 59.32 L 116.55 60.83 L 121.00 62.31 L 125.46 63.74 L 129.92 65.14 L 134.38 66.50 L 138.83 67.83 L 138.83 74.67 L 138.83 81.50 L 138.83 88.34 L 138.83 95.18 L 136.21 99.95 L 133.58 104.84 L 130.96 109.85 L 128.34 114.98 L 125.71 120.24 L 123.09 125.63 L 120.46 131.15 L 117.84 136.81 L 115.21 142.61 L 112.59 148.54 L 109.97 154.63 L 107.34 160.86 L 104.72 167.24 L 102.09 173.77 Z M 154.80 193.69 L 154.80 187.30 L 154.80 180.91 L 154.80 174.52 L 154.80 168.13 L 154.80 161.74 L 154.80 155.35 L 154.80 148.96 L 154.80 142.57 L 154.80 136.18 L 154.80 129.79 L 154.80 123.40 L 154.80 117.01 L 154.80 110.62 L 154.80 104.23 L 154.80 97.83 L 154.80 91.44 L 154.80 85.05 L 154.80 78.66 L 154.80 72.27 L 159.16 73.40 L 163.52 74.50 L 167.88 75.56 L 172.24 76.59 L 176.60 77.58 L 180.96 78.53 L 185.32 79.45 L 189.68 80.34 L 194.04 81.19 L 198.40 82.00 L 202.76 82.78 L 207.12 83.52 L 207.12 88.18 L 207.12 92.85 L 207.12 97.51 L 207.12 102.18 L 207.12 106.84 L 203.26 106.49 L 199.40 106.13 L 195.54 105.75 L 191.68 105.36 L 187.83 104.96 L 183.97 104.54 L 180.11 104.10 L 180.11 109.41 L 180.11 114.72 L 180.11 120.03 L 184.34 120.24 L 188.56 120.45 L 192.79 120.65 L 197.02 120.84 L 201.25 121.02 L 205.48 121.19 L 205.48 125.88 L 205.48 130.57 L 205.48 135.26 L 205.48 139.95 L 205.48 144.64 L 201.25 144.81 L 197.02 144.99 L 192.79 145.18 L 188.56 145.37 L 184.34 145.58 L 180.11 145.79 L 180.11 151.15 L 180.11 156.51 L 180.11 161.86 L 184.24 161.40 L 188.38 160.95 L 192.51 160.52 L 196.65 160.11 L 200.78 159.71 L 204.92 159.33 L 209.05 158.97 L 209.05 163.60 L 209.05 168.23 L 209.05 172.87 L 209.05 177.50 L 209.05 182.13 L 204.88 182.83 L 200.71 183.56 L 196.53 184.32 L 192.36 185.11 L 188.18 185.93 L 184.01 186.79 L 179.84 187.68 L 175.66 188.60 L 171.49 189.55 L 167.32 190.54 L 163.14 191.56 L 158.97 192.61 L 154.80 193.69 Z M 268.20 175.76 L 266.95 172.13 L 265.69 168.50 L 264.44 164.85 L 263.18 161.20 L 261.93 157.53 Q 261.32 155.73 260.60 154.19 Q 259.87 152.64 259.03 151.36 Q 258.18 150.07 257.21 149.05 Q 255.76 147.51 254.19 146.76 Q 252.61 146.00 250.91 146.05 L 249.92 146.07 L 249.92 150.50 L 249.92 154.92 L 249.92 159.34 L 249.92 163.76 L 249.92 168.19 L 249.92 172.61 L 249.92 177.03 L 245.70 177.42 L 241.48 177.83 L 237.26 178.28 L 233.04 178.76 L 228.82 179.28 L 224.61 179.83 L 224.61 174.90 L 224.61 169.97 L 224.61 165.04 L 224.61 160.11 L 224.61 155.17 L 224.61 150.24 L 224.61 145.31 L 224.61 140.38 L 224.61 135.45 L 224.61 130.52 L 224.61 125.59 L 224.61 120.66 L 224.61 115.73 L 224.61 110.80 L 224.61 105.87 L 224.61 100.94 L 224.61 96.01 L 224.61 91.08 L 224.61 86.15 L 228.81 86.69 L 233.01 87.21 L 237.22 87.69 L 241.42 88.14 L 245.63 88.55 L 249.83 88.93 L 254.03 89.28 L 258.24 89.60 Q 260.76 89.77 263.09 90.05 Q 265.42 90.31 267.56 90.67 Q 269.71 91.02 271.66 91.47 Q 273.62 91.91 275.38 92.46 Q 277.15 93.00 278.73 93.64 Q 280.30 94.28 281.69 95.03 Q 283.08 95.77 284.28 96.62 Q 285.97 97.81 287.31 99.22 Q 288.66 100.63 289.67 102.25 Q 290.67 103.88 291.35 105.73 Q 292.02 107.59 292.36 109.67 Q 292.69 111.75 292.69 114.06 Q 292.69 116.22 292.39 118.22 Q 292.08 120.21 291.47 122.02 Q 290.86 123.84 289.94 125.48 Q 289.02 127.12 287.80 128.59 Q 286.58 130.05 285.05 131.32 Q 283.53 132.58 281.71 133.65 Q 279.89 134.72 277.77 135.59 Q 275.66 136.46 273.24 137.14 L 273.24 137.38 Q 275.02 137.92 276.60 138.70 Q 278.17 139.47 279.55 140.47 Q 280.93 141.47 282.12 142.70 Q 283.30 143.93 284.40 145.56 Q 285.50 147.18 286.52 149.20 Q 287.54 151.23 288.47 153.64 L 289.85 157.20 L 291.23 160.76 L 292.60 164.32 L 293.98 167.88 L 295.36 171.44 L 296.74 175.00 L 292.66 175.02 L 288.58 175.06 L 284.51 175.14 L 280.43 175.25 L 276.35 175.39 L 272.28 175.56 L 268.20 175.76 Z M 265.80 117.31 Q 265.80 115.16 265.15 113.44 Q 264.51 111.71 263.22 110.41 Q 262.36 109.54 261.18 108.94 Q 259.99 108.33 258.48 107.99 Q 256.97 107.64 255.13 107.56 L 252.53 107.44 L 249.92 107.31 L 249.92 111.34 L 249.92 115.37 L 249.92 119.40 L 249.92 123.43 L 249.92 127.46 L 252.20 127.48 L 254.49 127.51 Q 256.19 127.52 257.67 127.21 Q 259.14 126.89 260.40 126.25 Q 261.66 125.61 262.69 124.63 Q 264.24 123.18 265.02 121.35 Q 265.80 119.53 265.80 117.31 Z" fill="#FEFEFD" stroke="#171717" stroke-width="6.2" stroke-linejoin="round" paint-order="stroke fill" />
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- WORK emerging right out from behind [0] -->
+  <g clip-path="url(#right-title-clip)">
+    <g transform="translate(493, 133)">
+      <g class="anim-work-pop">
+        <g transform="translate(-493, -133)">
+          <path d="M 596.95 178.24 L 592.46 177.96 L 587.98 177.70 L 583.50 177.45 L 579.02 177.21 L 574.53 176.98 L 570.05 176.77 L 568.99 172.19 L 567.93 167.62 L 566.87 163.06 L 565.81 158.51 L 564.75 153.98 L 563.69 149.45 L 562.63 144.93 L 561.57 140.42 L 560.51 135.92 L 559.45 131.43 L 558.39 126.95 Q 558.21 126.25 558.03 124.85 Q 557.84 123.45 557.64 121.35 Q 557.43 119.26 557.22 116.47 L 556.98 116.47 Q 556.69 118.95 556.40 120.94 Q 556.12 122.93 555.84 124.44 Q 555.56 125.94 555.29 126.97 L 554.24 131.07 L 553.19 135.16 L 552.14 139.25 L 551.09 143.32 L 550.04 147.40 L 548.99 151.46 L 547.94 155.52 L 546.89 159.57 L 545.84 163.62 L 544.79 167.66 L 543.74 171.69 L 542.69 175.72 L 538.62 175.61 L 534.55 175.50 L 530.48 175.40 L 526.42 175.32 L 522.35 175.24 L 518.28 175.18 L 514.21 175.12 L 513.21 170.90 L 512.21 166.68 L 511.21 162.46 L 510.20 158.24 L 509.20 154.03 L 508.20 149.82 L 507.20 145.61 L 506.20 141.40 L 505.19 137.19 L 504.19 132.99 L 503.19 128.78 L 502.19 124.58 L 501.19 120.38 L 500.18 116.18 L 499.18 111.98 L 498.18 107.78 L 497.18 103.58 L 496.18 99.38 L 495.17 95.18 L 494.17 90.98 L 498.14 90.97 L 502.11 90.96 L 506.07 90.93 L 510.04 90.90 L 514.01 90.86 L 517.98 90.80 L 521.95 90.74 L 522.53 94.88 L 523.12 99.01 L 523.70 103.15 L 524.29 107.29 L 524.88 111.43 L 525.46 115.58 L 526.05 119.73 L 526.63 123.88 L 527.22 128.03 L 527.80 132.18 L 528.39 136.34 L 528.98 140.50 Q 529.06 140.97 529.20 142.34 Q 529.33 143.72 529.50 146.00 L 529.68 148.45 L 529.86 150.91 L 530.21 150.91 Q 530.27 150.14 530.44 148.83 Q 530.62 147.53 530.91 145.68 Q 531.20 143.83 531.48 142.45 Q 531.76 141.07 532.02 140.15 L 533.10 136.02 L 534.18 131.88 L 535.26 127.74 L 536.34 123.59 L 537.42 119.44 L 538.50 115.28 L 539.58 111.11 L 540.66 106.94 L 541.74 102.76 L 542.81 98.58 L 543.89 94.38 L 544.97 90.18 L 548.92 90.06 L 552.86 89.92 L 556.80 89.77 L 560.74 89.62 L 564.69 89.45 L 568.63 89.28 L 572.57 89.09 L 573.47 93.39 L 574.37 97.69 L 575.27 102.01 L 576.16 106.33 L 577.06 110.66 L 577.96 115.00 L 578.86 119.35 L 579.76 123.71 L 580.66 128.08 L 581.55 132.45 L 582.45 136.84 L 583.35 141.23 L 583.73 143.87 L 584.11 146.52 L 584.41 149.10 L 584.70 151.68 L 584.93 151.69 L 585.11 149.51 L 585.49 145.20 L 585.87 140.89 L 586.48 136.51 L 587.09 132.14 L 587.70 127.75 L 588.31 123.36 L 588.92 118.96 L 589.53 114.55 L 590.14 110.14 L 590.75 105.72 L 591.36 101.29 L 591.97 96.86 L 592.58 92.42 L 593.20 87.97 L 597.36 87.71 L 601.52 87.44 L 605.68 87.16 L 609.84 86.87 L 614.00 86.57 L 618.16 86.26 L 617.10 91.00 L 616.04 95.73 L 614.97 100.44 L 613.91 105.14 L 612.85 109.82 L 611.79 114.48 L 610.73 119.13 L 609.67 123.77 L 608.61 128.38 L 607.55 132.99 L 606.49 137.58 L 605.43 142.15 L 604.37 146.71 L 603.31 151.25 L 602.25 155.78 L 601.19 160.30 L 600.13 164.81 L 599.07 169.30 L 598.01 173.77 L 596.95 178.24 Z M 711.17 132.67 Q 711.17 135.50 711.02 138.24 Q 710.87 140.97 710.56 143.59 Q 710.26 146.22 709.81 148.73 Q 709.35 151.24 708.75 153.64 Q 708.14 156.03 707.39 158.30 Q 706.63 160.57 705.72 162.72 Q 704.81 164.86 703.78 166.82 Q 702.76 168.77 701.61 170.54 Q 700.46 172.30 699.19 173.88 Q 697.92 175.44 696.53 176.83 Q 695.14 178.21 693.63 179.40 Q 692.12 180.59 690.49 181.60 Q 688.86 182.60 687.16 183.39 Q 685.46 184.18 683.70 184.76 Q 681.94 185.33 680.12 185.70 Q 678.29 186.07 676.40 186.24 Q 674.51 186.41 672.55 186.37 Q 670.59 186.34 668.57 186.12 Q 666.60 185.90 664.69 185.51 Q 662.77 185.13 660.92 184.57 Q 659.07 184.02 657.27 183.31 Q 655.48 182.60 653.74 181.72 Q 652.01 180.85 650.33 179.82 Q 648.66 178.79 647.04 177.61 Q 645.10 176.19 643.33 174.60 Q 641.57 173.02 639.97 171.26 Q 638.38 169.52 636.95 167.59 Q 635.53 165.68 634.28 163.58 Q 633.03 161.50 631.95 159.24 Q 631.05 157.36 630.30 155.41 Q 629.56 153.47 628.96 151.46 Q 628.36 149.45 627.91 147.37 Q 627.46 145.29 627.16 143.14 Q 626.86 140.99 626.71 138.77 Q 626.56 136.54 626.56 134.24 Q 626.56 131.83 626.71 129.50 Q 626.86 127.16 627.17 124.91 Q 627.47 122.65 627.92 120.47 Q 628.38 118.28 628.98 116.17 Q 629.59 114.05 630.35 112.00 Q 631.10 109.95 632.01 107.97 Q 632.92 105.98 633.95 104.12 Q 634.98 102.26 636.13 100.53 Q 637.28 98.80 638.56 97.20 Q 639.83 95.59 641.23 94.11 Q 642.63 92.63 644.14 91.27 Q 645.66 89.91 647.30 88.69 Q 648.94 87.45 650.66 86.39 Q 652.37 85.31 654.17 84.40 Q 655.96 83.49 657.82 82.75 Q 659.69 82.00 661.63 81.43 Q 663.57 80.85 665.58 80.44 Q 667.60 80.03 669.69 79.80 Q 671.70 79.58 673.64 79.54 Q 675.58 79.50 677.45 79.66 Q 679.32 79.82 681.12 80.17 Q 682.92 80.52 684.65 81.08 Q 686.38 81.64 688.03 82.40 Q 689.69 83.16 691.28 84.13 Q 693.18 85.30 694.91 86.74 Q 696.64 88.19 698.20 89.91 Q 699.76 91.63 701.14 93.63 Q 702.53 95.64 703.74 97.92 Q 704.95 100.21 705.98 102.76 Q 706.85 104.90 707.57 107.16 Q 708.29 109.43 708.87 111.80 Q 709.44 114.19 709.87 116.69 Q 710.31 119.19 710.59 121.80 Q 710.88 124.41 711.03 127.13 Q 711.17 129.85 711.17 132.67 Z M 684.33 133.58 Q 684.33 130.30 684.09 127.37 Q 683.84 124.45 683.34 121.88 Q 682.84 119.32 682.09 117.12 Q 681.35 114.92 680.35 113.09 Q 679.35 111.26 678.17 109.92 Q 677.00 108.58 675.63 107.73 Q 674.27 106.88 672.73 106.50 Q 671.18 106.13 669.45 106.23 Q 667.56 106.33 665.88 106.86 Q 664.20 107.39 662.73 108.33 Q 661.26 109.27 659.99 110.62 Q 658.73 111.97 657.67 113.73 Q 656.62 115.48 655.83 117.57 Q 655.04 119.65 654.51 122.08 Q 653.98 124.50 653.72 127.26 Q 653.46 130.02 653.46 133.13 Q 653.46 136.16 653.72 138.87 Q 653.98 141.58 654.50 143.96 Q 655.03 146.35 655.81 148.42 Q 656.60 150.49 657.64 152.24 Q 658.69 154.00 659.93 155.35 Q 661.16 156.70 662.59 157.64 Q 664.01 158.58 665.63 159.10 Q 667.24 159.62 669.04 159.72 Q 671.24 159.84 673.22 159.16 Q 675.19 158.47 676.95 156.97 Q 678.12 155.95 679.12 154.62 Q 680.12 153.28 680.94 151.62 Q 681.76 149.95 682.40 147.96 Q 683.05 145.96 683.48 143.70 Q 683.90 141.43 684.12 138.90 Q 684.33 136.37 684.33 133.58 Z M 770.26 198.38 L 769.00 192.55 L 767.75 186.75 L 766.50 181.00 L 765.24 175.28 L 763.99 169.60 Q 763.38 166.82 762.66 164.43 Q 761.93 162.05 761.09 160.06 Q 760.24 158.08 759.27 156.48 Q 757.82 154.09 756.25 152.87 Q 754.67 151.65 752.97 151.57 L 751.98 151.52 L 751.98 157.79 L 751.98 164.05 L 751.98 170.32 L 751.98 176.59 L 751.98 182.85 L 751.98 189.12 L 751.98 195.38 L 747.76 194.72 L 743.54 194.07 L 739.32 193.43 L 735.10 192.80 L 730.88 192.18 L 726.66 191.58 L 726.66 185.41 L 726.66 179.24 L 726.66 173.07 L 726.66 166.91 L 726.66 160.74 L 726.66 154.57 L 726.66 148.40 L 726.66 142.24 L 726.66 136.07 L 726.66 129.90 L 726.66 123.73 L 726.66 117.56 L 726.66 111.40 L 726.66 105.23 L 726.66 99.06 L 726.66 92.89 L 726.66 86.73 L 726.66 80.56 L 726.66 74.39 L 730.87 73.78 L 735.07 73.17 L 739.28 72.54 L 743.48 71.90 L 747.69 71.25 L 751.89 70.60 L 756.09 69.92 L 760.30 69.24 Q 762.82 68.83 765.15 68.62 Q 767.48 68.42 769.62 68.43 Q 771.77 68.43 773.72 68.66 Q 775.67 68.89 777.44 69.34 Q 779.21 69.80 780.78 70.48 Q 782.36 71.17 783.75 72.08 Q 785.14 73.00 786.34 74.15 Q 788.02 75.77 789.37 77.84 Q 790.71 79.91 791.72 82.43 Q 792.73 84.97 793.41 87.94 Q 794.08 90.91 794.41 94.32 Q 794.75 97.74 794.75 101.57 Q 794.75 105.17 794.44 108.49 Q 794.14 111.81 793.53 114.85 Q 792.92 117.88 792.00 120.62 Q 791.08 123.35 789.86 125.78 Q 788.64 128.20 787.11 130.27 Q 785.59 132.33 783.77 134.04 Q 781.95 135.74 779.83 137.10 Q 777.71 138.44 775.30 139.45 L 775.30 139.82 Q 777.08 140.72 778.65 141.98 Q 780.23 143.26 781.61 144.90 Q 782.99 146.56 784.17 148.59 Q 785.36 150.63 786.46 153.32 Q 787.56 156.03 788.58 159.40 Q 789.59 162.78 790.53 166.83 L 791.91 172.83 L 793.29 178.87 L 794.66 184.95 L 796.04 191.07 L 797.42 197.24 L 798.79 203.46 L 794.72 202.70 L 790.64 201.96 L 786.56 201.22 L 782.49 200.49 L 778.41 199.78 L 774.34 199.07 L 770.26 198.38 Z M 767.86 109.23 Q 767.86 105.97 767.21 103.44 Q 766.57 100.91 765.28 99.13 Q 764.42 97.94 763.23 97.21 Q 762.05 96.49 760.54 96.22 Q 759.03 95.94 757.19 96.12 L 754.58 96.36 L 751.98 96.60 L 751.98 102.31 L 751.98 108.02 L 751.98 113.73 L 751.98 119.44 L 751.98 125.15 L 754.26 125.10 L 756.55 125.06 Q 758.25 125.02 759.72 124.51 Q 761.20 123.99 762.46 122.99 Q 763.72 121.98 764.75 120.48 Q 766.30 118.22 767.08 115.41 Q 767.86 112.59 767.86 109.23 Z M 858.59 215.73 L 856.51 207.54 L 854.44 199.44 L 852.37 191.43 L 850.30 183.50 L 848.23 175.66 L 846.16 167.91 L 844.09 160.24 L 842.02 152.66 L 839.95 145.16 Q 839.01 141.19 838.46 138.47 Q 837.90 135.76 837.73 134.29 L 837.43 134.29 L 837.43 141.97 L 837.43 149.66 L 837.43 157.34 L 837.43 165.03 L 837.43 172.71 L 837.43 180.40 L 837.43 188.08 L 837.43 195.77 L 837.43 203.45 L 837.43 211.14 L 833.21 210.25 L 829.00 209.38 L 824.78 208.52 L 820.56 207.67 L 816.34 206.83 L 812.12 206.00 L 812.12 198.32 L 812.12 190.63 L 812.12 182.94 L 812.12 175.26 L 812.12 167.57 L 812.12 159.88 L 812.12 152.20 L 812.12 144.51 L 812.12 136.82 L 812.12 129.14 L 812.12 121.45 L 812.12 113.76 L 812.12 106.08 L 812.12 98.39 L 812.12 90.70 L 812.12 83.02 L 812.12 75.33 L 812.12 67.64 L 812.12 59.96 L 816.34 59.13 L 820.56 58.29 L 824.78 57.44 L 829.00 56.58 L 833.21 55.70 L 837.43 54.82 L 837.43 63.08 L 837.43 71.34 L 837.43 79.60 L 837.43 87.86 L 837.43 96.12 L 837.43 104.38 L 837.43 112.64 L 837.43 120.90 L 837.43 129.16 L 837.73 129.16 Q 838.28 126.20 838.91 123.46 Q 839.54 120.70 840.25 118.15 L 842.11 110.94 L 843.97 103.65 L 845.83 96.29 L 847.69 88.86 L 849.56 81.35 L 851.42 73.77 L 853.28 66.12 L 855.14 58.39 L 857.00 50.58 L 861.29 49.62 L 865.57 48.65 L 869.86 47.67 L 874.15 46.67 L 878.43 45.67 L 882.72 44.65 L 887.00 43.62 L 884.84 51.85 L 882.67 59.98 L 880.50 68.02 L 878.33 75.97 L 876.16 83.83 L 874.00 91.60 L 871.83 99.28 L 869.66 106.87 L 867.49 114.37 L 865.32 121.79 L 863.16 129.12 L 865.33 136.44 L 867.51 143.85 L 869.69 151.35 L 871.87 158.94 L 874.04 166.61 L 876.22 174.37 L 878.40 182.23 L 880.58 190.17 L 882.76 198.21 L 884.93 206.34 L 887.11 214.56 L 889.29 222.88 L 884.90 221.82 L 880.52 220.78 L 876.13 219.74 L 871.74 218.72 L 867.36 217.71 L 862.97 216.71 L 858.59 215.73 Z" transform="translate(5.5, 6.5)" fill="#171717" stroke="#171717" stroke-width="5.5" stroke-linejoin="round" />
+          <path d="M 596.95 178.24 L 592.46 177.96 L 587.98 177.70 L 583.50 177.45 L 579.02 177.21 L 574.53 176.98 L 570.05 176.77 L 568.99 172.19 L 567.93 167.62 L 566.87 163.06 L 565.81 158.51 L 564.75 153.98 L 563.69 149.45 L 562.63 144.93 L 561.57 140.42 L 560.51 135.92 L 559.45 131.43 L 558.39 126.95 Q 558.21 126.25 558.03 124.85 Q 557.84 123.45 557.64 121.35 Q 557.43 119.26 557.22 116.47 L 556.98 116.47 Q 556.69 118.95 556.40 120.94 Q 556.12 122.93 555.84 124.44 Q 555.56 125.94 555.29 126.97 L 554.24 131.07 L 553.19 135.16 L 552.14 139.25 L 551.09 143.32 L 550.04 147.40 L 548.99 151.46 L 547.94 155.52 L 546.89 159.57 L 545.84 163.62 L 544.79 167.66 L 543.74 171.69 L 542.69 175.72 L 538.62 175.61 L 534.55 175.50 L 530.48 175.40 L 526.42 175.32 L 522.35 175.24 L 518.28 175.18 L 514.21 175.12 L 513.21 170.90 L 512.21 166.68 L 511.21 162.46 L 510.20 158.24 L 509.20 154.03 L 508.20 149.82 L 507.20 145.61 L 506.20 141.40 L 505.19 137.19 L 504.19 132.99 L 503.19 128.78 L 502.19 124.58 L 501.19 120.38 L 500.18 116.18 L 499.18 111.98 L 498.18 107.78 L 497.18 103.58 L 496.18 99.38 L 495.17 95.18 L 494.17 90.98 L 498.14 90.97 L 502.11 90.96 L 506.07 90.93 L 510.04 90.90 L 514.01 90.86 L 517.98 90.80 L 521.95 90.74 L 522.53 94.88 L 523.12 99.01 L 523.70 103.15 L 524.29 107.29 L 524.88 111.43 L 525.46 115.58 L 526.05 119.73 L 526.63 123.88 L 527.22 128.03 L 527.80 132.18 L 528.39 136.34 L 528.98 140.50 Q 529.06 140.97 529.20 142.34 Q 529.33 143.72 529.50 146.00 L 529.68 148.45 L 529.86 150.91 L 530.21 150.91 Q 530.27 150.14 530.44 148.83 Q 530.62 147.53 530.91 145.68 Q 531.20 143.83 531.48 142.45 Q 531.76 141.07 532.02 140.15 L 533.10 136.02 L 534.18 131.88 L 535.26 127.74 L 536.34 123.59 L 537.42 119.44 L 538.50 115.28 L 539.58 111.11 L 540.66 106.94 L 541.74 102.76 L 542.81 98.58 L 543.89 94.38 L 544.97 90.18 L 548.92 90.06 L 552.86 89.92 L 556.80 89.77 L 560.74 89.62 L 564.69 89.45 L 568.63 89.28 L 572.57 89.09 L 573.47 93.39 L 574.37 97.69 L 575.27 102.01 L 576.16 106.33 L 577.06 110.66 L 577.96 115.00 L 578.86 119.35 L 579.76 123.71 L 580.66 128.08 L 581.55 132.45 L 582.45 136.84 L 583.35 141.23 L 583.73 143.87 L 584.11 146.52 L 584.41 149.10 L 584.70 151.68 L 584.93 151.69 L 585.11 149.51 L 585.49 145.20 L 585.87 140.89 L 586.48 136.51 L 587.09 132.14 L 587.70 127.75 L 588.31 123.36 L 588.92 118.96 L 589.53 114.55 L 590.14 110.14 L 590.75 105.72 L 591.36 101.29 L 591.97 96.86 L 592.58 92.42 L 593.20 87.97 L 597.36 87.71 L 601.52 87.44 L 605.68 87.16 L 609.84 86.87 L 614.00 86.57 L 618.16 86.26 L 617.10 91.00 L 616.04 95.73 L 614.97 100.44 L 613.91 105.14 L 612.85 109.82 L 611.79 114.48 L 610.73 119.13 L 609.67 123.77 L 608.61 128.38 L 607.55 132.99 L 606.49 137.58 L 605.43 142.15 L 604.37 146.71 L 603.31 151.25 L 602.25 155.78 L 601.19 160.30 L 600.13 164.81 L 599.07 169.30 L 598.01 173.77 L 596.95 178.24 Z M 711.17 132.67 Q 711.17 135.50 711.02 138.24 Q 710.87 140.97 710.56 143.59 Q 710.26 146.22 709.81 148.73 Q 709.35 151.24 708.75 153.64 Q 708.14 156.03 707.39 158.30 Q 706.63 160.57 705.72 162.72 Q 704.81 164.86 703.78 166.82 Q 702.76 168.77 701.61 170.54 Q 700.46 172.30 699.19 173.88 Q 697.92 175.44 696.53 176.83 Q 695.14 178.21 693.63 179.40 Q 692.12 180.59 690.49 181.60 Q 688.86 182.60 687.16 183.39 Q 685.46 184.18 683.70 184.76 Q 681.94 185.33 680.12 185.70 Q 678.29 186.07 676.40 186.24 Q 674.51 186.41 672.55 186.37 Q 670.59 186.34 668.57 186.12 Q 666.60 185.90 664.69 185.51 Q 662.77 185.13 660.92 184.57 Q 659.07 184.02 657.27 183.31 Q 655.48 182.60 653.74 181.72 Q 652.01 180.85 650.33 179.82 Q 648.66 178.79 647.04 177.61 Q 645.10 176.19 643.33 174.60 Q 641.57 173.02 639.97 171.26 Q 638.38 169.52 636.95 167.59 Q 635.53 165.68 634.28 163.58 Q 633.03 161.50 631.95 159.24 Q 631.05 157.36 630.30 155.41 Q 629.56 153.47 628.96 151.46 Q 628.36 149.45 627.91 147.37 Q 627.46 145.29 627.16 143.14 Q 626.86 140.99 626.71 138.77 Q 626.56 136.54 626.56 134.24 Q 626.56 131.83 626.71 129.50 Q 626.86 127.16 627.17 124.91 Q 627.47 122.65 627.92 120.47 Q 628.38 118.28 628.98 116.17 Q 629.59 114.05 630.35 112.00 Q 631.10 109.95 632.01 107.97 Q 632.92 105.98 633.95 104.12 Q 634.98 102.26 636.13 100.53 Q 637.28 98.80 638.56 97.20 Q 639.83 95.59 641.23 94.11 Q 642.63 92.63 644.14 91.27 Q 645.66 89.91 647.30 88.69 Q 648.94 87.45 650.66 86.39 Q 652.37 85.31 654.17 84.40 Q 655.96 83.49 657.82 82.75 Q 659.69 82.00 661.63 81.43 Q 663.57 80.85 665.58 80.44 Q 667.60 80.03 669.69 79.80 Q 671.70 79.58 673.64 79.54 Q 675.58 79.50 677.45 79.66 Q 679.32 79.82 681.12 80.17 Q 682.92 80.52 684.65 81.08 Q 686.38 81.64 688.03 82.40 Q 689.69 83.16 691.28 84.13 Q 693.18 85.30 694.91 86.74 Q 696.64 88.19 698.20 89.91 Q 699.76 91.63 701.14 93.63 Q 702.53 95.64 703.74 97.92 Q 704.95 100.21 705.98 102.76 Q 706.85 104.90 707.57 107.16 Q 708.29 109.43 708.87 111.80 Q 709.44 114.19 709.87 116.69 Q 710.31 119.19 710.59 121.80 Q 710.88 124.41 711.03 127.13 Q 711.17 129.85 711.17 132.67 Z M 684.33 133.58 Q 684.33 130.30 684.09 127.37 Q 683.84 124.45 683.34 121.88 Q 682.84 119.32 682.09 117.12 Q 681.35 114.92 680.35 113.09 Q 679.35 111.26 678.17 109.92 Q 677.00 108.58 675.63 107.73 Q 674.27 106.88 672.73 106.50 Q 671.18 106.13 669.45 106.23 Q 667.56 106.33 665.88 106.86 Q 664.20 107.39 662.73 108.33 Q 661.26 109.27 659.99 110.62 Q 658.73 111.97 657.67 113.73 Q 656.62 115.48 655.83 117.57 Q 655.04 119.65 654.51 122.08 Q 653.98 124.50 653.72 127.26 Q 653.46 130.02 653.46 133.13 Q 653.46 136.16 653.72 138.87 Q 653.98 141.58 654.50 143.96 Q 655.03 146.35 655.81 148.42 Q 656.60 150.49 657.64 152.24 Q 658.69 154.00 659.93 155.35 Q 661.16 156.70 662.59 157.64 Q 664.01 158.58 665.63 159.10 Q 667.24 159.62 669.04 159.72 Q 671.24 159.84 673.22 159.16 Q 675.19 158.47 676.95 156.97 Q 678.12 155.95 679.12 154.62 Q 680.12 153.28 680.94 151.62 Q 681.76 149.95 682.40 147.96 Q 683.05 145.96 683.48 143.70 Q 683.90 141.43 684.12 138.90 Q 684.33 136.37 684.33 133.58 Z M 770.26 198.38 L 769.00 192.55 L 767.75 186.75 L 766.50 181.00 L 765.24 175.28 L 763.99 169.60 Q 763.38 166.82 762.66 164.43 Q 761.93 162.05 761.09 160.06 Q 760.24 158.08 759.27 156.48 Q 757.82 154.09 756.25 152.87 Q 754.67 151.65 752.97 151.57 L 751.98 151.52 L 751.98 157.79 L 751.98 164.05 L 751.98 170.32 L 751.98 176.59 L 751.98 182.85 L 751.98 189.12 L 751.98 195.38 L 747.76 194.72 L 743.54 194.07 L 739.32 193.43 L 735.10 192.80 L 730.88 192.18 L 726.66 191.58 L 726.66 185.41 L 726.66 179.24 L 726.66 173.07 L 726.66 166.91 L 726.66 160.74 L 726.66 154.57 L 726.66 148.40 L 726.66 142.24 L 726.66 136.07 L 726.66 129.90 L 726.66 123.73 L 726.66 117.56 L 726.66 111.40 L 726.66 105.23 L 726.66 99.06 L 726.66 92.89 L 726.66 86.73 L 726.66 80.56 L 726.66 74.39 L 730.87 73.78 L 735.07 73.17 L 739.28 72.54 L 743.48 71.90 L 747.69 71.25 L 751.89 70.60 L 756.09 69.92 L 760.30 69.24 Q 762.82 68.83 765.15 68.62 Q 767.48 68.42 769.62 68.43 Q 771.77 68.43 773.72 68.66 Q 775.67 68.89 777.44 69.34 Q 779.21 69.80 780.78 70.48 Q 782.36 71.17 783.75 72.08 Q 785.14 73.00 786.34 74.15 Q 788.02 75.77 789.37 77.84 Q 790.71 79.91 791.72 82.43 Q 792.73 84.97 793.41 87.94 Q 794.08 90.91 794.41 94.32 Q 794.75 97.74 794.75 101.57 Q 794.75 105.17 794.44 108.49 Q 794.14 111.81 793.53 114.85 Q 792.92 117.88 792.00 120.62 Q 791.08 123.35 789.86 125.78 Q 788.64 128.20 787.11 130.27 Q 785.59 132.33 783.77 134.04 Q 781.95 135.74 779.83 137.10 Q 777.71 138.44 775.30 139.45 L 775.30 139.82 Q 777.08 140.72 778.65 141.98 Q 780.23 143.26 781.61 144.90 Q 782.99 146.56 784.17 148.59 Q 785.36 150.63 786.46 153.32 Q 787.56 156.03 788.58 159.40 Q 789.59 162.78 790.53 166.83 L 791.91 172.83 L 793.29 178.87 L 794.66 184.95 L 796.04 191.07 L 797.42 197.24 L 798.79 203.46 L 794.72 202.70 L 790.64 201.96 L 786.56 201.22 L 782.49 200.49 L 778.41 199.78 L 774.34 199.07 L 770.26 198.38 Z M 767.86 109.23 Q 767.86 105.97 767.21 103.44 Q 766.57 100.91 765.28 99.13 Q 764.42 97.94 763.23 97.21 Q 762.05 96.49 760.54 96.22 Q 759.03 95.94 757.19 96.12 L 754.58 96.36 L 751.98 96.60 L 751.98 102.31 L 751.98 108.02 L 751.98 113.73 L 751.98 119.44 L 751.98 125.15 L 754.26 125.10 L 756.55 125.06 Q 758.25 125.02 759.72 124.51 Q 761.20 123.99 762.46 122.99 Q 763.72 121.98 764.75 120.48 Q 766.30 118.22 767.08 115.41 Q 767.86 112.59 767.86 109.23 Z M 858.59 215.73 L 856.51 207.54 L 854.44 199.44 L 852.37 191.43 L 850.30 183.50 L 848.23 175.66 L 846.16 167.91 L 844.09 160.24 L 842.02 152.66 L 839.95 145.16 Q 839.01 141.19 838.46 138.47 Q 837.90 135.76 837.73 134.29 L 837.43 134.29 L 837.43 141.97 L 837.43 149.66 L 837.43 157.34 L 837.43 165.03 L 837.43 172.71 L 837.43 180.40 L 837.43 188.08 L 837.43 195.77 L 837.43 203.45 L 837.43 211.14 L 833.21 210.25 L 829.00 209.38 L 824.78 208.52 L 820.56 207.67 L 816.34 206.83 L 812.12 206.00 L 812.12 198.32 L 812.12 190.63 L 812.12 182.94 L 812.12 175.26 L 812.12 167.57 L 812.12 159.88 L 812.12 152.20 L 812.12 144.51 L 812.12 136.82 L 812.12 129.14 L 812.12 121.45 L 812.12 113.76 L 812.12 106.08 L 812.12 98.39 L 812.12 90.70 L 812.12 83.02 L 812.12 75.33 L 812.12 67.64 L 812.12 59.96 L 816.34 59.13 L 820.56 58.29 L 824.78 57.44 L 829.00 56.58 L 833.21 55.70 L 837.43 54.82 L 837.43 63.08 L 837.43 71.34 L 837.43 79.60 L 837.43 87.86 L 837.43 96.12 L 837.43 104.38 L 837.43 112.64 L 837.43 120.90 L 837.43 129.16 L 837.73 129.16 Q 838.28 126.20 838.91 123.46 Q 839.54 120.70 840.25 118.15 L 842.11 110.94 L 843.97 103.65 L 845.83 96.29 L 847.69 88.86 L 849.56 81.35 L 851.42 73.77 L 853.28 66.12 L 855.14 58.39 L 857.00 50.58 L 861.29 49.62 L 865.57 48.65 L 869.86 47.67 L 874.15 46.67 L 878.43 45.67 L 882.72 44.65 L 887.00 43.62 L 884.84 51.85 L 882.67 59.98 L 880.50 68.02 L 878.33 75.97 L 876.16 83.83 L 874.00 91.60 L 871.83 99.28 L 869.66 106.87 L 867.49 114.37 L 865.32 121.79 L 863.16 129.12 L 865.33 136.44 L 867.51 143.85 L 869.69 151.35 L 871.87 158.94 L 874.04 166.61 L 876.22 174.37 L 878.40 182.23 L 880.58 190.17 L 882.76 198.21 L 884.93 206.34 L 887.11 214.56 L 889.29 222.88 L 884.90 221.82 L 880.52 220.78 L 876.13 219.74 L 871.74 218.72 L 867.36 217.71 L 862.97 216.71 L 858.59 215.73 Z" fill="#FEFEFD" stroke="#171717" stroke-width="6.2" stroke-linejoin="round" paint-order="stroke fill" />
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- Centered STUDIOS flanked symmetrically by #C5F92A bars extending out to Z & K edges -->
+  <g transform="translate(480, 264)">
+    <g class="anim-studios-pop">
+      <g transform="translate(-480, -264)">
+        <path d="M398.768828125 268.06640625Q398.768828125 270.021484375 397.7229296875 271.470703125Q396.67703125 272.919921875 394.7903125 273.630859375Q392.90359375 274.341796875 390.25125 274.341796875Q387.175078125 274.341796875 384.6184375 273.302734375V267.9296875Q385.84890625 268.83203125 387.339140625 269.3857421875Q388.829375 269.939453125 390.11453125 269.939453125Q391.085234375 269.939453125 391.6184375 269.5908203125Q392.151640625 269.2421875 392.151640625 268.572265625Q392.151640625 268.09375 391.8850390625 267.7314453125Q391.6184375 267.369140625 391.0783984375 267.0546875Q390.538359375 266.740234375 389.07546875 266.193359375Q384.345 264.375 384.345 260.314453125Q384.345 257.470703125 386.50515625 255.7685546875Q388.6653125 254.06640625 392.30203125 254.06640625Q393.327421875 254.06640625 394.18875 254.1484375Q395.050078125 254.23046875 395.7541796875 254.353515625Q396.45828125 254.4765625 397.729765625 254.818359375V259.80859375Q395.25515625 258.455078125 392.862578125 258.455078125Q391.878203125 258.455078125 391.276640625 258.82421875Q390.675078125 259.193359375 390.675078125 259.8359375Q390.675078125 260.451171875 391.1604296875 260.8544921875Q391.64578125 261.2578125 393.190703125 261.900390625Q396.23953125 263.130859375 397.5041796875 264.59375Q398.768828125 266.056640625 398.768828125 268.06640625Z M422.833515625 259.015625V274.0H416.899921875V259.015625H411.4175V254.39453125H428.384296875V259.015625Z M459.585703125 265.044921875Q459.585703125 269.76171875 457.4323828125 272.0517578125Q455.2790625 274.341796875 450.7946875 274.341796875Q446.61109375 274.341796875 444.4441015625 272.0517578125Q442.277109375 269.76171875 442.277109375 265.154296875V254.39453125H448.210703125V265.373046875Q448.210703125 267.259765625 448.9148046875 268.2783203125Q449.61890625 269.296875 450.93140625 269.296875Q452.257578125 269.296875 452.9480078125 268.33984375Q453.6384375 267.3828125 453.6384375 265.509765625V254.39453125H459.585703125Z M493.466796875 263.951171875Q493.466796875 266.931640625 492.2158203125 269.2216796875Q490.96484375 271.51171875 488.640625 272.755859375Q486.31640625 274.0 483.28125 274.0H474.982421875V254.39453125H483.103515625Q493.466796875 254.39453125 493.466796875 263.951171875ZM487.19140625 264.005859375Q487.19140625 262.5703125 486.6103515625 261.421875Q486.029296875 260.2734375 484.94921875 259.64453125Q483.869140625 259.015625 482.40625 259.015625H480.888671875V269.37890625H482.54296875Q484.662109375 269.37890625 485.9267578125 267.9228515625Q487.19140625 266.466796875 487.19140625 264.005859375Z M507.988515625 274.0V254.39453125H513.894765625V274.0Z M548.158671875 264.142578125Q548.158671875 267.095703125 546.8871875 269.4267578125Q545.615703125 271.7578125 543.3325 273.0498046875Q541.049296875 274.341796875 538.21921875 274.341796875Q535.4575 274.341796875 533.1948046875 273.0908203125Q530.932109375 271.83984375 529.674296875 269.5771484375Q528.416484375 267.314453125 528.416484375 264.45703125Q528.416484375 261.462890625 529.68796875 259.0703125Q530.959453125 256.677734375 533.256328125 255.3720703125Q535.553203125 254.06640625 538.478984375 254.06640625Q541.295390625 254.06640625 543.5170703125 255.3173828125Q545.73875 256.568359375 546.9487109375 258.8857421875Q548.158671875 261.203125 548.158671875 264.142578125ZM541.896953125 264.306640625Q541.896953125 261.88671875 540.967265625 260.4921875Q540.037578125 259.09765625 538.424296875 259.09765625Q536.660625 259.09765625 535.67625 260.4375Q534.691875 261.77734375 534.691875 264.224609375Q534.691875 266.6171875 535.6694140625 267.95703125Q536.646953125 269.296875 538.32859375 269.296875Q539.353984375 269.296875 540.174296875 268.6953125Q540.994609375 268.09375 541.44578125 266.97265625Q541.896953125 265.8515625 541.896953125 264.306640625Z M576.31125 268.06640625Q576.31125 270.021484375 575.2653515625 271.470703125Q574.219453125 272.919921875 572.332734375 273.630859375Q570.446015625 274.341796875 567.793671875 274.341796875Q564.7175 274.341796875 562.160859375 273.302734375V267.9296875Q563.391328125 268.83203125 564.8815625 269.3857421875Q566.371796875 269.939453125 567.656953125 269.939453125Q568.62765625 269.939453125 569.160859375 269.5908203125Q569.6940625 269.2421875 569.6940625 268.572265625Q569.6940625 268.09375 569.4274609375 267.7314453125Q569.160859375 267.369140625 568.6208203125 267.0546875Q568.08078125 266.740234375 566.617890625 266.193359375Q561.887421875 264.375 561.887421875 260.314453125Q561.887421875 257.470703125 564.047578125 255.7685546875Q566.207734375 254.06640625 569.844453125 254.06640625Q570.86984375 254.06640625 571.731171875 254.1484375Q572.5925 254.23046875 573.2966015625 254.353515625Q574.000703125 254.4765625 575.2721875 254.818359375V259.80859375Q572.797578125 258.455078125 570.405 258.455078125Q569.420625 258.455078125 568.8190625 258.82421875Q568.2175 259.193359375 568.2175 259.8359375Q568.2175 260.451171875 568.7028515625 260.8544921875Q569.188203125 261.2578125 570.733125 261.900390625Q573.781953125 263.130859375 575.0466015625 264.59375Q576.31125 266.056640625 576.31125 268.06640625Z" transform="translate(2.5, 3)" fill="#171717" stroke="#171717" stroke-width="2.2" stroke-linejoin="round" />
+        <path d="M398.768828125 268.06640625Q398.768828125 270.021484375 397.7229296875 271.470703125Q396.67703125 272.919921875 394.7903125 273.630859375Q392.90359375 274.341796875 390.25125 274.341796875Q387.175078125 274.341796875 384.6184375 273.302734375V267.9296875Q385.84890625 268.83203125 387.339140625 269.3857421875Q388.829375 269.939453125 390.11453125 269.939453125Q391.085234375 269.939453125 391.6184375 269.5908203125Q392.151640625 269.2421875 392.151640625 268.572265625Q392.151640625 268.09375 391.8850390625 267.7314453125Q391.6184375 267.369140625 391.0783984375 267.0546875Q390.538359375 266.740234375 389.07546875 266.193359375Q384.345 264.375 384.345 260.314453125Q384.345 257.470703125 386.50515625 255.7685546875Q388.6653125 254.06640625 392.30203125 254.06640625Q393.327421875 254.06640625 394.18875 254.1484375Q395.050078125 254.23046875 395.7541796875 254.353515625Q396.45828125 254.4765625 397.729765625 254.818359375V259.80859375Q395.25515625 258.455078125 392.862578125 258.455078125Q391.878203125 258.455078125 391.276640625 258.82421875Q390.675078125 259.193359375 390.675078125 259.8359375Q390.675078125 260.451171875 391.1604296875 260.8544921875Q391.64578125 261.2578125 393.190703125 261.900390625Q396.23953125 263.130859375 397.5041796875 264.59375Q398.768828125 266.056640625 398.768828125 268.06640625Z M422.833515625 259.015625V274.0H416.899921875V259.015625H411.4175V254.39453125H428.384296875V259.015625Z M459.585703125 265.044921875Q459.585703125 269.76171875 457.4323828125 272.0517578125Q455.2790625 274.341796875 450.7946875 274.341796875Q446.61109375 274.341796875 444.4441015625 272.0517578125Q442.277109375 269.76171875 442.277109375 265.154296875V254.39453125H448.210703125V265.373046875Q448.210703125 267.259765625 448.9148046875 268.2783203125Q449.61890625 269.296875 450.93140625 269.296875Q452.257578125 269.296875 452.9480078125 268.33984375Q453.6384375 267.3828125 453.6384375 265.509765625V254.39453125H459.585703125Z M493.466796875 263.951171875Q493.466796875 266.931640625 492.2158203125 269.2216796875Q490.96484375 271.51171875 488.640625 272.755859375Q486.31640625 274.0 483.28125 274.0H474.982421875V254.39453125H483.103515625Q493.466796875 254.39453125 493.466796875 263.951171875ZM487.19140625 264.005859375Q487.19140625 262.5703125 486.6103515625 261.421875Q486.029296875 260.2734375 484.94921875 259.64453125Q483.869140625 259.015625 482.40625 259.015625H480.888671875V269.37890625H482.54296875Q484.662109375 269.37890625 485.9267578125 267.9228515625Q487.19140625 266.466796875 487.19140625 264.005859375Z M507.988515625 274.0V254.39453125H513.894765625V274.0Z M548.158671875 264.142578125Q548.158671875 267.095703125 546.8871875 269.4267578125Q545.615703125 271.7578125 543.3325 273.0498046875Q541.049296875 274.341796875 538.21921875 274.341796875Q535.4575 274.341796875 533.1948046875 273.0908203125Q530.932109375 271.83984375 529.674296875 269.5771484375Q528.416484375 267.314453125 528.416484375 264.45703125Q528.416484375 261.462890625 529.68796875 259.0703125Q530.959453125 256.677734375 533.256328125 255.3720703125Q535.553203125 254.06640625 538.478984375 254.06640625Q541.295390625 254.06640625 543.5170703125 255.3173828125Q545.73875 256.568359375 546.9487109375 258.8857421875Q548.158671875 261.203125 548.158671875 264.142578125ZM541.896953125 264.306640625Q541.896953125 261.88671875 540.967265625 260.4921875Q540.037578125 259.09765625 538.424296875 259.09765625Q536.660625 259.09765625 535.67625 260.4375Q534.691875 261.77734375 534.691875 264.224609375Q534.691875 266.6171875 535.6694140625 267.95703125Q536.646953125 269.296875 538.32859375 269.296875Q539.353984375 269.296875 540.174296875 268.6953125Q540.994609375 268.09375 541.44578125 266.97265625Q541.896953125 265.8515625 541.896953125 264.306640625Z M576.31125 268.06640625Q576.31125 270.021484375 575.2653515625 271.470703125Q574.219453125 272.919921875 572.332734375 273.630859375Q570.446015625 274.341796875 567.793671875 274.341796875Q564.7175 274.341796875 562.160859375 273.302734375V267.9296875Q563.391328125 268.83203125 564.8815625 269.3857421875Q566.371796875 269.939453125 567.656953125 269.939453125Q568.62765625 269.939453125 569.160859375 269.5908203125Q569.6940625 269.2421875 569.6940625 268.572265625Q569.6940625 268.09375 569.4274609375 267.7314453125Q569.160859375 267.369140625 568.6208203125 267.0546875Q568.08078125 266.740234375 566.617890625 266.193359375Q561.887421875 264.375 561.887421875 260.314453125Q561.887421875 257.470703125 564.047578125 255.7685546875Q566.207734375 254.06640625 569.844453125 254.06640625Q570.86984375 254.06640625 571.731171875 254.1484375Q572.5925 254.23046875 573.2966015625 254.353515625Q574.000703125 254.4765625 575.2721875 254.818359375V259.80859375Q572.797578125 258.455078125 570.405 258.455078125Q569.420625 258.455078125 568.8190625 258.82421875Q568.2175 259.193359375 568.2175 259.8359375Q568.2175 260.451171875 568.7028515625 260.8544921875Q569.188203125 261.2578125 570.733125 261.900390625Q573.781953125 263.130859375 575.0466015625 264.59375Q576.31125 266.056640625 576.31125 268.06640625Z" fill="#C5F92A" stroke="#171717" stroke-width="2.5" stroke-linejoin="round" paint-order="stroke fill" />
+      </g>
+    </g>
+  </g>
+  <g transform="translate(362.3, 260.2)">
+    <g class="anim-bar-left">
+      <rect x="-294.8" y="0" width="294.8" height="8.0" rx="4.0" fill="#171717" transform="translate(2.5, 2.5)" />
+      <rect x="-294.8" y="0" width="294.8" height="8.0" rx="4.0" fill="#C5F92A" stroke="#171717" stroke-width="2.2" />
+    </g>
+  </g>
+  <g transform="translate(598.3, 260.2)">
+    <g class="anim-bar-right">
+      <rect x="0" y="0" width="293.0" height="8.0" rx="4.0" fill="#171717" transform="translate(2.5, 2.5)" />
+      <rect x="0" y="0" width="293.0" height="8.0" rx="4.0" fill="#C5F92A" stroke="#171717" stroke-width="2.2" />
+    </g>
+  </g>
+
+  <!-- Stylistic Comic Motion Clouds (Behind Hero Stage so puffs emerge cleanly off [0] edges) -->
+  <g opacity="0" class="anim-cloud-launch">
+    <path class="ink-cloud" fill="#FEFEFD" d="M -36 -58 C -48 -76 -20 -98 6 -82 C 26 -96 54 -76 42 -50 C 60 -34 52 0 32 10 C 54 24 44 64 16 66 C 10 88 -26 90 -36 66 C -58 58 -54 24 -36 10 C -54 -6 -52 -42 -36 -58 Z" />
+    <circle cx="48" cy="-42" r="13" fill="#DCE0D8" class="ink-fine" />
+    <circle cx="-46" cy="48" r="10" fill="#C5F92A" class="ink-fine" />
+    <path class="ink-fine" fill="none" d="M -14 -20 C -8 -30 8 -28 8 -16 C 8 -6 -2 -4 -6 -10" />
+    <path class="ink-fine" fill="none" d="M -12 24 C -4 16 12 20 10 32 C 8 40 -2 40 -5 34" />
+  </g>
+
+  <g opacity="0" class="anim-cloud-curtain">
+    <path class="ink-cloud" fill="#FEFEFD" d="M -36 -58 C -48 -76 -20 -98 6 -82 C 26 -96 54 -76 42 -50 C 60 -34 52 0 32 10 C 54 24 44 64 16 66 C 10 88 -26 90 -36 66 C -58 58 -54 24 -36 10 C -54 -6 -52 -42 -36 -58 Z" />
+    <circle cx="-48" cy="-42" r="14" fill="#DCE0D8" class="ink-fine" />
+    <circle cx="46" cy="48" r="11" fill="#C5F92A" class="ink-fine" />
+    <path class="ink-fine" fill="none" d="M -8 -22 C -2 -32 14 -30 14 -18 C 14 -8 4 -6 0 -12" />
+    <path class="ink-fine" fill="none" d="M -10 26 C -2 18 14 22 12 34 C 10 42 0 42 -3 36" />
+  </g>
+
+  <!-- Hero Stage: centered (480, 160), slides into O slot of ZERO at (390.0, 133.0) scale(0.92) -->
+  <g transform="translate(480, 160)">
+    <g transform="translate(-90.0, -27.0) scale(0.92, 0.92)" class="anim-stage-slide">
+
+      <g transform="scale(1.15) translate(-124, -126)">
+
+        <!-- Plump White Zero acting as the O in ZER[0] WORK -->
+        <g transform="translate(124, 216)">
+          <g class="anim-zero-bowl">
+            <g transform="translate(-124, -216)">
+              <path fill="#171717" fill-rule="evenodd" transform="translate(5, 6)"
+                d="M 124 36 C 171 36 197 72 197 126 C 197 180 171 216 124 216 C 77 216 51 180 51 126 C 51 72 77 36 124 36 Z
+                   M 125 71 C 102 71 89 91 89 124 C 89 157 102 178 126 178 C 149 178 161 157 161 124 C 161 91 148 71 125 71 Z" />
+              <path fill="#FEFEFD" fill-rule="evenodd"
+                d="M 124 36 C 171 36 197 72 197 126 C 197 180 171 216 124 216 C 77 216 51 180 51 126 C 51 72 77 36 124 36 Z
+                   M 125 71 C 102 71 89 91 89 124 C 89 157 102 178 126 178 C 149 178 161 157 161 124 C 161 91 148 71 125 71 Z" />
+            </g>
+          </g>
+        </g>
+
+        <!-- Resting Controller inside bottom bowl of the Zero before pickup -->
+        <g transform="translate(132, 162) rotate(-16)">
+          <g opacity="0" class="anim-rest-ctrl">
+            <ellipse cx="-9.6" cy="-6.2" rx="2.3" ry="1.45" fill="#B8C0CE" class="pose-ink-fine" />
+            <ellipse cx="9.6" cy="-6.2" rx="2.3" ry="1.45" fill="#B8C0CE" class="pose-ink-fine" />
+            <path class="pose-ink" fill="#5D6679" d="M -11.5 -5.0 C -5 -5.8 5 -5.8 11.5 -5.0 C 14.0 -4.5 14.8 0.2 13.5 4.8 C 12.5 7.2 9.5 7.2 7.4 4.6 C 5.8 2.8 4.0 2.4 0 2.4 C -4.0 2.4 -5.8 2.8 -7.4 4.6 C -9.5 7.2 -12.5 7.2 -13.5 4.8 C -14.8 0.2 -14.0 -4.5 -11.5 -5.0 Z" />
+            <path fill="#454E61" d="M -12.4 2.4 C -11.0 5.4 -8.8 5.6 -6.8 3.4 C -5.2 1.8 -3.4 1.5 0 1.5 C 3.4 1.5 5.2 1.8 6.8 3.4 C 8.8 5.6 11.0 5.4 12.4 2.4 C 12.6 4.4 11.4 6.2 9.2 6.2 C 7.5 6.2 5.7 3.6 3.9 2.5 L -3.9 2.5 C -5.7 3.6 -7.5 6.2 -9.2 6.2 C -11.4 6.2 -12.6 4.4 -12.4 2.4 Z" />
+          </g>
+        </g>
+
+        <!-- Ground-Locked Dust Puffs (at EVERY foot plant: wx=444, 400, 356, 312, 268) -->
+        <g transform="translate(456, 212)">
+          <g opacity="0" class="anim-puff-0">
+            <path class="ink-fine" fill="#DCE0D8" d="M -9 2 C -12 -3 -6 -7 -1 -4 C 2 -8 8 -7 9 -2 C 13 1 10 6 5 5 C 1 7 -6 5 -9 2 Z" />
+          </g>
+        </g>
+        <g transform="translate(412, 212)">
+          <g opacity="0" class="anim-puff-1">
+            <path class="ink-fine" fill="#DCE0D8" d="M -9 2 C -12 -3 -6 -7 -1 -4 C 2 -8 8 -7 9 -2 C 13 1 10 6 5 5 C 1 7 -6 5 -9 2 Z" />
+          </g>
+        </g>
+        <g transform="translate(368, 212)">
+          <g opacity="0" class="anim-puff-2">
+            <path class="ink-fine" fill="#DCE0D8" d="M -9 2 C -12 -3 -6 -7 -1 -4 C 2 -8 8 -7 9 -2 C 13 1 10 6 5 5 C 1 7 -6 5 -9 2 Z" />
+          </g>
+        </g>
+        <g transform="translate(324, 212)">
+          <g opacity="0" class="anim-puff-3">
+            <path class="ink-fine" fill="#DCE0D8" d="M -9 2 C -12 -3 -6 -7 -1 -4 C 2 -8 8 -7 9 -2 C 13 1 10 6 5 5 C 1 7 -6 5 -9 2 Z" />
+          </g>
+        </g>
+        <g transform="translate(280, 212)">
+          <g opacity="0" class="anim-puff-4">
+            <path class="ink-fine" fill="#DCE0D8" d="M -9 2 C -12 -3 -6 -7 -1 -4 C 2 -8 8 -7 9 -2 C 13 1 10 6 5 5 C 1 7 -6 5 -9 2 Z" />
+          </g>
+        </g>
+
+        <!-- Hand-Locked Pickup Sparkle -->
+        <g transform="translate(142, 156)">
+          <g opacity="0" class="anim-pickup-spark">
+            <path fill="#C5F92A" stroke="#0B0C10" stroke-width="1.8" d="M 0 -16 L 3.5 -4 L 15 0 L 3.5 4 L 0 16 L -3.5 4 L -15 0 L -3.5 -4 Z" />
+            <path stroke="#FEFEFD" stroke-width="2.4" stroke-linecap="round" d="M -17 -13 L -11 -8 M 17 -13 L 11 -8 M -17 13 L -11 8 M 17 13 L 11 8" />
+          </g>
+        </g>
+
+        <!-- UPGRADED 3/4 WALKING AND REACHING CHARACTER (Integrated exact user SVG art) -->
+        <g opacity="0" class="anim-walk-root">
+          <g class="anim-walk-bob">
+
+            <!-- Back Arm (behind torso) -->
+            <g transform="translate(-9.0, -29.0)">
+              <g class="anim-walk-arm-b">
+                <path fill="#E5B58B" d="M -4.2 5.0 C -4.4 9.5 -4.6 13.0 -6.4 16.2 C -7.6 18.2 -8.8 19.8 -9.8 21.3 C -12.3 21.0 -15.1 22.1 -15.7 24.2 C -16.1 25.5 -14.8 26.5 -12.7 25.1 C -15.1 26.4 -17.2 28.8 -16.7 30.5 C -16.4 31.7 -15.2 31.8 -14.2 30.7 C -15.4 32.1 -15.1 33.3 -13.8 33.5 C -12.7 33.7 -11.9 33.1 -11.3 32.3 C -11.9 33.4 -11.0 34.5 -9.5 34.0 C -7.8 33.3 -6.0 30.8 -4.2 26.3 C -1.0 23.2 2.2 19.8 3.8 16.8 C 5.0 14.5 4.8 10.6 4.2 5.0 Z" />
+                <path class="walk-ink-hand" fill="none" d="M -4.2 6.0 C -4.4 9.5 -4.6 13.0 -6.4 16.2 C -7.6 18.2 -8.8 19.8 -9.8 21.3 C -12.3 21.0 -15.1 22.1 -15.7 24.2 C -16.1 25.5 -14.8 26.5 -12.7 25.1 C -15.1 26.4 -17.2 28.8 -16.7 30.5 C -16.4 31.7 -15.2 31.8 -14.2 30.7 C -15.4 32.1 -15.1 33.3 -13.8 33.5 C -12.7 33.7 -11.9 33.1 -11.3 32.3 C -11.9 33.4 -11.0 34.5 -9.5 34.0 C -7.8 33.3 -6.0 30.8 -4.2 26.3 C -1.0 23.2 2.2 19.8 3.8 16.8 C 5.0 14.5 4.8 10.6 4.2 6.0" />
+                <path class="walk-ink-subtle" fill="none" d="M -14.2 30.7 Q -13.0 29.1 -11.8 27.8" />
+                <path class="walk-ink-subtle" fill="none" d="M -11.3 32.3 Q -10.3 30.9 -9.5 29.6" />
+                <path fill="#F2F3F0" d="M -2.5 -4.0 C -6.8 -1.5 -8.0 3.2 -6.8 8.2 L 5.2 7.8 C 5.8 2.5 4.2 -2.2 -2.5 -4.0 Z" />
+                <path class="pose-ink" fill="none" d="M -2.5 -4.0 C -6.8 -1.5 -8.0 3.2 -6.8 8.2 L 5.2 7.8" />
+              </g>
+            </g>
+
+            <!-- Back Leg (seamless two-pass knee articulation + shoe) -->
+            <g transform="translate(3.5, 0.5)">
+              <g class="anim-walk-leg-b">
+                <path fill="#0B0C10" stroke="#0B0C10" stroke-width="4.6" stroke-linejoin="round" d="M -6.8 -4.0 C -6.8 5.5 -6.6 14.0 -5.6 20.0 A 6.2 6.2 0 0 0 6.8 20.0 C 5.8 14.0 6.4 5.0 6.4 -4.0 Z" />
+                <g transform="translate(0.6, 20.0)">
+                  <g class="anim-walk-knee-b">
+                    <path fill="none" stroke="#0B0C10" stroke-width="4.6" stroke-linejoin="round" stroke-linecap="round" d="M -6.2 0 A 6.2 6.2 0 0 1 6.2 0 C 7.4 6.5 8.8 12.5 10.0 17.8 M -0.2 20.8 C -2.6 14.8 -5.2 8.0 -6.2 0" />
+                  </g>
+                </g>
+              </g>
+              <g class="anim-walk-leg-b">
+                <path fill="#315580" d="M -6.8 -5.0 C -6.8 5.5 -6.6 14.0 -5.6 20.0 A 6.2 6.2 0 0 0 6.8 20.0 C 5.8 14.0 6.4 5.0 6.4 -5.0 Z" />
+                <g transform="translate(0.6, 20.0)">
+                  <g class="anim-walk-knee-b">
+                    <g transform="translate(4.9, 19.3)">
+                      <g class="anim-walk-shoe-b">
+                        <path class="pose-ink" fill="#F2F3F0" d="M 5.4 0 C 7.2 3.4 6.8 8.4 3.4 10.6 C -2.2 12.2 -10.2 12.2 -15.4 10.6 C -17.2 10.0 -17.4 7.8 -15.2 5.4 C -11.8 2.0 -8.0 0.5 -5.4 0 Z" />
+                      </g>
+                    </g>
+                    <path fill="#315580" d="M -6.2 0 A 6.2 6.2 0 0 1 6.2 0 C 7.4 6.5 8.8 12.5 10.0 17.8 L -0.2 20.8 C -2.6 14.8 -5.2 8.0 -6.2 0 Z" />
+                    <path class="pose-ink" fill="none" d="M -0.2 20.8 L 10.0 17.8" />
+                  </g>
+                </g>
+              </g>
+            </g>
+
+            <!-- Front Leg (seamless two-pass knee articulation + shoe) -->
+            <g transform="translate(-3.0, 0.5)">
+              <g class="anim-walk-leg-f">
+                <path fill="#0B0C10" stroke="#0B0C10" stroke-width="4.6" stroke-linejoin="round" d="M -7.2 -4.0 C -7.2 5.5 -6.6 14.0 -5.8 20.0 A 6.3 6.3 0 0 0 6.8 20.0 C 6.4 14.0 6.8 5.5 6.6 -4.0 Z" />
+                <g transform="translate(0.5, 20.0)">
+                  <g class="anim-walk-knee-f">
+                    <path fill="none" stroke="#0B0C10" stroke-width="4.6" stroke-linejoin="round" stroke-linecap="round" d="M -6.2 0 A 6.2 6.2 0 0 1 6.2 0 C 6.6 6.5 7.0 13.0 7.3 19.8 M -3.5 20.8 C -4.5 14.0 -5.4 7.0 -6.2 0" />
+                  </g>
+                </g>
+              </g>
+              <g class="anim-walk-leg-f">
+                <path fill="#396292" d="M -7.2 -5.0 C -7.2 5.5 -6.6 14.0 -5.8 20.0 A 6.3 6.3 0 0 0 6.8 20.0 C 6.4 14.0 6.8 5.5 6.6 -5.0 Z" />
+                <g transform="translate(0.5, 20.0)">
+                  <g class="anim-walk-knee-f">
+                    <g transform="translate(1.9, 20.2)">
+                      <g class="anim-walk-shoe-f">
+                        <path class="pose-ink" fill="#FEFEFD" d="M 5.4 0 C 7.2 3.5 6.8 8.6 3.4 10.8 C -2.2 12.4 -10.4 12.4 -15.6 10.8 C -17.4 10.2 -17.6 8.0 -15.4 5.5 C -12.0 2.0 -8.2 0.5 -5.4 0 Z" />
+                      </g>
+                    </g>
+                    <path fill="#396292" d="M -6.2 0 A 6.2 6.2 0 0 1 6.2 0 C 6.6 6.5 7.0 13.0 7.3 19.8 L -3.5 20.8 C -4.5 14.0 -5.4 7.0 -6.2 0 Z" />
+                    <path class="pose-ink" fill="none" d="M -3.5 20.8 L 7.3 19.8" />
+                  </g>
+                </g>
+              </g>
+            </g>
+
+            <!-- Torso & Head -->
+            <g class="anim-walk-torso">
+              <path fill="#F1C198" d="M -7.2 -35.6 C -4.0 -30.8 2.0 -30.8 5.2 -35.6 L 4.6 -42.5 L -6.6 -42.5 Z" />
+              <path fill="#FEFEFD" d="M -7.2 -35.6 C -11.4 -34.8 -13.6 -30.6 -14.0 -22.5 C -14.5 -14.2 -13.8 -5.2 -12.2 2.0 C -4.6 4.4 5.0 4.4 12.2 1.5 C 13.4 -6.6 13.6 -16.8 12.8 -26.0 C 12.2 -31.8 9.6 -34.8 5.2 -35.6 C 2.0 -30.8 -4.0 -30.8 -7.2 -35.6 Z" />
+              <path class="pose-ink" fill="none" d="M -7.2 -35.6 C -11.4 -34.8 -13.6 -30.6 -14.0 -22.5 C -14.5 -14.2 -13.8 -5.2 -12.2 2.0 C -4.6 4.4 5.0 4.4 12.2 1.5 C 13.4 -6.6 13.6 -16.8 12.8 -26.0 C 12.2 -31.8 9.6 -34.8 5.2 -35.6" />
+              <path class="pose-ink-fine" fill="none" d="M -7.2 -35.6 C -4.0 -30.8 2.0 -30.8 5.2 -35.6" />
+
+              <g transform="translate(-1, -40)">
+                <g class="anim-walk-head">
+                  <path class="pose-ink" fill="#F1C198" d="M 13.0 -14.2 C 17.8 -15.2 20.2 -11.8 19.4 -8.0 C 18.6 -4.4 15.0 -3.4 12.2 -4.8 C 7.8 1.6 -1.5 3.8 -11.2 1.6 C -19.6 -0.2 -22.8 -8.2 -21.2 -19.2 C -20.2 -26.2 -18.2 -31.0 -15.8 -34.0 C -8.0 -33.2 0.8 -33.2 9.4 -32.4 C 12.4 -26.8 12.8 -20.0 13.0 -14.2 Z" />
+                  <path class="pose-ink-face" fill="none" d="M 16.0 -10.8 C 17.2 -9.6 16.4 -7.6 14.5 -8.1" />
+
+                  <path class="pose-ink-hair" fill="#16181E" d="M 13.0 -14.2 C 20.2 -14.2 24.8 -18.5 24.8 -24.5 C 24.8 -28.0 23.4 -31.0 20.8 -33.0 C 22.0 -38.2 19.2 -44.6 12.0 -47.6 C 5.0 -50.4 -4.2 -49.2 -11.0 -51.4 C -13.4 -52.2 -15.0 -54.0 -16.0 -55.8 C -21.4 -51.8 -22.8 -44.6 -19.8 -38.0 C -19.0 -36.2 -17.6 -34.6 -16.0 -34.0 C -8.2 -33.2 0.8 -33.2 9.4 -32.4 C 12.6 -32.0 13.8 -29.2 13.4 -24.8 C 13.2 -20.8 12.6 -17.2 13.0 -14.2 Z" />
+                  <path fill="none" stroke="#2E323E" stroke-width="1.6" stroke-linecap="round" d="M 15.2 -42.4 C 8.4 -46.8 -2.8 -46.2 -11.6 -49.4" />
+
+                  <ellipse cx="-14.6" cy="-19.8" rx="2.0" ry="3.0" transform="rotate(4 -14.6 -19.8)" fill="#0B0C10" />
+                  <path class="pose-ink-face" fill="none" d="M -17.8 -26.0 Q -14.4 -28.6 -10.8 -26.4" />
+                  <ellipse cx="-2.6" cy="-19.6" rx="2.2" ry="3.2" transform="rotate(3 -2.6 -19.6)" fill="#0B0C10" />
+                  <path class="pose-ink-face" fill="none" d="M -6.2 -26.2 Q -2.2 -29.2 2.0 -26.6" />
+
+                  <path class="pose-ink-face" fill="none" d="M -10.4 -16.8 C -14.0 -15.5 -14.2 -12.0 -10.2 -11.0" />
+                  <path class="pose-ink-face" fill="none" d="M -14.4 -7.4 C -9.8 -3.4 -2.2 -3.6 2.0 -7.6" />
+                  <path class="pose-ink-face" fill="none" d="M 2.0 -8.8 C 2.8 -7.8 2.8 -6.6 2.0 -5.8" />
+                  <path class="walk-ink-subtle" fill="none" d="M -8.6 -1.8 Q -6.2 -1.2 -3.8 -2.0" />
+                </g>
+              </g>
+            </g>
+
+            <!-- Front Arm, Fingered Hand, Picked-Up Gamepad & Flared Sleeve -->
+            <g transform="translate(7.5, -29.5)">
+              <g class="anim-walk-arm-f">
+                <path fill="#F1C198" d="M -4.5 6.0 C -4.6 11.5 -4.6 14.5 -5.4 17.5 C -6.1 20.5 -6.7 23.5 -7.2 26.2 C -9.4 27.3 -11.0 29.1 -10.8 30.9 C -10.5 32.2 -9.0 32.5 -7.8 30.8 C -9.5 33.0 -10.4 35.6 -9.3 36.9 C -8.6 37.9 -7.4 37.6 -7.0 36.3 C -7.5 37.8 -6.5 38.7 -5.3 38.4 C -4.2 38.1 -3.9 37.2 -3.7 36.5 C -3.7 37.5 -2.4 37.9 -1.3 36.8 C -0.2 35.1 0.2 32.0 -0.3 28.3 C 1.0 24.8 2.6 21.4 3.8 18.2 C 4.8 15.4 4.8 11.2 4.5 6.0 Z" />
+                <path class="walk-ink-hand" fill="none" d="M -4.5 6.8 C -4.6 11.5 -4.6 14.5 -5.4 17.5 C -6.1 20.5 -6.7 23.5 -7.2 26.2 C -9.4 27.3 -11.0 29.1 -10.8 30.9 C -10.5 32.2 -9.0 32.5 -7.8 30.8 C -9.5 33.0 -10.4 35.6 -9.3 36.9 C -8.6 37.9 -7.4 37.6 -7.0 36.3 C -7.5 37.8 -6.5 38.7 -5.3 38.4 C -4.2 38.1 -3.9 37.2 -3.7 36.5 C -3.7 37.5 -2.4 37.9 -1.3 36.8 C -0.2 35.1 0.2 32.0 -0.3 28.3 C 1.0 24.8 2.6 21.4 3.8 18.2 C 4.8 15.4 4.8 11.2 4.5 6.8" />
+                <path class="walk-ink-subtle" fill="none" d="M -7.0 36.3 Q -6.7 34.5 -6.1 32.8" />
+                <path class="walk-ink-subtle" fill="none" d="M -3.7 36.5 Q -3.4 34.9 -3.3 33.5" />
+
+                <g transform="translate(-8.0, 32.0) rotate(14)">
+                  <g opacity="0" class="anim-walk-ctrl">
+                    <ellipse cx="-9.2" cy="-5.8" rx="2.2" ry="1.4" fill="#B8C0CE" class="pose-ink-fine" />
+                    <ellipse cx="9.2" cy="-5.8" rx="2.2" ry="1.4" fill="#B8C0CE" class="pose-ink-fine" />
+                    <path class="pose-ink" fill="#5D6679" d="M -11.0 -4.8 C -4.8 -5.5 4.8 -5.5 11.0 -4.8 C 13.4 -4.3 14.2 0.2 13.0 4.6 C 12.0 6.8 9.2 6.8 7.1 4.4 C 5.5 2.7 3.8 2.3 0 2.3 C -3.8 2.3 -5.5 2.7 -7.1 4.4 C -9.2 6.8 -12.0 6.8 -13.0 4.6 C -14.2 0.2 -13.4 -4.3 -11.0 -4.8 Z" />
+                    <path fill="#454E61" d="M -11.8 2.3 C -10.5 5.2 -8.4 5.4 -6.5 3.3 C -5.0 1.7 -3.2 1.4 0 1.4 C 3.2 1.4 5.0 1.7 6.5 3.3 C 8.4 5.4 10.5 5.2 11.8 2.3 C 12.0 4.2 10.9 5.9 8.8 5.9 C 7.2 5.9 5.4 3.5 3.7 2.4 L -3.7 2.4 C -5.4 3.5 -7.2 5.9 -8.8 5.9 C -10.9 5.9 -12.0 4.2 -11.8 2.3 Z" />
+                  </g>
+                </g>
+
+                <path fill="#FEFEFD" d="M -1.6 -6.2 C 3.8 -4.8 6.8 1.2 6.5 8.2 L -6.0 8.4 C -6.0 4.0 -4.8 -2.0 -1.6 -6.2 Z" />
+                <path class="pose-ink" fill="none" d="M -1.6 -6.2 C 3.8 -4.8 6.8 1.2 6.5 8.2 L -6.0 8.4 L -5.2 2.2" />
+              </g>
+            </g>
+
+          </g>
+        </g>
+
+        <!-- AIRBORNE FRONT-FACING TURN BREAKDOWN POSE (Matched to final pose linework) -->
+        <g opacity="0" class="anim-mid-turn">
+          <path class="pose-ink" fill="#396292" d="M -15 4 C -19 14 -17 24 -12 28 L -4 26 C -6 18 -6 10 -4 4 Z" />
+          <path class="pose-ink" fill="#396292" d="M 15 4 C 19 14 17 24 12 28 L 4 26 C 6 18 6 10 4 4 Z" />
+          <path class="pose-ink" fill="#FEFEFD" d="M -15 26 C -21 29 -22 36 -14 37 C -6 37 -3 31 -5 26 Z" />
+          <path class="pose-ink" fill="#FEFEFD" d="M 15 26 C 21 29 22 36 14 37 C 6 37 3 31 5 26 Z" />
+          <path class="pose-ink" fill="#FEFEFD" d="M -16 -36 C -20 -26 -19 -10 -16 4 C -6 7 6 7 16 4 C 19 -10 20 -26 16 -36 C 8 -39 -8 -39 -16 -36 Z" />
+          <path fill="#F1C198" d="M -8 -38 C -3 -32 3 -32 8 -38 L 7 -43 L -7 -43 Z" />
+          <path class="pose-ink-fine" fill="none" d="M -8 -38 C -3 -32 3 -32 8 -38" />
+          <path class="pose-ink" fill="#F1C198" d="M -21 -18 C -20 -9 -14 -5 -9 -8 L -11 -16 Z" />
+          <path class="pose-ink" fill="#F1C198" d="M 21 -18 C 20 -9 14 -5 9 -8 L 11 -16 Z" />
+          <path fill="#FEFEFD" d="M -16 -36 C -23 -32 -25 -24 -23 -16 L -12 -18 C -12 -25 -13 -32 -16 -36 Z" />
+          <path class="pose-ink" fill="none" d="M -16 -36 C -23 -32 -25 -24 -23 -16 L -12 -18 L -14 -25" />
+          <path fill="#FEFEFD" d="M 16 -36 C 23 -32 25 -24 23 -16 L 12 -18 C 12 -25 13 -32 16 -36 Z" />
+          <path class="pose-ink" fill="none" d="M 16 -36 C 23 -32 25 -24 23 -16 L 12 -18 L 14 -25" />
+          <g transform="translate(0, -10) rotate(-6)">
+            <ellipse cx="-9.2" cy="-5.8" rx="2.2" ry="1.4" fill="#B8C0CE" class="pose-ink-fine" />
+            <ellipse cx="9.2" cy="-5.8" rx="2.2" ry="1.4" fill="#B8C0CE" class="pose-ink-fine" />
+            <path class="pose-ink" fill="#5D6679" d="M -11.0 -4.8 C -4.8 -5.5 4.8 -5.5 11.0 -4.8 C 13.4 -4.3 14.2 0.2 13.0 4.6 C 12.0 6.8 9.2 6.8 7.1 4.4 C 5.5 2.7 3.8 2.3 0 2.3 C -3.8 2.3 -5.5 2.7 -7.1 4.4 C -9.2 6.8 -12.0 6.8 -13.0 4.6 C -14.2 0.2 -13.4 -4.3 -11.0 -4.8 Z" />
+            <path fill="#454E61" d="M -11.8 2.3 C -10.5 5.2 -8.4 5.4 -6.5 3.3 C -5.0 1.7 -3.2 1.4 0 1.4 C 3.2 1.4 5.0 1.7 6.5 3.3 C 8.4 5.4 10.5 5.2 11.8 2.3 C 12.0 4.2 10.9 5.9 8.8 5.9 C 7.2 5.9 5.4 3.5 3.7 2.4 L -3.7 2.4 C -5.4 3.5 -7.2 5.9 -8.8 5.9 C -10.9 5.9 -12.0 4.2 -11.8 2.3 Z" />
+          </g>
+          <g transform="translate(0, -42)">
+            <circle cx="-19.5" cy="-13" r="4.5" fill="#F1C198" class="pose-ink-fine" />
+            <circle cx="19.5" cy="-13" r="4.5" fill="#F1C198" class="pose-ink-fine" />
+            <path class="pose-ink" fill="#F1C198" d="M -18.5 -27 C -20.5 -12 -13.5 2 0 2 C 13.5 2 20.5 -12 18.5 -27 C 11.5 -32 -11.5 -32 -18.5 -27 Z" />
+            <path class="pose-ink-hair" fill="#16181E" d="M -19.5 -20 C -24.5 -26 -23.0 -39 -13.0 -44 C -4.0 -47 2.0 -52 7.5 -56 C 12.5 -51 17.5 -44 21.0 -37 C 23.0 -30 22.0 -23 19.5 -20 C 13.5 -28 -13.5 -28 -19.5 -20 Z" />
+            <path fill="none" stroke="#2E323E" stroke-width="1.6" stroke-linecap="round" d="M -10.5 -40 C -2.5 -45 5.5 -44 12.0 -38" />
+            <ellipse cx="-6.8" cy="-16.5" rx="2.1" ry="3.1" fill="#0B0C10" />
+            <ellipse cx="6.8" cy="-16.5" rx="2.1" ry="3.1" fill="#0B0C10" />
+            <path class="pose-ink-face" fill="none" d="M -10.8 -23 Q -6.8 -26 -2.8 -23 M 2.8 -23 Q 6.8 -26 10.8 -23" />
+            <path class="pose-ink-face" fill="none" d="M 0 -13 C 3.2 -12 3.2 -9 -0.8 -8.5" />
+            <path class="pose-ink-face" fill="none" d="M -8.5 -5 C -2.8 -1.2 3.6 -1.2 8.5 -5" />
+            <path class="pose-ink-subtle" fill="none" d="M -2.6 0 Q 0 0.7 2.6 0" />
+          </g>
+        </g>
+
+        <!-- FINAL SEATED CHARACTER (Integrated exact user SVG pose with post-reveal wink) -->
+        <g transform="translate(124, 126)" class="anim-seated-rig">
+          <g transform="translate(0, 36)">
+            <g class="anim-seated-sway">
+              <g transform="translate(-124, -162)">
+                <g transform="translate(50, 52)">
+
+                  <!-- Bottom Dangling Leg -->
+                  <g transform="translate(88, 108)">
+                    <g class="anim-seated-leg-bot">
+                      <g transform="translate(-88, -108)">
+                        <path class="pose-ink" fill="#FEFEFD" d="M 98.5 138 L 111.5 137.5 C 115.5 141.5 119.5 146.5 121.2 150.5 C 121.8 152.2 120.5 153.2 118.2 153.0 C 111.0 152.2 103.0 149.8 99.2 146.8 C 97.6 145.4 97.8 141.2 98.5 138 Z" />
+                        <path class="pose-ink" fill="#396292" d="M 74 111 L 97 89 L 106.5 92 C 108.5 106 110.2 122 111.5 137.8 C 107.2 138.8 102.5 138.8 98.5 138.2 C 97.4 129.8 96.2 121.5 95.0 114.8 C 94.6 112.8 93.2 112.2 90.8 112.6 C 85.8 113.4 80.5 114.2 74 114 Z" />
+                      </g>
+                    </g>
+                  </g>
+
+                  <!-- Upper Body, Arms/Gamepad, Sleeve, Crossed Leg & Head -->
+                  <g transform="translate(58, 108)">
+                    <g class="anim-seated-torso">
+                      <g transform="translate(-58, -108)">
+
+                        <!-- Torso, Neck & Crease -->
+                        <path class="pose-ink" fill="#FEFEFD" d="M 36.5 72.2 C 28 73.5 22 81.5 23 95.5 L 34 103 C 40 109.5 47.5 114.5 56.5 117.8 C 65.5 109.8 73.5 100.5 79.0 93.2 C 77.8 83.5 73.5 74.2 67.5 71.0 C 63.2 69.0 58.0 69.4 53.0 70.2 C 48.2 76.2 40.8 76.5 36.5 72.2 Z" />
+                        <path fill="#F1C198" d="M 37.5 68.5 L 52.0 66.5 L 53.0 70.4 C 48.2 76.4 40.8 76.6 36.5 72.2 Z" />
+                        <path class="pose-ink-fine" fill="none" d="M 36.5 72.2 C 40.8 76.6 48.2 76.4 53.0 70.4" />
+                        <path class="pose-ink-fine" fill="none" d="M 60.5 75.5 L 65.2 81.2" />
+
+                        <!-- Arms, Hands & Tilted Gamepad -->
+                        <g transform="translate(32, 90)">
+                          <g class="anim-seated-arms">
+                            <g transform="translate(-32, -90)">
+                              <path class="pose-ink" fill="#F1C198" d="M 74.8 84.2 C 76.2 88.2 77.8 91.5 79.8 93.2 L 85.5 89.2 C 87.2 86.8 88.4 83.8 88.8 80.6 L 83.5 79.5 L 75.5 82.0 Z" />
+
+                              <g transform="translate(72.5, 81.2) rotate(-25)">
+                                <ellipse cx="-9.6" cy="-6.2" rx="2.3" ry="1.45" fill="#B8C0CE" class="pose-ink-fine" />
+            <ellipse cx="9.6" cy="-6.2" rx="2.3" ry="1.45" fill="#B8C0CE" class="pose-ink-fine" />
+                                <path class="pose-ink" fill="#5D6679" d="M -11.5 -5.0 C -5 -5.8 5 -5.8 11.5 -5.0 C 14.0 -4.5 14.8 0.2 13.5 4.8 C 12.5 7.2 9.5 7.2 7.4 4.6 C 5.8 2.8 4.0 2.4 0 2.4 C -4.0 2.4 -5.8 2.8 -7.4 4.6 C -9.5 7.2 -12.5 7.2 -13.5 4.8 C -14.8 0.2 -14.0 -4.5 -11.5 -5.0 Z" />
+                                <path fill="#454E61" d="M -12.4 2.4 C -11.0 5.4 -8.8 5.6 -6.8 3.4 C -5.2 1.8 -3.4 1.5 0 1.5 C 3.4 1.5 5.2 1.8 6.8 3.4 C 8.8 5.6 11.0 5.4 12.4 2.4 C 12.6 4.4 11.4 6.2 9.2 6.2 C 7.5 6.2 5.7 3.6 3.9 2.5 L -3.9 2.5 C -5.7 3.6 -7.5 6.2 -9.2 6.2 C -11.4 6.2 -12.6 4.4 -12.4 2.4 Z" />
+                                <path class="pose-ink-hand" fill="#F1C198" d="M 10.6 -4.4 C 13.0 -5.2 16.2 -4.8 17.6 -2.6 C 18.8 -0.6 18.8 2.4 17.5 4.8 C 16.4 6.6 14.0 7.2 11.6 6.4 C 10.0 5.8 9.6 4.0 11.0 3.0 C 9.2 2.2 9.0 0.0 10.6 -0.8 C 9.2 -1.6 9.2 -3.8 10.6 -4.4 Z" />
+                                <path class="pose-ink-subtle" fill="none" d="M 10.6 -0.8 C 12.4 -0.9 14.2 -0.8 15.5 -0.5" />
+                                <path class="pose-ink-subtle" fill="none" d="M 11.0 3.0 C 12.6 2.9 14.2 3.0 15.3 3.2" />
+                              </g>
+
+                              <path class="pose-ink" fill="#F1C198" d="M 24.4 95.2 C 25.4 104.2 29.8 112.2 37.2 112.4 C 44.2 112.6 51.4 104.8 58.2 97.2 C 60.4 96.6 62.6 95.4 64.4 93.8 C 66.0 92.4 66.2 90.6 64.6 89.8 C 67.2 89.0 68.0 87.0 66.4 85.6 C 69.2 84.2 69.8 81.8 67.8 81.2 C 65.8 80.6 62.4 82.6 59.5 84.8 C 60.8 81.6 60.4 78.8 58.2 79.0 C 56.0 79.2 53.8 82.8 52.2 87.6 C 47.4 92.6 43.0 96.8 40.2 97.6 C 38.6 98.0 37.8 96.4 37.2 93.6 L 36.6 91.0 Z" />
+                              <path class="pose-ink-subtle" fill="none" d="M 61.6 87.6 C 63.4 87.0 65.0 86.2 66.4 85.6" />
+                              <path class="pose-ink-subtle" fill="none" d="M 61.4 91.4 C 62.8 90.9 63.8 90.4 64.6 89.8" />
+                            </g>
+                          </g>
+                        </g>
+
+                        <!-- White T-Shirt Sleeve (over shoulder seam) -->
+                        <path fill="#FEFEFD" d="M 36.5 72.2 C 27.5 73.8 21.5 82.0 23.2 95.8 L 38.2 91.2 C 37.5 84.8 36.5 79.0 35.8 75.5 Z" />
+                        <path class="pose-ink" fill="none" d="M 36.5 72.2 C 27.5 73.8 21.5 82.0 23.2 95.8 L 38.2 91.2 L 35.8 84.0" />
+
+                        <!-- Top Crossed Denim Leg & Raised Sneaker -->
+                        <g transform="translate(66, 114)">
+                          <g class="anim-seated-leg-top">
+                            <g transform="translate(-66, -114)">
+                              <path class="pose-ink" fill="#FEFEFD" d="M 124.5 94.5 C 131.5 91.0 138.8 88.2 143.2 88.6 C 145.0 89.0 144.2 93.5 139.8 99.2 C 135.2 105.0 128.5 109.2 123.5 109.2 C 121.0 109.2 119.5 107.2 119.5 105.0 Z" />
+                              <path class="pose-ink" fill="#396292" d="M 56.5 117.5 C 66.0 105.5 76.2 94.2 85.5 87.2 C 92.8 81.8 99.8 81.2 106.2 83.0 C 111.5 84.6 117.5 88.8 126.5 94.5 L 120.5 106.2 L 105.5 98.0 Q 100.2 95.2 95.8 99.5 C 87.0 108.4 77.5 117.2 69.5 120.5 C 63.5 122.8 58.8 120.8 56.5 117.5 Z" />
+                            </g>
+                          </g>
+                        </g>
+
+                        <!-- Head, Hair & Expressive Eyes (Open pre-reveal, Wink post-reveal) -->
+                        <g transform="translate(44, 68)">
+                          <g class="anim-seated-head">
+                            <g transform="translate(-44, -68)">
+                              <path class="pose-ink" fill="#F1C198" d="M 23.0 54.6 C 18.2 53.6 15.6 57.0 16.4 60.8 C 17.2 64.5 21.0 65.5 24.0 63.8 C 28.6 71.0 38.0 74.2 47.5 72.2 C 56.5 70.2 61.5 62.5 59.8 52.0 C 58.6 44.5 55.8 36.8 51.8 31.0 C 42.5 32.5 31.5 34.5 23.5 36.8 C 22.0 42.5 22.8 49.5 23.0 54.6 Z" />
+                              <path class="pose-ink-face" fill="none" d="M 19.6 57.8 C 18.4 59.1 19.2 61.0 21.1 60.5" />
+
+                              <path class="pose-ink-hair" fill="#16181E" d="M 23.0 54.6 C 15.5 54.6 10.5 50.6 10.2 44.8 C 10.0 41.2 11.4 38.2 13.8 36.2 C 12.2 31.2 14.5 24.5 21.5 21.0 C 28.5 17.5 37.8 18.2 44.5 15.8 C 46.8 14.8 48.2 13.0 49.2 11.2 C 55.2 14.8 57.5 22.0 54.8 28.5 C 54.0 30.2 52.8 31.2 51.5 31.2 C 44.5 34.2 36.5 35.5 27.0 35.8 C 23.2 36.0 21.8 38.5 22.2 43.2 C 22.5 47.2 23.5 51.2 23.0 54.6 Z" />
+                              <path fill="none" stroke="#2E323E" stroke-width="1.6" stroke-linecap="round" d="M 18.8 26.5 C 25.5 21.8 36.5 21.8 45.2 18.2" />
+
+                              <!-- Right Eye & Brow (always open) -->
+                              <ellipse cx="49.2" cy="45.6" rx="2.2" ry="3.2" transform="rotate(-10 49.2 45.6)" fill="#0B0C10" />
+                              <path class="pose-ink-face" fill="none" d="M 44.0 39.8 Q 48.2 36.6 52.6 38.2" />
+
+                              <!-- Left Brow & Eye Open State (pre-reveal) -->
+                              <g transform="translate(33.8, 40.6)">
+                                <g opacity="0" class="anim-brow-left">
+                                  <path class="pose-ink-face" fill="none" d="M -4.2 1.6 Q 0 -1.6 4.2 0" />
+                                </g>
+                              </g>
+                              <g opacity="0" class="anim-eye-open">
+                                <ellipse cx="34.6" cy="47.8" rx="2.1" ry="3.1" transform="rotate(-8 34.6 47.8)" fill="#0B0C10" />
+                              </g>
+
+                              <!-- Left Wink State (post-reveal, exact user path) -->
+                              <g transform="translate(34.4, 48.0)">
+                                <g class="anim-eye-wink">
+                                  <g transform="translate(-34.4, -48.0)">
+                                    <path class="pose-ink-face" fill="none" d="M 29.8 49.6 Q 34.5 45.8 39.0 48.4" />
+                                  </g>
+                                </g>
+                              </g>
+
+                              <!-- Brief post-reveal wink sparkle -->
+                              <g transform="translate(26.5, 43.0)">
+                                <g opacity="0" class="anim-wink-spark">
+                                  <path stroke="#C5F92A" stroke-width="2.0" stroke-linecap="round" d="M -2 -2.5 L -6 -6 M -3.5 1.5 L -8 1.5 M 1 -4 L -0.5 -8" />
+                                </g>
+                              </g>
+
+                              <!-- Nose, Cheek Dimple, Smile & Chin Shadow -->
+                              <path class="pose-ink-face" fill="none" d="M 44.6 48.2 C 48.2 49.5 48.5 53.0 44.5 54.0" />
+                              <path class="pose-ink-face" fill="none" d="M 34.0 57.6 C 33.2 58.6 33.2 59.8 33.8 60.6" />
+                              <path class="pose-ink-face" fill="none" d="M 34.2 59.0 C 39.2 63.0 46.8 62.4 51.0 58.2" />
+                              <path class="pose-ink-subtle" fill="none" d="M 41.8 65.2 Q 44.4 65.9 47.0 64.9" />
+                            </g>
+                          </g>
+                        </g>
+
+                      </g>
+                    </g>
+                  </g>
+
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+
+      </g>
+    </g>
+  </g>
+
+</svg>
