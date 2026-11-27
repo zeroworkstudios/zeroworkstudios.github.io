@@ -137,7 +137,7 @@ A standalone UI system with its own batched renderer, from [fairygui/FairyGUI-un
 
 `FairyGUITextStyle` is a ScriptableObject with face colour, outline, hard shadow, faux bold and letter spacing.
 
-- **Counter:** keeps the bridge's **Counter Style** at every level (empty uses the yellow/red of level 3). Turn on **Tier Styles On Counter** to restyle it per level.
+- **Counter:** with the combo counter's **Follow Levels** on, it takes each level's **FairyGUI Style**. With it off, it keeps the bridge's **Counter Style** at every level (empty uses the yellow/red of level 3).
 - **Popups:** use the level's **FairyGUI Style**. Without one, the built-in tier colours of `ComboCounter.uss` apply.
 - **Outline width** works like UI Toolkit's `-unity-text-outline-width`: relative to the font, so smaller text gets a thinner outline.
 
@@ -350,12 +350,12 @@ Each world demo is saved next to its UI demo. `WorldDemoSceneBuilder` builds it 
 All demos share `Demos/Assets/`:
 
 - `Combo Config.asset` and `Level_01..03.asset`: levels at 0 / 15 / 35 hits with ×1 / ×2 / ×4 score, each with its words, fonts, FairyGUI style and UniText font stack and appearance.
-- The LEMON MILK font as TMP (`Font_1..3`, `ButtonFont`), UI Toolkit TextCore (`*_TextCore`) and Noesis (`LEMONMILK-Bold.otf`) assets, plus the ★ fallback (`StarFallback`).
+- The League Spartan Caps font (League Spartan ExtraBold with lowercase drawn as capitals; SIL Open Font License) as TMP (`Font_1..3`, `ButtonFont`), UI Toolkit TextCore (`*_TextCore`) and Noesis (`LeagueSpartanCaps-ExtraBold.ttf`) assets.
 - `Button.png`, the pill button sprite, and `EmojiSprites/`, the sprites on the demo buttons and popups.
 
 Framework-specific assets (XAML, USS/UXML, TSX, UniText and FairyGUI styles) stay in each demo's folder.
 
-**Moving or renaming demo assets.** Move them in the Project window, or keep each `.meta` file with its asset, and nothing breaks: scenes and assets reference each other by GUID, the Setup window finds package assets by GUID (`ComboDemoAssets`), USS/UXML URLs carry the asset's GUID, and XAML font paths are rewritten when files move in the Editor. The package tests (`PackageReferenceTests`) fail if any of these references stops resolving.
+**Moving or renaming demo assets.** Move them in the Project window, or keep each `.meta` file with its asset, and nothing breaks: scenes and assets reference each other by GUID, the Setup window finds package assets by GUID (`ComboDemoAssets`), USS/UXML URLs carry the asset's GUID, and XAML font paths are rewritten when files move in the Editor.
 
 ### Scene layout and logging
 
@@ -439,6 +439,7 @@ combo.HitCombo(new Vector2(Screen.width * 0.5f, 200f));   // screen position
 | `IsCounting` | `bool` | True while the combo timer runs. |
 | `Backend` | `ComboBackend` | The selected backend (settable). |
 | `Config` | `ComboConfig` | The config asset, or null for the built-in defaults (settable). |
+| `CounterFollowsLevels` | `bool` | Whether the counter takes each level's look (settable; see `counterFollowsLevels`). |
 
 ### Events
 
@@ -488,6 +489,7 @@ The first `HitCombo` or `BreakCombo` on a backend that is not ready logs one war
 | Field | Default | Meaning |
 |---|---|---|
 | `counterFormat` | `{0}` | Counter text; `{0}` is the hit count (for example `{0} HITS!`). |
+| `counterFollowsLevels` | on | **Follow Levels** in the Inspector. On: the counter takes each level's look: the `LevelConfig` counter font on uGUI (TMP or legacy Text) and UI Toolkit (plus the level's USS class), the level's **FairyGUI Style** or UniText font stack and appearance, and the tier colours on NoesisGUI, OneJS and ReactUnity. Off: the counter keeps the look it has in the scene at every level. Popups follow the level either way. The demo UI scenes turn it off; the world demos keep it on. |
 | `popupOffset` | zero | Offset of the default popup stage from the counter (popup template) position. |
 | `popupSpread` | zero | Random ± X/Y jitter of default-stage popups, in reference pixels. |
 | `audioSource` | none | Plays the levels' sounds. Empty uses an `AudioSource` on the same GameObject, if any. |
@@ -522,7 +524,7 @@ Create one with **NEW ASSET** or **Create > Combo Counter > Level Configuration*
 |---|---|
 | `levelBoundaryLower` | Combo count at which this level starts. |
 | `scoreMultiplier` | Score multiplier while this level is active. |
-| `hitSound`, `levelUpSound` | Optional sounds for a hit at this level and for reaching it. |
+| `hitSound`, `levelUpSound`, `breakSound` | Optional sounds for a hit at this level, for reaching it, and for the combo breaking (timeout or `BreakCombo`) while at it. |
 | `words` | Words shown by popups at this level, one picked at random. Empty shows no word. |
 | `popupScale` | Popup size at this level (1 = normal). |
 | `counterFont`, `popupFont` | uGUI: TextMesh Pro fonts at this level. |

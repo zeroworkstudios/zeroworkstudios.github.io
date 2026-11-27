@@ -5,11 +5,12 @@
    its own main column.
    ========================================================================== */
 
-/* Combo Counter's display face (from the package's Editor/UI/Fonts), subset to Latin. */
+/* Combo Counter's display face (the package's Editor/UI/Fonts): League Spartan ExtraBold with lowercase drawn as
+   capitals, SIL OFL 1.1 (public/fonts/LeagueSpartan-OFL.txt). One weight, so 400-800 all map to it unsynthesised. */
 @font-face {
-  font-family: 'LEMON MILK';
-  src: url('/fonts/lemonmilk-bold.woff2') format('woff2');
-  font-weight: 400 700;
+  font-family: 'League Spartan Caps';
+  src: url('/fonts/leaguespartancaps-extrabold.woff2') format('woff2');
+  font-weight: 400 800;
   font-display: swap;
 }
 

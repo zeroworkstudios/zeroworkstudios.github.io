@@ -26,7 +26,7 @@
   --cc-warning: #ffb627;
   --cc-navy: #24459e;
 
-  --cc-display: 'LEMON MILK', 'Arial Black', var(--font-sans);
+  --cc-display: 'League Spartan Caps', 'Arial Black', var(--font-sans);
 
   /* Text outlines matching the demo HUD (ComboCounter.uss): 3px outline + hard drop. */
   --outline-red: -2px -2px 0 #d91129, 2px -2px 0 #d91129, -2px 2px 0 #d91129, 2px 2px 0 #d91129, 0 -2.5px 0 #d91129,
