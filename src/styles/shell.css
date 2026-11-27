@@ -153,17 +153,37 @@ button {
   block-size: 100%;
 }
 
+/* The logo's lettering, unwarped: League Spartan Caps (the @font-face above) with an ink outline and a
+   hard offset drop shadow, like the logo and Combo Counter's editor UI. ZERO WORK over a letter-spaced
+   STUDIOS in the logo's lime. */
 .studio__name {
-  font: 600 14px/1.2 var(--font-sans);
-  color: var(--muted);
-  transition: color 0.2s;
+  --ink: #0b0c10;
+  --outline: -1.5px -1.5px 0 var(--ink), 1.5px -1.5px 0 var(--ink), -1.5px 1.5px 0 var(--ink),
+    1.5px 1.5px 0 var(--ink), 0 -1.5px 0 var(--ink), 0 1.5px 0 var(--ink), -1.5px 0 0 var(--ink),
+    1.5px 0 0 var(--ink);
+  display: grid;
+  gap: 5px;
+  font-family: 'League Spartan Caps', 'Arial Black', var(--font-sans);
+  font-weight: 800;
+  line-height: 1;
+}
+.studio__word {
+  font-size: 19px;
+  letter-spacing: 0.02em;
+  color: #fefefd;
+  text-shadow: var(--outline), 2.5px 3px 0 var(--ink);
+}
+.studio__sub {
+  font-size: 9.5px;
+  letter-spacing: 0.34em;
+  color: #c5f92a;
+  --outline: -1px -1px 0 var(--ink), 1px -1px 0 var(--ink), -1px 1px 0 var(--ink), 1px 1px 0 var(--ink),
+    0 -1px 0 var(--ink), 0 1px 0 var(--ink), -1px 0 0 var(--ink), 1px 0 0 var(--ink);
+  text-shadow: var(--outline), 1.5px 2px 0 var(--ink);
 }
 
 .studio:hover .studio__mark {
   transform: rotate(4deg) scale(1.06);
-}
-.studio:hover .studio__name {
-  color: var(--mahogany);
 }
 
 /* --------------------------------------------------------------------------
