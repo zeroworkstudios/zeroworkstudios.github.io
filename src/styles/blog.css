@@ -387,15 +387,31 @@ a.post-pill:hover .post-pill__bolt {
 .comments {
   margin-top: 56px;
 }
-.comments__title {
-  margin: 0;
-  font: 800 clamp(24px, 2.7vw, 31px) / 1.15 var(--font-display);
-  letter-spacing: -0.032em;
-}
-.comments__note {
-  margin: 8px 0 24px;
+.comments__viewer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 14px;
   color: var(--muted);
-  font-size: 15px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.comments__viewer[hidden] {
+  display: none;
+}
+.comments__avatar {
+  inline-size: 22px;
+  block-size: 22px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: var(--card);
+}
+.comments__login {
+  color: var(--mahogany);
+  text-underline-offset: 3px;
+}
+.comments__login:hover {
+  color: var(--caramel);
 }
 .comments .giscus {
   min-block-size: 240px;

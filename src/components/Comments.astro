@@ -19,9 +19,13 @@ const themeHost = import.meta.env.PROD || Astro.url.protocol !== 'https:' ? Astr
 const theme = new URL('/giscus-theme.css', themeHost).href;
 ---
 
-<section class="comments" id="comments" aria-labelledby="comments-title">
-  <h2 class="comments__title" id="comments-title">Comments</h2>
-  <p class="comments__note">Sign in with GitHub to comment. Threads live in the site's GitHub Discussions.</p>
+<section class="comments" id="comments" aria-label="Comments">
+  <!-- Who the reader is signed in to Giscus as. Giscus never shows this itself, but with
+       data-emit-metadata it posts the viewer to the page each time it loads the thread. -->
+  <p class="comments__viewer" hidden>
+    <img class="comments__avatar" alt="" width="22" height="22" />
+    <span>Commenting as <a class="comments__login" rel="noopener"></a></span>
+  </p>
   <div class="giscus"></div>
   <script
     is:inline
@@ -34,11 +38,49 @@ const theme = new URL('/giscus-theme.css', themeHost).href;
     data-term={term}
     data-strict="1"
     data-reactions-enabled="1"
-    data-emit-metadata="0"
+    data-emit-metadata="1"
     data-input-position="top"
     data-theme={theme}
     data-lang="en"
     data-loading="lazy"
     crossorigin="anonymous"
     async></script>
+  <script is:inline>
+    (() => {
+      const viewer = document.querySelector('.comments__viewer');
+      const avatar = viewer.querySelector('.comments__avatar');
+      const login = viewer.querySelector('.comments__login');
+
+      // Signed out, Giscus reads the thread with its own app token and reports its bot as the
+      // viewer. Its client keeps the reader's session in localStorage, so that tells the two apart.
+      const signedIn = () => {
+        try {
+          return !!localStorage.getItem('giscus-session');
+        } catch {
+          return false;
+        }
+      };
+
+      addEventListener('message', (e) => {
+        if (e.origin !== 'https://giscus.app') return;
+        const msg = e.data?.giscus;
+        if (!msg || !('signOut' in msg || 'viewer' in msg)) return;
+        const v = msg.viewer;
+        if (msg.signOut || !signedIn() || !v?.login || v.login.endsWith('[bot]')) {
+          viewer.hidden = true;
+          return;
+        }
+        try {
+          const src = new URL(v.avatarUrl);
+          src.searchParams.set('s', '44');
+          avatar.src = src.href;
+        } catch {
+          avatar.removeAttribute('src');
+        }
+        login.textContent = `@${v.login}`;
+        login.href = v.url;
+        viewer.hidden = false;
+      });
+    })();
+  </script>
 </section>
