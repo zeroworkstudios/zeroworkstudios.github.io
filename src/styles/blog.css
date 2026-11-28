@@ -383,9 +383,27 @@ a.post-pill:hover .post-pill__bolt {
 .post__foot .post-pills {
   margin-top: 18px;
 }
+/* ---- Comments: the Giscus thread (src/components/Comments.astro, themed by public/giscus-theme.css) ---- */
+.comments {
+  margin-top: 56px;
+}
+.comments__title {
+  margin: 0;
+  font: 800 clamp(24px, 2.7vw, 31px) / 1.15 var(--font-display);
+  letter-spacing: -0.032em;
+}
+.comments__note {
+  margin: 8px 0 24px;
+  color: var(--muted);
+  font-size: 15px;
+}
+.comments .giscus {
+  min-block-size: 240px;
+}
+
 .post__all {
   display: inline-block;
-  margin-top: 28px;
+  margin-top: 40px;
   color: var(--muted);
   font-size: 14.5px;
   font-weight: 600;

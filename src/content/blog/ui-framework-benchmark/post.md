@@ -97,17 +97,17 @@ To pull everything together, I scored each framework from 1 to 10 on every metri
 
 - **Scale:** the best framework on a metric gets 10 and the worst gets 1, with the rest placed on a log scale between them, because the values span orders of magnitude.
 - **Noise:** the 0.04ms noise is added to every time before scoring. Without it, an idle time of 0.01ms would score as 3x better than 0.031 ms, when both are inside the noise.
-- **Weights:** CPU time while animating counts 3 times, hitches and garbage twice, and everything else once, because frame time is what players feel first. With equal weights, the order is the same.
+- **Weights:** CPU time while animating counts 3 times, hitches and garbage twice, and everything else once, because frame time is what players feel first. With equal weights, UniText and uGUI swap places, and the rest of the order is the same.
 - **Missing values:** NoesisGUI's draw calls can't be measured, so they're left out of its average.
 
 The overall ranking, from best to worst:
 
-1. uGUI + TMPro, 9.5
-2. UniText, 9.0
-3. UI Toolkit, 8.9
-4. NoesisGUI 4.0, 8.2
-5. NoesisGUI 2.2, 7.5
-6. FairyGUI, 7.1
+1. uGUI + TMPro, 9.3
+2. UniText, 9.2
+3. UI Toolkit, 8.8
+4. NoesisGUI 4.0, 8.3
+5. NoesisGUI 2.2, 7.7
+6. FairyGUI, 7.0
 7. OneJS, 3.4
 8. ReactUnity, 1.9
 

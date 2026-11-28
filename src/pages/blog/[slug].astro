@@ -1,6 +1,7 @@
 ---
 import StudioLayout from '../../layouts/StudioLayout.astro';
 import PostLinks from '../../components/PostLinks.astro';
+import Comments from '../../components/Comments.astro';
 import { posts, postHref, formatDate, type Post } from '../../data/blog';
 import '../../styles/blog.css';
 
@@ -31,9 +32,12 @@ const { Content } = post;
     </div>
 
     <footer class="post__foot">
-      <p>{post.closing ?? 'Questions or corrections? Reply on a thread.'}</p>
+      <p>{post.closing ?? 'Questions or corrections? Comment below or reply on a thread.'}</p>
       <PostLinks post={post} />
-      <a class="post__all" href={postHref()}>All posts</a>
     </footer>
+
+    <Comments term={post.slug} />
+
+    <a class="post__all" href={postHref()}>All posts</a>
   </article>
 </StudioLayout>

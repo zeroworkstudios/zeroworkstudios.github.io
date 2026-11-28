@@ -31,6 +31,7 @@ export default defineConfig({
   vite: {
     // Tailwind only runs on the about page's stylesheet (src/styles/about.css), for Hank's ID card.
     plugins: [tailwindcss()],
-    server: { allowedHosts: true },
+    // cors: Giscus's iframe loads public/giscus-theme.css from the dev server.
+    server: { allowedHosts: true, cors: { origin: 'https://giscus.app' } },
   },
 });

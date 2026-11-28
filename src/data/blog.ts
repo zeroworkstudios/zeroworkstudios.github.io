@@ -37,7 +37,8 @@ const entries: PostEntry[] = [
         url: 'https://assetstore.unity.com/packages/tools/gui/combo-counter-system-217635',
       },
     },
-    closing: 'Know one of these frameworks well, or ran the benchmark on other hardware? Reply on a thread.',
+    closing:
+      'Know one of these frameworks well, or ran the benchmark on other hardware? Comment below or reply on a thread.',
     sectionLabels: {
       'cpu-the-c-frameworks-are-cheap-the-javascript-ones-are-not': 'CPU Time',
       'garbage-noesisgui-allocates-every-frame': 'Garbage',
@@ -76,6 +77,8 @@ export const posts: Post[] = entries
           .getHeadings()
           .filter((h) => h.depth === 2)
           .map((h) => ({ id: h.slug, label: e.sectionLabels?.[h.slug] ?? h.text })),
+        // The Giscus thread under every post (src/components/Comments.astro).
+        { id: 'comments', label: 'Comments' },
       ],
     };
   })

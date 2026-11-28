@@ -1,0 +1,44 @@
+---
+// A blog post's comment thread, through Giscus (https://giscus.app).
+// Each post's comments are a GitHub Discussion in this repo's Announcements category, matched by
+// the post's slug, so renaming a post's title or moving its URL keeps its thread. Giscus opens the
+// Discussion when the first comment comes in. Announcements is the category to use because only
+// maintainers (and Giscus) can open Discussions there.
+// The Giscus GitHub app must be installed on the repo: https://github.com/apps/giscus
+// The widget is styled by public/giscus-theme.css. Giscus loads that file from inside its iframe on
+// giscus.app, and browsers block a public site from loading files off localhost, so `npm run dev`
+// on localhost uses the live site's copy too: changes to the theme show up locally once deployed.
+// An https tunnel preview serves its own copy (vite.server.cors in astro.config.mjs lets giscus.app read it).
+interface Props {
+  /** The Discussion this post's comments live in: the post's slug. */
+  term: string;
+}
+const { term } = Astro.props;
+
+const themeHost = import.meta.env.PROD || Astro.url.protocol !== 'https:' ? Astro.site : Astro.url;
+const theme = new URL('/giscus-theme.css', themeHost).href;
+---
+
+<section class="comments" id="comments" aria-labelledby="comments-title">
+  <h2 class="comments__title" id="comments-title">Comments</h2>
+  <p class="comments__note">Sign in with GitHub to comment. Threads live in the site's GitHub Discussions.</p>
+  <div class="giscus"></div>
+  <script
+    is:inline
+    src="https://giscus.app/client.js"
+    data-repo="zeroworkstudios/zeroworkstudios.github.io"
+    data-repo-id="R_kgDOV79Cug"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOV79Cus4DMKw0"
+    data-mapping="specific"
+    data-term={term}
+    data-strict="1"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme={theme}
+    data-lang="en"
+    data-loading="lazy"
+    crossorigin="anonymous"
+    async></script>
+</section>
