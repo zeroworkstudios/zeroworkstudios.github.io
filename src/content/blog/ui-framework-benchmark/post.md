@@ -6,7 +6,7 @@ date: 2026-11-25
 
 A few years ago, I made a simple combo-counter, player-feedback asset for unity using uGUI. Over the last few months, I've been updating [Combo Counter](https://assetstore.unity.com/packages/package/1830129) to work on Unity 6+ and I ported its demo HUD to UI toolkit seeing as to how it is maturing... but then I thought why the hell not and I rebuilt the same UI on every framework I could find for free. Once I had all the demos in a working state, it seemed a waste to not benchmark them. The same output, same fonts, same main C# system driving it, and only the UI framework changes behind the HUD.
 
-// insert HUD Image
+![The Combo Counter demo HUD, rebuilt identically in each of the 8 frameworks](images/00-hud-demo.png)
 
 Each of these UI frameworks has its own design workflow, which I won't get into that here. This post is strictly about what each one costs at runtime in a packaged build since I *am* a nerd for optimizations after all.
 
