@@ -4,7 +4,17 @@
 //   public/brand/zero-work-studios-logo-static.svg   the finished logo, no animation (repeat visits)
 //   public/og-image.png                               1200x630 social card
 //
-// (The favicon and the sidebar mark are Hank's donut emoji, not built from the logo.)
+// and PNGs of the square studio mark, public/brand/zero-work-studios-mark.svg:
+//
+//   public/brand/zero-work-studios-mark-1024.png      uploads: Asset Store publisher logo, mailbox photo
+//   public/brand/zero-work-studios-mark-512.png
+//   public/apple-touch-icon.png                       180x180
+//   public/favicon-32.png                             PNG favicon for browsers without SVG favicons
+//
+// The mark is hand-made, not built here: the logo's [0] and seated character on its charcoal, as
+// SVG Tiny PS so the same file serves as the BIMI email logo. It allows no CSS, classes, clip paths,
+// animation, text or images, and must stay square and under 32 kB. Strokes are ~30% heavier than in
+// the logo so the line art survives a 40px avatar. If the logo's character changes, redo it by hand.
 //
 // The still frame is the logo with every animation off. The logo already shows its finished pose
 // under prefers-reduced-motion, so its resting state is the final frame.
@@ -49,3 +59,14 @@ await write(
   ]),
   path.join(pub, 'og-image.png'),
 );
+
+// ---- Square mark PNGs ----------------------------------------------------------
+const mark = fs.readFileSync(path.join(brand, 'zero-work-studios-mark.svg'), 'utf8');
+for (const [width, out] of [
+  [1024, path.join(brand, 'zero-work-studios-mark-1024.png')],
+  [512, path.join(brand, 'zero-work-studios-mark-512.png')],
+  [180, path.join(pub, 'apple-touch-icon.png')],
+  [32, path.join(pub, 'favicon-32.png')],
+]) {
+  await write(raster(mark, 256, width), out);
+}

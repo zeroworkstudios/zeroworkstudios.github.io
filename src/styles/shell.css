@@ -136,14 +136,16 @@ button {
   text-decoration: none;
 }
 
-/* The brand mark: Hank's donut, the same emoji as the favicon. */
+/* The brand mark: the logo's [0] on its charcoal, the same file as the favicon and the email logo.
+   An ink border and the studio name's hard drop sit it on the paper like a sticker. */
 .studio__mark {
   inline-size: 30px;
   block-size: 30px;
   flex: none;
-  display: grid;
-  place-items: center;
-  font: 26px/1 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+  display: block;
+  border: 1.5px solid #0b0c10;
+  border-radius: 22%;
+  filter: drop-shadow(1.5px 2px 0 #0b0c10);
   transform: rotate(-4deg);
   transition: transform 0.4s var(--ease-spring);
 }
@@ -181,14 +183,13 @@ button {
   border-radius: 999px;
 }
 
-/* More donut in the sidebar head; the top bar and footer keep the 30px mark. */
+/* A bigger mark in the sidebar head; the top bar and footer keep the 30px one. */
 .side-head .studio {
   gap: 12px;
 }
 .side-head .studio__mark {
   inline-size: 46px;
   block-size: 46px;
-  font-size: 42px;
 }
 
 .studio:hover .studio__mark {
